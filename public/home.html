@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="/stylesheets/home.css" type="text/css" />
+	<script src="/javascripts/jquery-2.1.1.js"></script>
+	
+	<script src="/javascripts/common.js" ></script>
+	<link rel="stylesheet" href="/stylesheets/common.css" type="text/css" />
+	
+<style>
+
+</style>
+</head>
+<body>
+	<center>
+	<div class="login-panel" style="width:100px;height:500px;overflow-y:auto;">
+		<h3 style="margin-top:-20px;font-size:13pt;">我的应用</h3>
+		<div id="applist" style="">
+			<!-- <div class="login-btn-panel" >
+				    <a id="btn_open_app" class="login-btn" href="javascript:;" style="width:100px;height:20px;padding:10 10 50 30;">
+							test
+				    </a>
+				</div>
+				<div class="login-btn-panel" >
+				    <a id="btn_open_app" class="login-btn" href="javascript:;" style="width:100px;height:20px;padding:10 10 50 30;">
+							test2
+				    </a>
+				</div> -->
+		</div>
+	</div>
+	<div class="login-panel" id="create_panel" style="width:500px;height:500px;left:200px;">
+		<div class="login-btn-panel" style="margin-top:100px;">
+		    <a id="btn_pre_create_app" class="login-btn" href="javascript:pre_create_app();" style="width:160px;height:auto;font-size:17pt;padding-top:24px;padding-bottom: 24px;">
+					创建应用
+		    </a>
+			<p/>
+
+		</div>	
+	</div>
+	<div class="login-panel" id="pre_create_app" style="display:none;width:500px;height:300px;left:200px;">
+		<div style="float:left;">
+			<div style="text-align:left;"><div style="width:200px;">应用ID</div>&nbsp;<input id="app_id"></input> </div>
+			<div style="text-align:left;"><div style="width:200px;">应用名称</div>&nbsp;<input id="app_name"></input> </div>
+			<div style="text-align:left;"><div style="width:100px;">应用描述</div>&nbsp;<textarea id="app_desc"></textarea> </div>
+		</div>
+		<div style="float:left;margin-left:80px;">
+			<div id="app_key_container" style="text-align:left;margin-bottom:10px;"><div style="width:200px;font-size:12pt;font-weight:300;">App Key</div>&nbsp;<span id="app_key" style="font-weight:300;">xxxx-xxxx-xxxx-xxxx</span> </div>
+			<div style="text-align:left;"><div style="width:200px;font-size:12pt;font-weight:400;">App Type</div>&nbsp;<span id="app_type" style="font-weight:300;">AddOn</span> </div>
+
+		</div>
+		<div style="clear:both;">
+		</div>
+		<div class="login-btn-panel" >
+		    <a id="btn_create_app" class="login-btn" href="javascript:create_app();" style="display:block;width:100px;height:auto;font-size:12pt;padding-top:24px;padding-bottom: 24px;">
+					创建应用
+		    </a>
+		    <a id="btn_open_app" class="login-btn" href="/index.html" style="display:none;width:100px;height:auto;font-size:12pt;padding-top:24px;padding-bottom: 24px;float:left;">
+					进入开发
+		    </a>
+		    <a id="btn_del_app" class="login-btn" href="javascript:void();" style="display:none;float:left;width:100px;height:auto;font-size:12pt;padding-top:24px;padding-bottom: 24px;">
+					删除应用
+		    </a>		
+			<p/>
+
+		</div>	
+	</div>
+	
+	</center>
+	<div id="waitingbg" style="display:none;z-index:1000;position:absolute;left:0;top:0;width:100%;height:100%;">
+		<center>			
+			<img src="/images/wait3.gif" style="width:50px;margin-top:230px;"/>
+		</center>
+	</div>
+	<!-- <div id="popup" style="display:block;background:url(/images/bg_dlg.png);background-size: 100% 100%;color:yellow;text-align:center;padding:28px;position:absolute;z-index:800;width:187px;min-height:37px;max-height:200px;overflow:auto;word-wrap: break-word;word-break: normal;left:38;top:180px;/*background-size:243px 93px;*/border:0px red solid;" onclick="close_popup();">
+	
+	</div> -->
+	<div id="popup" class="round_border_m" style="display:none;opacity:0.3;background-color:black;color:white;text-align:center;padding:28px;position:absolute;left:250px;top:180px;z-index:800;width:200px;height:128px;font-size:13pt;min-height:37px;max-height:200px;overflow:auto;word-wrap: break-word;word-break: normal;/*background-size:243px 93px;*/border:0px red solid;" onclick="close_popup();">
+	
+	</div> 
+	<script>
+	function del_app(appid){
+			$.ajax({
+				type: "post",
+				url: "/app/delapp?t="+ new Date().getTime(),
+				dataType: 'json',
+				
+				data: {
+					appid:appid,
+			
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					// alert(data);
+					showWaiting(false);
+					if (data.error){
+						err = data.error.replace(/[<>]/g, "&");
+						// alert(data.error);
+						popup(err);
+					}else{
+				   // alert( "Data Saved: " + data +","+ textStatus);
+				    window.location.href="/home.html";
+				}
+			
+			},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					showWaiting(false);
+	
+				}
+		});
+	}
+	function show_app_info(appid){
+		$("#create_panel").css("display", "none");
+		$("#pre_create_app").css("display", "block");
+		$("input#app_id").val(appid);
+		$("input#app_name").val($("#btn_open_app_"+appid+ " span#appname").val());
+		$("input#app_desc").val($("#btn_open_app_"+appid+ " span#appdesc").val());
+		$("#btn_open_app").css("display", "block");
+		$("#btn_create_app").css("display", "none");
+		$("#btn_del_app").css("display", "block");
+		$("#btn_del_app").click(function(event){
+			del_app(appid);
+		});
+		
+		$("#btn_open_app").attr("href", "/index.html?appid="+appid);
+		
+	}
+	function pre_create_app(){
+		$("#create_panel").css("display", "none");
+		$("#pre_create_app").css("display", "block");
+		
+		$("#btn_create_app").css("display", "block");
+		
+			$("input#app_id").val("");
+			$("input#app_name").val("");
+				$("input#app_desc").val("");
+					$("#app_key_container").css("display", "none");
+	}
+		function create_app(){
+			app_id = $("input#app_id").val();
+			app_name = $("input#app_name").val();
+			app_desc = $("input#app_desc").val();
+			alert(app_id);
+			$.ajax({
+				type: "post",
+				url: "/repo/createapp?t="+ new Date().getTime(),
+				dataType: 'json',
+				
+				data: {
+					appid:app_id,
+					name:app_name,
+					desc:app_desc
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					// alert(data);
+					showWaiting(false);
+					if (data.error){
+						err = data.error.replace(/[<>]/g, "&");
+						// alert(data.error);
+						popup(err);
+					}else{
+				   // alert( "Data Saved: " + data +","+ textStatus);
+				    window.location.href="/index.html?appid="+app_id;
+				}
+			
+			},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					showWaiting(false);
+	
+				}
+		});
+			showWaiting(true);
+		}
+	
+	function load_app_list(){
+		
+			$.ajax({
+				type: "post",
+				url: "/app/list?t="+ new Date().getTime(),
+				//dataType: 'json',
+
+				data: {
+			
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					//alert( "Data Saved: " + data +","+ textStatus);
+				   
+					showWaiting(false);
+					if (data.error){
+						popup(data.error);
+					}else{
+						$("#applist").html(data);
+					}
+			
+				},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					showWaiting(false);
+	
+				}
+			});
+			
+			showWaiting(true);
+		}
+		load_app_list();
+		
+	</script>
+</body>
+</html>

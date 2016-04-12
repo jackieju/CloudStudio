@@ -1,0 +1,8 @@
+<% @list.each{|m|%>
+<div class="field" style=";border-bottom:1px solid grey;margin-top:5px;" onclick="deploy_on('<%=m[:id]%>');">
+	<span class='field_name' ><%=m[:id]%>(<%=m[:name]%>)</span>
+</div>
+<% } %>
+<div>
+<a href="http://www.sapanywhere.cn/free-trial/" target="_blank">Apply Sandbox Tenant</a>
+</div>

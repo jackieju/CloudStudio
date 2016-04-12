@@ -1,0 +1,8 @@
+<% @apps.each {|app|%>
+<div class="login-btn-panel" >
+    <a id="btn_open_app_<%=app.appid%>" class="login-btn" href="javascript:show_app_info('<%=app.appid%>');" style="width:100px;height:20px;padding:10 10 50 30;">
+			<span class="appname" ><%=app.name%></span><div><span class="appid" style="color:grey;">(<%=app.appid%>)</span><span class="appdesc" style="display:none;"><%=app.desc%></span></div>
+    </a>
+
+</div>
+<% } %>

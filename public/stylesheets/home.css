@@ -1,0 +1,63 @@
+/* for the button */
+.login-mod .login-remember-pwd:hover, .login-mod .login-btn:hover {
+    text-decoration: none;
+}
+
+.login-btn-panel .login-btn {
+    display: inline-block;
+    width: 120px;
+    margin-right: 15px;
+    padding: 3px 0px;
+	background-color:rgb(111, 180, 32);
+  	/* chrome 2+, safari 4+; multiple color stops */
+	background-image:-webkit-gradient(linear, left bottom, left top, color-stop(0.32, #063053), color-stop(0.66, #395873), color-stop(0.83, #5c7c99));
+	/* chrome 10+, safari 5.1+ */
+	/*	background-image: -webkit-linear-gradient(#063053, #395873, #5c7c99);*/
+	background-image: -webkit-linear-gradient(rgb(111, 180, 32), rgb(81, 147, 13), #5c7c99);
+    /* 标准写法 */
+	/*	background-image: linear-gradient(#063053, #395873, #5c7c99);*/
+	background-image: linear-gradient(rgb(111, 180, 32), rgb(81, 147, 13), rgb(81, 147, 13));
+	/*firefox*/	
+	background: -moz-linear-gradient(center top , rgb(111, 180, 32) 0px, rgb(81, 147, 13) 100%) repeat scroll 0% 0% transparent;
+	
+	color: rgb(255, 255, 255);
+    border: 1px solid rgb(99, 132, 103);
+    border-radius: 5px 5px 5px 5px;
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: rgb(63, 101, 181);
+}
+
+input, textarea, button, a {
+    outline: 0px none;
+}
+body {
+    font-size: 14px;
+}
+body {
+    line-height: 1.6;
+    font-family: "Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma;
+
+}
+
+.login-panel {
+    position: absolute;
+/*    top: 25px;*/
+/*    right: 0px;*/
+    padding: 25px 35px 20px;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    background: -moz-linear-gradient(center top , rgba(228, 228, 228, 0.9) 0px, rgba(248, 248, 248, 0.9) 100%) repeat scroll 0% 0% transparent;
+}
+.login-btn-panel {
+    margin-top: 20px;
+    padding-bottom: 10px;
+}
+.login-panel h3 {
+    font-size: 21px;
+    margin-bottom: 5px;
+    font-weight: normal;
+    text-shadow: 1px 1px 1px rgb(238, 238, 238);
+}

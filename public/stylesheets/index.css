@@ -1,0 +1,124 @@
+.component_line{
+	height:50px;
+	width:100%-6;
+	padding:6px;
+}
+div.line_splitter{
+	width:99%;
+	height:2px;
+	border-bottom:1px solid grey;
+}
+.draggable_content {
+	display:none;
+}
+.draggable_source{
+	display:none;
+}
+.draggable_obj{
+	position:absolute;
+	z-index:10;
+}
+.prop_name{
+	float:left;
+	margin-right:3px;
+	min-width:50px;
+}
+.prop_v{
+	float:left;
+	background:#f5f5f5;
+	
+}
+
+.draggable_obj_prop{
+	display:none;
+}
+
+.grid_background{
+/*	background: -webkit-linear-gradient(top, transparent 23px, green 24px),
+	-webkit-linear-gradient(left, transparent 23px, green 24px);
+	background-size: 24px 24px;*/
+	background: 
+    -webkit-linear-gradient(top, transparent 39px, grey 40px), 
+    -webkit-linear-gradient(left, transparent 39px, grey 40px)
+    ;
+    background: 
+    -moz-linear-gradient(top, transparent 39px, grey 40px), 
+    -moz-linear-gradient(left, transparent 39px, grey 40px)
+    ;
+    background: 
+    -o-linear-gradient(top, transparent 39px, grey 40px), 
+    -o-linear-gradient(left, transparent 39px, grey 40px)
+    ;
+    background: 
+    -ms-linear-gradient(top, transparent 39px, grey 40px), 
+    -ms-linear-gradient(left, transparent 39px, grey 40px)
+    ;
+    background:
+        linear-gradient(top, transparent 39px, grey 40px),
+        linear-gradient(left, transparent 39px, grey 40px)
+  	;
+    -webkit-background-size: 40px 40px;
+    -moz-background-size: 40px 40px;
+    background-size: 40px 40px;
+}
+.bod_tb_btn{
+	margin-left:10px;margin-bottom:20px;
+}
+.shadowed-border{
+	-webkit-box-shadow: inset  1px 1px 1px red;  
+	-moz-box-shadow: inset 1px 1px 1px blue;  
+	box-shadow: inset 1px 1px 1px gray;
+}
+.toolbar_btn{
+	height:18px;
+	border-width:0px;
+}
+.toolbar_btn_m{
+	height:25px;
+	border-width:0px;
+}
+/*#balloon{
+	  minWidth: "20px",
+	  padding: "5px",
+	  borderRadius: "6px",
+	  border: "solid 1px #777",
+	  boxShadow: "4px 4px 4px #555",
+	  color: "#666",
+	  backgroundColor: "#efefef",
+	  opacity: "0.85",
+	  zIndex: "32767",
+	  textAlign: "left"
+	
+}*/
+#balloon{
+	background: none repeat scroll 0% 0% rgb(238, 238, 238);
+	border: 1px solid rgb(204, 204, 204);
+	padding: 10px;
+	border-radius: 8px 8px 8px 8px;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	font-size: 1.2em;
+	position: relative;
+	width: 200px;
+}
+
+.bo_field_prop_list{
+	display:none;
+}
+div.btn_add_bf{
+	border-bottom:1px solid grey;margin-top:5px;
+}
+div.field{
+	border-bottom:1px solid grey;margin-top:5px;cursor:default;
+}
+div.field_list{
+	display:none;margin-top:10px;scroll:auto;
+}
+div.btn_theme{
+	cursor:default;border-top:1px solid #c8c8c8;padding:2px 5px;
+	background:#eeeeee;
+}
+div.selected_theme{
+	background:#cccccc;
+}
+
+}

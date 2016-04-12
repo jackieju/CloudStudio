@@ -1,0 +1,2622 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>SAP Anywhere working room</title>
+    <style type="text/css" media="screen">
+      body {
+        margin: 0;
+        margin-bottom: 25px;
+        padding: 0;
+        background-color: #f0f0f0;
+        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+        font-size: 13px;
+        color: #333;
+      }
+      
+      h1 {
+        font-size: 28px;
+        color: #000;
+      }
+      
+      a  {color: #03c}
+      a:hover {
+        background-color: #03c;
+        color: white;
+        text-decoration: none;
+      }
+    
+    </style>
+	<link rel="stylesheet" href="/stylesheets/index.css" type="text/css" />
+	<link rel="stylesheet" href="/stylesheets/github.css" type="text/css" />
+	
+	<!--script src="http://wh.joyqom.com/javascripts/jquery-1.3.2.js" type="text/javascript" charset="utf-8"></script-->
+	<!--script src="http://code.jquery.com/jquery-2.1.1.js"></script-->
+	<!--script src="http://wh.joyqom.com/javascripts/utils.js" type="text/javascript" charset="utf-8"></script-->
+	
+	<!--script src="/javascripts/jquery-1.3.2.js" type="text/javascript" charset="utf-8"></script-->
+
+	<script src="/javascripts/jquery-2.1.1.js"></script>
+	<script src="/javascripts/utils.js" type="text/javascript" charset="utf-8"></script>
+	<!--script type="text/javascript" src="/javascripts/jquery.html5uploader.js"></script-->
+    <script type="text/javascript">
+		//alert("this is index.html");
+
+     </script>
+  </head>
+  <body>
+	<style>
+	.btn1{
+		border:1px solid #d8d8d8;/*font-size:11px;*/
+	}
+
+
+	</style>
+	<script>
+		var g_main_width = 1000;
+		var g_main_height = 600;
+		var g_main_tb_height = 50;
+			alert("this is index.html");
+	</script>
+	<div id="main" class="draggable" style=" position: absolute;width: 1000px;height: 600px;margin-left:100px;">
+		
+		<div id="main_toolbar" class="gradient draghandle" style="width:100%;height:50px;border:1px solid #d8d8d8;border-bottom:0px;">
+			<center>
+			<div id="console" class="round_border shadowed-border" style="line-height:27px;padding:0;overflow-y:hidden;position:relative;top:13px;height:27px;width:300px;border:0px solid red;background:#f0f0f0;">
+				<div>Ready</div>
+			</div>
+			<div id="progress_bar" class="round_border shadowed-border" style="visibility:hidden;text-align:left;padding:0;position:relative;top:13px;height:8px;width:300px;border:0px solid red;background:#f0f0f0;">
+				<div  id="progress" class = "round_border shadowed-border" style="width:0%;height:100%;background:#666666;margin:0;background-position:30 30;position:relative;"></div>
+			</div>
+			</center>
+			<div id='main_tb_left' style="position:relatvie;float:left;top:0px;margin-right:10px;margin-top:-28px;border:0px solid red;">
+				<a href="javascript:gosubmit();" style="display:block;float:left;margin-left:5px;"> <img src="/images/Lightning.png" title="App Store" class="toolbar_btn" style="width:35px;height:35px;"></a>
+				<a href="javascript:void();" onclick="pre_deploy(event);" style="display:block;float:left;margin-left:5px;"> <img src="/images/deploy.png" title="Deploy" class="toolbar_btn" style="width:35px;height:35px;"></a>
+				<a href="javascript:void();" style="display:block;float:left;margin-left:5px;" onclick="show_balloon_for_mig(event);"> <img src="/images/undeploy.png" title="Undeploy" class="toolbar_btn" style="width:35px;height:35px;"></a>
+
+			</div>
+			<div id='main_tb_btns' style="position:relatvie;float:right;top:0px;margin-right:10px;margin-top:-28px;border:0px solid red;">
+				<a href="javascript:save();" style="display:block;float:right;margin-right:5px;"> <img src="/images/save.png" title="Save(Ctrl+Shift+S)" class="toolbar_btn" style="width:35px;height:35px;"></a>
+				<!-- <a href="javascript:gitlist();" style="display:block;float:right;margin-right:5px;"> <img src="/images/git.png" title="Git" class="toolbar_btn" style="width:35px;height:35px;"></a> -->
+				<!-- <a href="javascript:git_push();" style="display:block;float:right;margin-right:5px;"> <img src="/images/git.png" title="Git" class="toolbar_btn" style="width:35px;height:35px;"></a> -->
+
+			</div>
+		</div>
+		
+		<div id="left_pane" style="position:relative;float:left;width:18%;height:600px;background:#f5f5f5;">
+			<div id="tree" style="margin:2px;font-size:18px;height:580px;overflow-y:auto;">
+				<ul>
+			      <!-- <li>Root node 1
+			      			        <ul>
+			      			          <li id="child_node_1">Child node 1</li>
+			      			          <li>Child node 2</li>
+			      			        </ul>
+			      			      </li>
+			      			      <li>Root node 2</li> -->
+			    </ul>
+			</div><!-- tree -->
+			<div class='left_toolbar' style="position:static;bottom:0px;float:bottom;width:100%;height:20px;border:1px solod blue;background:#eeeeee;">
+				
+				<div id='cp_tb_btns' style="float:right;">
+					<a href="javascript:add_node();"> <img src="/images/button-add.png" class="toolbar_btn"></a>
+					<a href="javascript:remove_node();"> <img src="/images/button-remove.png" class="toolbar_btn"></a>
+				</div>
+			</div>
+		</div><!-- left_pane -->
+		<div id="splitter" style="position:relative;float:left;height:600px;width:2px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
+		</div>
+		<div id='code_pane' style="margin-left:18.5%;width:81.5%;height:100%;border:1px solid #d8d8d8;border-top:0;">
+			<div class='cp_toolbar' style="width:100%;height:20px;border:1px solod blue;background:#f5f5f5">
+				<div id="filenav" style="color:#666666;float:left;">
+					
+				</div>
+				<div id='cp_tb_btns' style="float:right;">
+					<button class='btn1' onclick="show_git();">Git</button>
+					<button class='btn1' onclick="openlog();">Log</button>
+					
+					<button class='btn1' onclick="openvi();">vim</button>
+					<button id = "btn_open_editor"  class='btn1' onclick="show_editor()" >Editor</button>
+				</div>
+			</div>
+			<div id="editor_wrapper" style="width:100%;height:580px;display:none;">
+				<div id="editor" name="body" class="droppable" style="display:block;width:99%;height:560px;">
+				</div>
+				<div id="editor_bottombar" class="" name="editor_bottombar" style="font-size:8pt;height:35px;float:bottom;;bottom:0px;border-top:1px solid #d8d8d8;position:static;bottom:0px;float:bottom;">
+					<!-- <div onclick="show_mode();" style="cursor:default;border-left:1px solid #c8c8c8;float:right;width:100px;padding-left:5px;">▼Mode</div>
+					<div id="mode_list" style="display:none;z-index:100;border:1px solid #c8c8c8;font-size:8pt;position:absolute;float:bottom;">
+						<div style="border-bottom:1px solid #c8c8c8;padding:2px 5px;">TextMate</div>
+						<div style="border-bottom:1px solid #c8c8c8;padding:2px 5px;">TextMate</div>
+						<div style="border-bottom:1px solid #c8c8c8;padding:2px 5px;">TextMate</div>
+					</div> -->
+					<div id="btn_select_theme" onclick="show_themes(event);"  style="cursor:default;border-left:1px solid #c8c8c8;float:right;width:100px;padding-left:5px;">▼Theme</div>
+					<div id="theme_list" style="min-width:100px;display:none;z-index:100;border-left:1px solid #c8c8c8;border-right:1px solid #c8c8c8;font-size:8pt;position:absolute;">
+						<div class='btn_theme selected_theme' onclick="on_select_theme(event, this, 'textmate');" >TextMate</div>
+						<div class='btn_theme' onclick="on_select_theme(event, this, 'ambiance');" >Ambiance</div>
+						<div class='btn_theme' onclick="on_select_theme(event, this, 'xcode');" >XCode</div>
+						<div class='btn_theme' onclick="on_select_theme(event, this, 'twilight');" >Twilight</div>
+						<div class='btn_theme' onclick="on_select_theme(event, this, 'eclipse');" >Eclipse</div>
+						<div class='btn_theme' onclick="on_select_theme(event, this, 'terminal');" >Terminal</div>
+					</div>
+				</div>
+			</div><!-- editor_wrapper -->
+			<div id="log" name="body" class="droppable" style="display:none;width:99%;height:580px;background:white;overflow:scroll;">
+					<div id="bt_plog" style="height:20px;width:100%;text-align:center;color:#9999ff;" onclick="retrieve_previous_log();">
+						<a><i><span style="color:#9999ff;cursor:pointer;"> Previous Log</span></i></a>
+					</div>
+				<div id="log_ln" style="white-space:nowrap;padding-right:2px;text-align:right;width:39px;float:left;position:relative;color:#aaaaaa;background:white;border-right:1px solid #88aa99;">
+				</div>
+				<div id="log_c" style="white-space:nowrap;margin-left:3px;width:93%;float:left;position:relative;color:grey;background:white;">
+				</div>
+				<div style="clear:both">
+				</div>
+			</div>
+			<div id="git" name="body" class="" style="display:none;width:99%;height:580px;overflow:auto;">
+				<div id="git_tab">
+					<button id="btn_tab_commit" class="minibutton selected" onclick="select_commit();" style="margin:0px;width:65px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;" >Commit</button>
+					<button id="btn_tab_diff" class="minibutton " onclick="select_diff();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">Diff</button>
+					<button id="btn_tab_pull" class="minibutton " onclick="select_pull();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">Pull</button>
+					<button id="btn_tab_push" class="minibutton " onclick="select_push();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">Push</button>
+					<button id="btn_tab_hisotry" class="minibutton " onclick="select_hisotry();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">History</button>
+					
+				
+				</div>
+				<div id="diff" name="body" class="droppable" style="display:none;width:99%;min-height:500px;border:1px solid #999999">
+					
+				</div>
+				<div id="push" name="body" class="droppable" style="display:none;width:99%;min-height:500px;border:1px solid #999999">
+					
+				</div>
+				<div id="pull" name="body" class="droppable" style="display:none;width:99%;min-height:500px;border:1px solid #999999">
+					
+				</div>
+				<div id="git_history" name="body" class="droppable" style="display:none;width:99%;min-height:500px;border:1px solid #999999">
+					
+				</div>
+				<div id="git_commit" class="file-commit-form js-file-commit-form" style="margin:2px;">
+				  <img alt="Jackie Ju" class="commit-form-avatar js-avatar" data-user="53884" height="48" src="https://avatars2.githubusercontent.com/u/53884?s=140" width="48" />
+
+				  <div class="commit-form" style="height:320px;">
+				    <h3 class="file-commit-form-heading">Commit changes</h3>
+
+				    <div class="too-long-message">
+				      <span class="octicon octicon-megaphone"></span>
+				      ProTip: Great commit summaries are 50 characters or less. Place extra information in the extended description.
+				    </div>
+
+				    <label for="commit-summary-input" class="hidden">
+				      Commit summary
+				    </label>
+				    <input id="commit-summary-input" type="text" class="input-block input-contrast commit-message-summary js-new-blob-commit-summary"
+				      placeholder="Update README.md"
+				      name="message" value="">
+				    <input type="hidden" class="js-commit-message-fallback" name="placeholder_message"
+				      value="Update README.md" />
+
+				    <label for="commit-description-textarea" class="hidden">
+				      Optional extended description
+				    </label>
+				    <textarea id="commit-description-textarea" name="description"
+				      class="input-block input-contrast commit-message js-new-blob-commit-description" placeholder="Add an optional extended description..."></textarea>
+
+
+				    <div class="commit-form-actions">
+				      <button type="submit" class="button primary js-blob-submit"
+				        id="submit-file"
+				        data-test-id="blob-submit-file"
+				        data-edit-text="Commit changes"
+				        data-pull-text="Propose file change"
+				        onclick="commit_file();">
+				      <!--button type="submit" class="button primary js-blob-submit"
+				        id="submit-file"
+				        data-test-id="blob-submit-file"
+				        data-edit-text="Commit changes"
+				        data-pull-text="Propose file change"
+				         disabled -->
+				        Commit changes
+				      </button>
+				      <!-- <a href="/jackieju/appstore/blob/master/README.md" class="button danger cancel">Cancel</a> -->
+				    </div>
+				  </div>
+				</div>
+				<script src="/javascripts/git.js" ></script>
+
+			</div>
+			
+			<div id="bo_designer" class="droppable" name="body" style="display:none;width:99%;height:580px;background:#fefefe;">
+				<div id="bod_tb" style="float:left;width:50px;height:100%;border-right:1px solid grey;margin-right:5px;">
+					<div class="bod_tb_btn" style="margin-top:50px;">
+						<a href="javascript:add_bo();"><img src="/images/plus.png" class="toolbar_btn_m"></a>
+					</div>
+					<div class="bod_tb_btn" >
+						<a href="javascript:rm_bo();"> <img src="/images/minus.png" class="toolbar_btn_m"></a>
+					</div>
+					<div class="bod_tb_btn" >
+						<a href="javascript:edit_bo();"> <img src="/images/edit.png" class="toolbar_btn_m"></a>
+					</div>
+					<div class="bod_tb_btn" >
+						<a href="javascript:gen_bo_mig();" title="Generate Migration"> <img src="/images/cloud_64x64.png" class="toolbar_btn_m"></a>
+					</div>
+				</div>
+				<div id="canvas" class="grid_background" style="float:left;border:0px solid red;height:100%;width:90%;">
+					<!-- <div id="canvas_end">
+									</div> -->
+				</div>
+			</div><!-- bo_designer -->
+
+
+<script>
+var last_theme_div = $("div.selected_theme");
+function on_select_theme(event, t, theme){
+	ace_editor.setTheme("ace/theme/"+theme);
+	// alert(inspect(t));
+	$(t).addClass("selected_theme");
+	if (last_theme_div !=null)
+	last_theme_div.removeClass("selected_theme");
+	last_theme_div = $(t);	
+	$("#theme_list").css("display", "none");
+}
+function show_themes(e){
+	$("#theme_list").css("display", "block");
+	var pos = $("#btn_select_theme").offset();
+	var m_pos = $("#main").offset();
+	var x = pos.left - m_pos.left;
+	// alert($("#btn_select_theme").height());
+	var y = pos.top - m_pos.top - $("#theme_list").height();
+	// alert(inspect(m_pos));
+	// alert($("#btn_select_theme").offset().left);
+	$("#theme_list").css("left", x);
+	$("#theme_list").css("top", y);
+	e.stopPropagation();
+}
+</script>
+		</div><!-- code_pane -->
+	</div> <!-- main -->
+
+	<div id="waitingbg" style="display:none;z-index:1000;position:absolute;left:0;top:0;width:100%;height:100%;">
+		<center>			
+			<img src="/images/wait3.gif" style="width:50px;margin-top:230px;"/>
+		</center>
+	</div>
+	<div id="popup" class="round_border_b" style="display:none;opacity:0.3;background-color:black;color:white;text-align:center;padding:28px;position:absolute;left:500px;top:180px;z-index:800;width:300px;height:168px;font-size:13pt;min-height:57px;max-height:300px;overflow:auto;word-wrap: break-word;word-break: normal;/*background-size:243px 93px;*/border:0px red solid;" onclick="close_popup();">
+		<div id="popup_c" style="margin:10px;top:50%; transform: translateY(-50%);position:relative;border:0px solid red;">	
+		</div>
+	</div>
+	<div id="balloon" class="commit-form1" style="display:none;left:200px;top:200px;width:300px;min-height:300px;position:absolute;z-index:200;">
+		<div id="balloon_title" style="float:left;"></div>
+		<img style="float:right;width:20px;z-index:1000;" src="/images/close.png" onclick="show_balloon(false);" />
+		<!-- <div id="ballon_c"> -->
+		<div id="balloon_field_list" style="margin-top:22px;scroll:auto;">
+			<!--div class="field" style="border-bottom:1px solid grey;margin-top:5px;">
+				Id <span style="color:grey">(Integer)</span>
+			</div>
+			<div class="field" style="border-bottom:1px solid grey;margin-top:5px;">
+				username <span style="color:grey">(String)</span>
+			</div>
+			<div class="field" style="border-bottom:1px solid grey;margin-top:5px;">
+				company <span style="color:grey">(String)</span>
+			</div>
+			<div class="field" style="border-bottom:1px solid grey;margin-top:5px;" onclick="add_bo_field();">
+				<img src="/images/button-add.png" class="toolbar_btn">
+			</div-->
+		</div><!-- field_list -->
+		<!-- </div--><!-- ballon_c -->
+	</div>
+<script>
+
+</script>
+	<div id="edit_box" style="display:none;background-color:white;color:black;text-align:left;position:absolute;z-index:800;font-size:18pt;overflow:auto;word-wrap: break-word;word-break: normal;border:0px red solid;">
+		<input id="edit_value" style="font-size:18pt;min-width:300px;" onclick="$(event).stopPropagation();"></input>
+	</div>
+	
+	<div id="float" class="draggable" style=" position: absolute;width: 300px;height: 600px;left:1100px;">
+		
+		<div id="float_handle" class="gradient draghandle" style="width:100%;height:50px;border:1px solid #d8d8d8;border-bottom:0px;">
+			<center>
+			<!-- <div id="console" class="round_border shadowed-border" style="line-height:27px;padding:0;overflow-y:hidden;position:relative;top:13px;height:27px;width:300px;border:0px solid red;background:#f0f0f0;">
+						<div>Ready</div>
+					</div> -->
+			</center>
+			<!-- <div id='main_tb_btns' style="position:relatvie;float:right;top:0px;margin-right:10px;margin-top:-15px;border:0px solid red;">
+					<a href="javascript:save();" style="display:block;float:right;margin-right:5px;"> <img src="/images/save.png" class="toolbar_btn" style="width:35px;height:35px;"></a>
+					<a href="javascript:gitlist();" style="display:block;float:right;margin-right:5px;"> <img src="/images/git.png" class="toolbar_btn" style="width:35px;height:35px;"></a>
+				</div> -->
+		</div>
+		<div id="pane1" style="position:relative;float:none;width:100%;height:300px;background:#f5f5f5;">
+			<div id="prop_pad" style="margin:3px;margin-left:5px;display:none;">
+				<div style="width:100%;height:20px;border:1px solod blue;background:#f5f5f5">
+					Properties
+				</div>
+				<div id="props" style="float:right;">
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Name</div><div class="prop_v"><input id="boprop_v_name" onchange="on_boprop_change(event);"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Type</div><div class="prop_v"><input id="boprop_v_type" onchange="on_boprop_change(event);"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">ReadOnly</div><div class="prop_v"><input type="checkbox" id="boprop_v_readonly" onchange="on_boprop_change(event);"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Description</div><div class="prop_v"><textarea  id="boprop_v_desc" onchange="on_boprop_change(event);"></textarea></div>
+					</div>
+				</div>
+			</div>
+			<div id="field_prop_pad" style="display:none;margin:3px;margin-left:5px;display:none;">
+				<div style="width:100%;height:20px;border:1px solod blue;background:#f5f5f5">
+					Field Properties
+				</div>
+				<div id="fprops" style="float:right;">
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Name</div><div class="prop_v"><input id="fprop_v_name"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Type</div><div class="prop_v"><input id="fprop_v_type"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">ReadOnly</div><div class="prop_v"><input type="checkbox" id="prop_v_readonly"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Default value</div><div class="prop_v"><input id="fprop_v_name"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Length</div><div class="prop_v"><input id="fprop_v_type"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Enabled</div><div class="prop_v"><input type="checkbox" id="prop_v_readonly"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Encoding</div><div class="prop_v"><input id="fprop_v_name"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">Type</div><div class="prop_v"><input id="fprop_v_type"></input></div>
+					</div>
+					<div class="prop_line" style="height:30px;">
+						<div class="prop_name">unique</div><div class="prop_v"><input type="checkbox" id="prop_v_unique"></input></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="splitter2" style="position:relative;float:none;height:5px;width:100%;border:0px solid red;z-index:100;" class="gradient-toptobottom" >
+		</div>
+		<div id="pane2" style="position:relative;float:none;width:100%;height:300px;background:#f5f5f5;">
+			<div class='pane2_toolbar' style="width:100%;height:35px;border:1px solod blue;background:#f5f5f5">
+				<center>
+				<div id='cp_tb_btns' style="padding:3px;">
+					<a href="javascript:show_list(1);" style="margin-right:3px;" title="Extendable"> <img src="/images/dropbox-icon.png" class="toolbar_btn_m"></a>
+					<a href="javascript:show_list(2);" title="Code"> <img src="/images/brackets-icon.png" class="toolbar_btn_m" style="margin-right:3px;"></a>
+					<a href="javascript:show_list(3);" title="Object"> <img src="/images/feedly-icon.png" class="toolbar_btn_m" style="margin-right:3px;"></a>
+					<a href="javascript:show_list(4);" title="OpenAPI"> <img src="/images/lastfm-icon.png" class="toolbar_btn_m" style="margin-right:3px;"></a>
+					<script>
+						function show_list(l){
+							// alert($("#pane2_content div.p2_c").length);
+							// alert("#p2_content"+l);
+							// alert($("#p2_content"+l).length);
+							$("#pane2_content div.p2_c").css("display", "none");
+							$("#p2_content"+l).css("display", "block");
+						}
+					</script>
+				</div>
+				</center>
+			</div><!-- pane2_toolbar -->
+			
+			<div id="pane2_content">
+				<div id="p2_content1" class='p2_c' style="display:none;">
+					<div class="draggable_element  component_line" >	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/Plugins-48.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;">
+							<span style="font-size:13pt;font-weight:300;">Delivery Note</span><br>
+							<span>Delivery Note</span>
+						</div>
+						<div class="draggable_content draggable_source" t="code">
+class Com::Sap::Sbo::App::Jaw::Bo::Gen::DeliveryNote &lt; BOExtension
+
+end
+						</div>
+					</div>
+					<!-- <div class="draggable_element revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+									</div> -->
+									<div class="line_splitter">
+									</div>
+					
+					<div class="draggable_element  component_line"  >	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/Plugins-48.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;">
+							<span style="font-size:13pt;font-weight:300;">BusinessPartner</span><br>
+							<span>Business Partner</span>
+						</div>
+						<div class="draggable_content draggable_source" t="code">
+class Com::Sap::Sbo::App::Jaw::Bo::Gen::BusinessPartner &lt; BOExtension
+
+end
+						</div>
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+									</div> -->
+									<div class="line_splitter">
+									</div>
+			
+				<div class="draggable_element  component_line"  >	
+					<div style="float:left;height:100%;width:50px;border:0px solid red;">
+						<img src="/images/Plugins-48.png" style="height:100%;" />
+					</div>
+					<div style="float:left;margin-left:5px;">
+						<span style="font-size:13pt;font-weight:300;">Quotation</span><br>
+						<span>Quotation</span>
+					</div>
+					<div class="draggable_content draggable_source" t="code">
+class Com::Sap::Sbo::App::Jaw::Bo::Gen::Quotation &lt; BOExtension
+
+end
+					</div>
+				</div>
+				<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+								</div> -->
+								<div class="line_splitter">
+								</div>
+			
+			
+				</div> <!-- pane2_content1 -->
+				
+				<div id="p2_content2"  class='p2_c' style="display:none">
+					<div class="draggable_element component_line" style="">	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/bracket.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;width:230px;">
+							<div style="font-size:13pt;font-weight:300;">Before Close</div>
+							<div style="font-size:10pt;">Called before The business object closed</div>
+							<div class="draggable_content draggable_source" t="code">
+def before_action_closed
+end
+							</div>
+						</div>
+					</div>
+					<div class="line_splitter">
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+										</div> -->
+										
+					<div class="draggable_element component_line" >	
+						<div  style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/bracket.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;width:230px;">
+							<div style="font-size:13pt;font-weight:300;">Before copyToDeliveryNote</div>
+							<div style="font-size:10pt;">Before copy to DeliveryNote</div>
+							<div class="draggable_content draggable_source" t="code">
+def before_action_copyToDeliveryNote
+end
+							</div>
+						</div>
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+										</div> -->	
+					<div class="line_splitter">
+					</div>				
+				</div>	<!-- pane2_content1 -->
+				
+				<div id="p2_content3"  class='p2_c' style="display:none">
+					<div class="draggable_element  component_line" >	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/block2.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;width:230px;">
+							<div style="font-size:13pt;font-weight:300;">Entity</div>
+							<div style="font-size:10pt;"></div>
+							<div class="draggable_content " t="obj">
+								<div class="draggable_obj">
+									<img src="/images/block2.png" style="height:50px;" />
+									<div class="draggable_obj_name">
+									New Entity
+									</div>
+									<div class="draggable_obj_prop" n="type">
+										Entity
+									</div>
+									<div class="draggable_obj_prop" n="xx">
+										yy
+									</div>
+									<div class="field_list" style="display:none;margin-top:10px;scroll:auto;">
+										<div class="field" style="border-bottom:1px solid grey;margin-top:5px;">
+											Id <span style="color:grey">(Integer)</span>
+										</div>
+										<div class="btn_add_bf" style="border-bottom:1px solid grey;margin-top:5px;" onclick="add_bo_field();">
+											<img src="/images/button-add.png" class="toolbar_btn">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+										</div> -->
+										<div class="line_splitter">
+										</div>										
+					<div class="draggable_element  component_line" >	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/block2.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;width:230px;">
+							<div style="font-size:13pt;font-weight:300;">Single Table</div>
+							<div style="font-size:10pt;">Table </div>
+							<div class="draggable_content " t="obj">
+								<div class="draggable_obj">
+									<img src="/images/block2.png" style="height:50px;" />
+									<div class="draggable_obj_name">
+									New Table
+									</div>
+									<div class="draggable_obj_prop" n="type">
+										Table
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+										</div> -->	
+										<div class="line_splitter">
+										</div>				
+				</div><!-- p2_content3 -->
+				
+				<div id="p2_content4"  class='p2_c' style="display:none">
+					<div class="draggable_element  component_line" >	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/api.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;width:230px;">
+							<div style="font-size:13pt;font-weight:300;">LogIn</div>
+							<div style="font-size:10pt;">Login and get session</div>
+						</div>
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+										</div> -->
+										<div class="line_splitter">
+										</div>
+										
+					<div class="draggable_element  component_line" >	
+						<div style="float:left;height:100%;width:50px;border:0px solid red;">
+							<img src="/images/api.png" style="height:100%;" />
+						</div>
+						<div style="float:left;margin-left:5px;width:230px;">
+							<div style="font-size:13pt;font-weight:300;">QueryCompanyInfo</div>
+							<div style="font-size:10pt;">Query company Info</div>
+						</div>
+					</div>
+					<!-- <div class="draggable revertable" style="height:60px;width:100%-6;z-index:100;margin-top:-60px;border:1px solid #cccccc;">
+										</div> -->	
+										<div class="line_splitter">
+										</div>				
+				</div><!-- p2_content4 -->
+									
+			</div><!-- p2_content -->
+		</div> <!-- pane2 -->
+	</div>
+	<div id="float_output" class="draggable resizable" style="position: relative;width: 1000px;height: auto;left:100px;top:660px;">
+		
+		<div id="float_output_float_handle" class="gradient draghandle" style="width:100%;height:20px;border:1px solid #d8d8d8;border-bottom:0px;">
+			<center>
+				Output
+			<!-- <div id="console" class="round_border shadowed-border" style="line-height:27px;padding:0;overflow-y:hidden;position:relative;top:13px;height:27px;width:300px;border:0px solid red;background:#f0f0f0;">
+						<div>Ready</div>
+					</div> -->
+			</center>
+			<!-- <div id='main_tb_btns' style="position:relatvie;float:right;top:0px;margin-right:10px;margin-top:-15px;border:0px solid red;">
+					<a href="javascript:save();" style="display:block;float:right;margin-right:5px;"> <img src="/images/save.png" class="toolbar_btn" style="width:35px;height:35px;"></a>
+					<a href="javascript:gitlist();" style="display:block;float:right;margin-right:5px;"> <img src="/images/git.png" class="toolbar_btn" style="width:35px;height:35px;"></a>
+				</div> -->
+		</div>
+		<div id="pane3" class='resizable' style="position:relative;width:100%;height:280px;overflow:auto;background:#f5f5f5;">
+		
+		</div><!-- pane3 -->
+	</div><!-- float_output -->
+	
+	<div id="tenant_list" style="display:none">
+	</div>
+	<!-- code editor -->
+	<script src="/javascripts/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+	<!--script src="http://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js" type="text/javascript" charset="utf-8"></script-->
+	
+	<!--script src="http://gpl.internetconnection.net/vi/vi.js"></script>
+	<link rel="stylesheet" href="http://gpl.internetconnection.net/vi/vi.css" type="text/css" /-->
+
+	
+	<script src="/javascripts/vi.js"></script>
+	<link rel="stylesheet" href="/stylesheets/vi.css" type="text/css" />
+	
+
+
+
+	<script src="/javascripts/common.js" ></script>
+	<link rel="stylesheet" href="/stylesheets/common.css" type="text/css" />
+
+	<!-- for dragable resizable-->
+	<script src="/javascripts/jquery-ui-1.10.4.js"></script>
+<link rel="stylesheet" href="/stylesheets/jquery-ui-1.11.0-smoothness.css" type="text/css" />
+<!-- <link rel="stylesheet" href="/stylesheets/jquery_ui_resizable.css" type="text/css" />  -->
+	
+	
+	
+	<script>
+	var g_appid = "";
+//////// editor ///////////
+
+	function openvi(){
+		alert($("div#editor")[0]);
+		// editor($('body')[0]);
+		editor($("div#editor")[0]);
+		alert();
+		return false;
+	}
+	// var ace = require("lib/ace");
+	var ace_editor = ace.edit("editor");
+	
+	// ace_editor.setTheme("ace/theme/twilight");
+	
+	// editor.getSession().setMode("ace/mode/javascript");
+	// ace_editor.getSession().setMode("ace/mode/ruby");
+	ace_editor.getSession().setUseWorker(true);
+	ace_editor.getSession().setTabSize(4);
+	ace_editor.setTheme("ace/theme/textmate");
+	document.getElementById('editor').style.fontSize='18px';
+	
+	ace_editor.getSession().setUseWrapMode(false);
+	
+	ace_editor.setHighlightActiveLine(false);
+	
+	ace_editor.setReadOnly(false);
+	
+	ace_editor.setValue("");// or session.setValue
+	
+    // ace_editor.getValue(); // or session.getValue
+	ace_editor.commands.addCommand({
+    	name: 'save',
+    	bindKey: {win: 'Ctrl-Shift-S', mac: 'Command-Shift-S'},
+    	exec: function(ace_editor) {
+			// alert('save');
+			save();
+			return true;
+    	},
+    	readOnly: false // 如果不需要使用只读模式，这里设置false
+    });
+	function set_ace_mode(file_ext){
+		// alert("setmode for "+file_ext);
+		if (file_ext == "rb"){
+			ace_editor.getSession().setMode("ace/mode/ruby");
+		}
+		else if (file_ext == "js"){
+			ace_editor.getSession().setMode("ace/mode/javascript");			
+		}
+		else if (file_ext == "css")
+			ace_editor.getSession().setMode("ace/mode/css");
+		else if (file_ext == "html")
+			ace_editor.getSession().setMode("ace/mode/html");
+		else if (file_ext == "json")
+			ace_editor.getSession().setMode("ace/mode/json");
+		else if (file_ext == "php")
+			ace_editor.getSession().setMode("ace/mode/php");
+		else if (file_ext == "less")
+			ace_editor.getSession().setMode("ace/mode/less");
+		else
+			ace_editor.getSession().setMode("ace/mode/test");
+		
+	}
+
+
+	var diff_editor = ace.edit("diff");
+	// diff_editor.getSession().setMode("ace/mode/javascript");
+	diff_editor.getSession().setTabSize(4);	
+	document.getElementById('editor').style.fontSize='18px';
+	diff_editor.getSession().setUseWrapMode(false);
+	diff_editor.setHighlightActiveLine(false);
+	diff_editor.setReadOnly(false);
+	diff_editor.setReadOnly(false);
+	diff_editor.setShowPrintMargin(false);
+	diff_editor.renderer.setShowGutter(false); 
+	diff_editor.setValue("");// or session.setValue	
+	
+	function getNodePath(node){
+		fname = node.name;
+		parent = node.parent;
+		while (parent != null && parent != undefined && parent.name != null){
+			// alert(parent.name);
+			fname = parent.type +"/"+fname;
+			parent = parent.parent;
+		}
+		fname = "/"+fname;
+		return fname;
+	}
+	function export_bo(){
+	/*	ret = [];
+		bo_list = $("div.bo");
+		bo_list.forEach(function(bo){
+			
+			name = bo.find(".draggable_obj_name").html();
+			var p = {
+				name:name,
+				fields:[]
+			};
+			field_list = bo.find("div.field_list");
+			var f = {};
+			for(field in field_list){
+				field_name = field.find("span.field_name").html(); 
+				field_type = field.find("span.field_type").html();
+				f.name = field_name;
+				f.type = field_type;
+				props = field.find(".bo_field_prop_list");
+				for (prop in props){
+					n = prop.find(".prop_name");
+					v = prop.find(".prop_v");
+					f[n] = v.prop("v");
+				}
+			}
+			p.fields.push(f);
+			ret.push(p);
+		});
+		alert(inspect(ret));
+		*/
+		// alert(inspect(g_bos));
+		
+		for (var i=0; i<g_bos.data.length; i++){
+			b = g_bos.data[i];
+			if (b){
+				// alert(inspect(b));
+				// alert("#"+b.ui);
+				pos = $("#"+b.ui).offset();
+				// alert(pos);
+				b.x = pos.left-$("#main").offset().left;
+				b.y = pos.top-$("#main").offset().top;
+			}
+		}
+		return JSON.stringify(g_bos);
+		// return toJSON(g_bos);
+		
+	}
+	function gen_bo_mig(){
+			// type = g_selected_node.type;
+		// fname = g_selected_node.name;
+		if (g_current_bo_node == null)
+			return;
+		fname = getNodePath(g_current_bo_node);
+
+		$.ajax({
+			type: "post",
+			url: "/app/gbm?t="+ new Date().getTime(),
+			dataType: 'json',
+
+			data: {
+				appid:g_appid,
+				fname:fname,
+				// type:type,
+
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			}, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				if (data.error){
+					popup(data.error);
+				}else{
+					 // alert(data.data);
+					var parent_node = $tree.tree('getNodeById', 111);
+					for (var i =0; i< data.migrate.length; i++){
+						mig = data.migrate[i];
+						target = find_node_by_name(parent_node, mig);
+						if (target == null)
+							target = $('#tree').tree(
+						    	'appendNode',
+							    {
+							        label: mig,
+							        type:'code',
+							    },
+							    parent_node
+							);
+							// $(target.element).find("div").click();
+					}
+					// alert(inspect(target));
+					$(target.element).find("div").click();
+					// $("#applist").html(data);
+					appendToConsole('Generate migration script successfully');
+
+				}
+
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+				showWaiting(false);
+
+			}
+		}); // $ajax
+	}
+	
+	// rm bo by button on left bar
+	function rm_bo(){
+		if (g_bo == null || g_current_bo_node == null || g_currentView != "bo_designer" )
+				return;
+				alert(1);
+		bo = g_bo.prop("ref");
+		g_bo.remove();
+		g_bos.data.remove(bo);
+		alert(2);
+	}
+	// add bo by botton on left bar
+	function add_bo(){
+		var pos = $("#main").offset();
+		var bo = {
+			"y":pos.top+300,"x":pos.left+300,
+			"desc":"",
+			"name":"New Entity",
+			"fields":[],
+			"version":1,
+			"size":1,
+			"type":"BO"
+		};
+		inserted = $("#canvas").append(render_bo(bo));
+		prepare_bo(inserted, bo);
+	}
+	function edit_bo(){
+		if (g_bo == null )
+			return;
+		show_balloon_for_bo(true, g_bo.offset().left, g_bo.offset().top);
+		
+	}
+	function save(){
+		if (g_currentView == "bo_designer"){
+			
+			content = export_bo();
+			
+		}else
+			// alert(getNodePath(g_selected_node));
+			content = ace_editor.getValue(); 
+		// alert(content);
+		type = g_selected_node.type;
+		// fname = g_selected_node.name;
+		fname = getNodePath(g_selected_node);
+		// alert(fname);
+		isnew = g_selected_node.isNew;
+		// alert(isnew);
+		// alert(content);
+		if (type != 'bo' && type !='code')
+			return;
+		//alert(content);
+		$.ajax({
+			type: "post",
+			url: "/app/sf?t="+ new Date().getTime(),
+			dataType: 'json',
+
+			data: {
+				appid:g_appid,
+				fname:fname,
+				type:type,
+				content:content,
+				isnew:isnew
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			}, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				if (data.error){
+					popup(data.error);
+				}else{
+					g_selected_node.isNew = "false";
+					// $("#applist").html(data);
+					popup('Save successfully');
+					if (type == 'code')
+						g_prevContent = ace_editor.getValue();
+					
+				}
+
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				
+				showWaiting(false);
+
+			}
+		}); // $ajax
+		// alert(content);
+
+		showWaiting(true);
+	    
+	}
+	var g_prevContent = null;
+	function isEditorChanged(){
+		content = ace_editor.getValue(); 
+		
+		if (g_prevContent != null && content!=g_prevContent)
+			return true;
+		return false;
+	}
+</script>
+<script src="/javascripts/socket.io/socket.io.js"></script>
+<script>
+	err_connection_count = 0;
+// web socket deploy
+var socket = null;
+function ws_deploy(appid, tenant){
+	// var socket = io();
+	// var socket = io.connect('http://10.58.9.209:8090', {'reconnect':false,'auto connect':false, 'force new connection': true});
+	if (socket == null){
+		socket = io.connect('http://10.58.9.209:8090');
+		// alert("===>new socket created<====");
+	
+	console.log("connected="+socket.connected);
+	socket.emit("haha1");
+	console.log('socket='+inspect(socket));
+	err_connection_count = 0;
+	socket.on('news', function (data) {
+		console.log(">>>>new connection:"+data);
+		console.log("connected="+socket.connected);
+			// socket.emit('command', "deploy "+appid);
+		// socket.emit('deploy', { appid: appid });
+	});
+
+	socket.on('error', function(data){
+		console.log('error:'+data);
+		// err_connection_count += 1;
+		// 	if (err_connection_count < 5)
+		// 		socket.socket.reconnect();
+	});
+	socket.on('deploy_msg', function (data) {
+		 // alert("deploy_msg:"+data.msg);
+		console.log("deploy_msg:"+data.msg);
+		// appendToPopup(data.msg);
+		appendToOutput(data.msg);
+		
+	});
+	socket.on('progress', function (data) {
+		// alert("msg");
+		console.log("progress "+data);
+		// appendToConsole(data);
+		$("#progress_bar").css("visibility", "visible");
+		$("#progress").css("width", data+"%");
+			// console.log("show progress "+data);
+	});	
+	socket.on("disconnect"), function(data){
+		console.log("disconnect");
+		// alert("disconnect");
+	};
+	socket.on("close"), function(data){
+		console.log("disconnect");
+		// alert("disconnect");
+	};
+	socket.on("#=END=#", function(data){
+		console.log("disconnect");
+		$("#progress_bar").css("visibility", "hidden");
+		$("#progress").css("width", "0%");
+	});
+	socket.on("#=EXIT=#", function(data){
+		console.log("EXIT with code "+data.code);
+		if (data.code == 0){
+			appendToConsole("Deploy complete");
+		}else
+			appendToConsole("Deploy failed");
+		// socket.disconnect();
+	});
+	// socket.emit('deploy', { appid: appid });
+	
+	// cr=>command_received, but command name seem cannot be too long, otherwise
+	// will got "parse decode error"
+	socket.on("command_received", function(data){
+		console.log("haha3");
+		// show_popup({width:500,height:350}, null, {
+		// 	text_align:"left"
+		// });
+	});
+}
+	socket.emit('command', "deploy "+appid + " on " +tenant);
+
+	console.log("haha2");
+} // function _deploy(appid){
+</script>
+
+<script>
+    function list_tenatns(){
+		$.ajax({
+			type: "post",
+			url: "/app/tenants?t="+ new Date().getTime(),
+			// dataType: 'json',
+
+			// data: {
+			// 	appid:g_appid,
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			// }, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				
+				$("#tenant_list").html(data);
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				
+				showWaiting(false);
+
+			}
+		}); // $ajax
+		// alert(content);
+		showWaiting(true);
+	}
+	function pre_deploy(e){
+		data = $("#tenant_list").html();
+		show_balloon(true, e.clientX, e.clientY, data, "Deploy on tenant");
+	}
+	function deploy_on(tenant){
+		ws_deploy(g_appid, tenant);
+	}
+	function deploy(){
+		// ws_deploy(g_appid);
+		return;
+		// alert(getNodePath(g_selected_node));
+		if (isEditorChanged()){
+			popup("Pleave save your file first");
+			return;
+		}
+		
+	
+			
+		$.ajax({
+			type: "post",
+			url: "/app/deploy?t="+ new Date().getTime(),
+			dataType: 'json',
+
+			data: {
+				appid:g_appid,
+		
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			}, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				if (data.error){
+					popup(data.error);
+				}else{
+					if (g_selected_node != null)
+						g_selected_node.isNew = "false";
+					// $("#applist").html(data);
+					popup('Deploy successfully.<br />Please click <a target="_blank" href="'+data.url+'" >here</a> to view.');
+				}
+
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				
+				showWaiting(false);
+
+			}
+		}); // $ajax
+		// alert(content);
+		showWaiting(true);
+	    
+	}
+	function do_undeployto(ver){
+		
+		// alert(getNodePath(g_selected_node));
+		if (isEditorChanged()){
+			popup("Pleave save your file first");
+			return;
+		}
+		
+	
+		$.ajax({
+			type: "post",
+			url: "/app/undeployto?t="+ new Date().getTime(),
+			dataType: 'json',
+
+			data: {
+				appid:g_appid,
+				v:ver
+		
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			}, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				if (data.error){
+					popup(data.error);
+				}else{
+					// $("#applist").html(data);
+					popup('Undeploy successfully.<br />Please click <a target="_blank" href="'+data.url+'" >here</a> to view.');
+				}
+
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				
+				showWaiting(false);
+
+			}
+		}); // $ajax
+		// alert(content);
+		showWaiting(true);
+		show_balloon(false);
+	    
+	}
+	function gosubmit(){
+		// alert(g_appid);
+		window.open('/app/submit?appid='+g_appid);
+	}
+	function gitlist(){
+		// window.location.href='http://mygithub/'+g_appid+".git";
+		window.open('http://mygithub/'+g_appid+".git");
+	}
+	</script>
+	
+	<!-- acitree -->
+	<!--script src="jquery.aciTree.min.js"></script-->
+	<script>
+/*		alert(1);
+	// init tree
+	alert($('#tree')[0]);
+	$('#tree').aciTree({
+	    ajax: {
+	        url: '/sample.json'
+	    }
+	});
+
+		alert();*/
+	</script>
+	
+	<!-- jstree >
+	<link rel="stylesheet" href="/javascripts/jstree/themes/default/style.min.css" />
+	<script src="/javascripts/jstree/jstree.min.js"></script-->
+	<script>
+/*	function init_jstree(){
+		$('#tree').jstree();
+		alert(343);
+	
+		$('#tree').on("changed.jstree", function (e, data) {
+		  //console.log(data.selected);
+		});
+	
+		$('button').on('click', function () {
+		  $('#tree').jstree(true).select_node('child_node_1');
+		  $('#tree').jstree('select_node', 'child_node_1');
+		  $.jstree.reference('#tree').select_node('child_node_1');
+		});
+	}
+	alert("js done");*/
+	</script>
+	
+	<!-- jqtree -->
+
+	<script src="/javascripts/tree.jquery.js"></script>
+
+	<link rel="stylesheet" href="/stylesheets/jqtree.css">
+	<style>
+	div.jqtree-element span{
+		overflow-x:hidden;
+	} 
+	ul.jqtree-tree .jqtree-element{
+		height:30px;
+		overflow-x:hidden;
+		white-space:nowrap;
+
+	}
+	div.jqtree-element a{
+		float:left;
+		position:relative;
+		left:0;
+	}
+	div.jqtree-element img{
+		position:relative;
+		float:left;
+	}
+	ul.jqtree-tree  .jqtree-toggler {
+		float:left;
+		position:relative;
+		left:0;
+	}
+	</style>
+	<script src="/javascripts/oce_tree.js"></script>
+	<script>
+	////////
+	// load repo
+
+
+		function load_project(appid){
+			// var appid = "Jidang";
+			$.ajax({
+				type: "POST",
+				// url: "http://d.anywhere.cn:3000"+"/app/ld?t="+ new Date().getTime(),
+				url: "/app/ld?t="+ new Date().getTime(),
+
+				dataType: 'json',
+				// headers:{'Content-Type':'application/x-www-form-urlencoded'},
+				data: {
+					appid:appid
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					// alert( "Data Saved: " + data +","+ textStatus);
+
+					showWaiting(false);
+					if (data.error){
+						popup(data.error);
+					}else{
+						// popup(inspect(data));
+						init_tree2(data.data_root, data.info);
+						appendToConsole("Project Ready");
+					}
+
+				},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					
+					showWaiting(false);
+
+				}
+			}); // $ajax
+
+			showWaiting(true);
+
+		}
+
+
+
+	function open_git(){
+		
+		// $("#editor").css("display", "block");	
+		// $("#bo_designer").css("display", "none");
+		// $("#log").css("display", "none");	
+		// 
+		// g_currentView = "git";
+		switch_view("git", null);
+	}
+
+
+		function open_file(node){
+			// $("#editor").css("display", "block");	
+			// $("#bo_designer").css("display", "none");
+			// g_currentView = "editor";
+			
+			type = g_selected_node.type;
+			// fname = g_selected_node.name;
+			fname = getNodePath(g_selected_node);
+			
+			$.ajax({
+				type: "post",
+				url: "/app/of?t="+ new Date().getTime(),
+				dataType: 'json',
+
+				data: {
+					appid:g_appid,
+					fname:fname,
+					type:type,
+			
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					// alert( "Data Saved: " + data +","+ textStatus);
+
+					showWaiting(false);
+					if (data.error){
+						popup(data.error);
+					}else{
+						// alert(data.data);
+						set_ace_mode(get_file_ext(g_selected_node.name));
+						ace_editor.setValue(data.data);
+						g_prevContent = data.data;
+						
+						nav = "";
+						if (type == 'bo')
+							nav = "Business Objects > ";
+						else if	(type == "code")
+							nav = "Extensions > ";
+						$("#filenav").html(nav+fname);
+						
+						// $("#editor").css("display", "block");
+						// $("#bo_designer").css("display", "none");
+						switch_view("editor", node);
+						// $("#applist").html(data);
+						appendToConsole('Load successfully');
+
+					}
+
+				},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+					showWaiting(false);
+
+				}
+			}); // $ajax 
+		}
+
+		function open_bo(node){
+			// fname = g_selected_node.name;
+			type = g_selected_node.type;
+			
+				// fname = g_selected_node.name;
+			fname = getNodePath(g_selected_node);
+			// alert("a");
+			
+			if (g_selected_node.isNew == 'true'){
+				
+				
+				nav = "";
+				if (type == 'bo')
+					nav = "Business Objects > ";
+				else if	(type == "code")
+					nav = "Extensions > ";
+				$("#filenav").html(nav+g_selected_node.name);
+				
+				
+				switch_view("bo_designer", node);
+				// $("#editor").css("display", "none");	
+				// $("#bo_designer").css("display", "block");
+				// g_currentView = "bo_designer";
+				// 								
+				// $("#prop_pad").css("display", "none");
+				// g_current_bo_node = node;		
+						
+				$("#canvas").empty();
+
+
+				// $("#applist").html(data);
+				appendToConsole('Load successfully');
+				return;
+			}
+			
+		// alert("b");
+			
+			$.ajax({
+				type: "post",
+				url: "/app/of?r=json&t="+ new Date().getTime(),
+				dataType: 'json',
+
+				data: {
+					appid:g_appid,
+					fname:fname,
+					type:type,
+
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					// alert( "Data Saved: " + data +","+ textStatus);
+
+					showWaiting(false);
+					if (data.error){
+						popup(data.error);
+					}else{
+						// alert(data.data);
+						// alert(inspect(data.data.data));
+
+						nav = "";
+						if (type == 'bo')
+							nav = "Business Objects > ";
+						else if	(type == "code")
+							nav = "Extensions > ";
+						$("#filenav").html(nav+g_selected_node.name);
+						
+						switch_view("bo_designer");
+						// $("#editor").css("display", "none");	
+						// $("#bo_designer").css("display", "block");
+						// $("#git").css("display", "none");	
+						// alert($("#git").length);
+						// g_currentView = "bo_designer";
+						// 		
+						// $("#prop_pad").css("display", "none");
+						$("#canvas").empty();
+						
+						g_bos = data.data;
+						_html = "";
+						for (var i =0; i< data.data.data.length; i++){
+							// alert(inspect(data.data.data[i]));
+							// _html += render_bo(data.data.data[i]);
+							inserted = $("#canvas").append(render_bo(data.data.data[i]));
+							prepare_bo(inserted, data.data.data[i]);
+						}
+						// $("#canvas").html(_html);
+						
+						// $("#applist").html(data);
+						g_current_bo_node = node;
+						appendToConsole('Load BO successfully');
+
+					}
+
+				},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+					showWaiting(false);
+
+				}
+			}); // $ajax
+		
+			// $("#props").empty();
+			appendToConsole("Load BO Successfully");
+			update_nav(fname, type);
+	
+		}
+		
+// ======
+// = UI =
+// ======
+
+		g_currentView = null;
+		// view: "editor", "bo_designer", "git", "log"
+		// node: if triggered by click this node
+		function switch_view(view, node){ 
+			$("#editor_wrapper").css("display", "none");	
+			$("#bo_designer").css("display", "none");
+			$("#git").css("display", "none");
+			$("#log").css("display", "none");															
+			$("#prop_pad").css("display", "none");
+			
+			if (view != "bo_designer")
+				g_current_bo_node = null;
+			else if (node != null)
+				g_current_bo_node = node;
+				
+			g_currentView = view;
+			
+			if (view == "editor")
+				$("#editor_wrapper").css("display", "block");
+			else
+				$("#"+view).css("display", "block");
+			
+		}
+		function show_editor(){
+			// $("#editor").css("display", "block");	
+			// $("#bo_designer").css("display", "none");
+			// $("#log").css("display", "none");
+			// $("#git").css("display", "none");
+			switch_view("editor");
+		}
+		function update_nav(fname, type){
+				nav = "";
+				if (type == 'bo')
+					nav = "Business Objects > ";
+				else if	(type == "code")
+					nav = "Extensions > ";
+			$("#filenav").html(nav+fname);
+		}
+		var g_moving_sp = -1; // 0: moving main splitter, 1: moving splitter2
+		var sp_stat = 0; // 0: normal, 1: over, 2: dragging
+		$("#splitter").mouseover(function(event){
+			if (sp_stat == 0)
+				sp_stat = 1;
+			$(this).css("cursor", "move");
+			// var x=event.clientX;
+			// var y=event.clientY;
+			// var msg = "";
+			// msg += "st:"+sp_stat;
+			// msg += "<br/>x:"+x;
+			// $("#console").html(msg);
+		});
+		$("#splitter").mouseout(function(event){
+
+			if (sp_stat == 1){
+				sp_stat = 0;
+			//	$(this).css("cursor", "auto");
+			}
+			// var x=event.clientX;
+			// var y=event.clientY;
+			// var msg = "";
+			// msg += "st:"+sp_stat;
+			// msg += "<br/>x:"+x;
+			// $("#console").html(msg);
+			return true;
+		});
+		$("#splitter").mousedown(function(){
+			if (sp_stat != 1)
+				return true;
+			// console.log("mounsedown");
+			sp_stat = 2;
+			g_moving_sp = 0;
+			// var x=event.clientX;
+			// var y=event.clientY;
+			// var msg = "";
+			// msg += "st:"+sp_stat;
+			// msg += "<br/>x:"+x;
+			// $("#console").html(msg);
+			return true;
+		});
+		$("#main").mouseup(function(event){
+			if (sp_stat != 2)
+				return;
+			// alert("up");
+			sp_stat = 0;
+			g_moving_sp =-1;
+			// var x=event.clientX;
+			// var y=event.clientY;
+			// var msg = "";
+			// msg += "st:"+sp_stat;
+			// msg += "<br/>x:"+x;
+			// $("#console").html(msg);
+			return true;
+		});
+
+		$("#main").mousemove(function(event){
+			if (sp_stat != 2)
+				return;
+			// console.log("mounsedown");
+			// alert($("#main").offset().left);
+			if (g_moving_sp == 0){
+
+				var x= event.clientX - $("#main").offset().left;
+				// var y=event.clientY; 
+				if (x > 600)
+					x = 600;
+				if ( x < 150)
+					x = 150;
+
+				$("#left_pane").width(x+"px");
+				var w = g_main_width-x-2;
+				$("#code_pane").width(w+"px");
+				$("#code_pane").css("margin-left", x+"px");
+			}else if (g_moving_sp == 1){
+
+			}
+
+			// $("#editor").width(w+"px");
+			var msg = "";
+			msg += "st:"+sp_stat;
+			msg += "<br/>x:"+x;
+			$("#console").html(msg);
+			// alert(x);
+
+			sp_stat = 2;
+			return false;
+
+		});	
+
+		$("#splitter2").mouseover(function(event){
+			if (sp_stat == 0)
+				sp_stat = 1;
+			$(this).css("cursor", "move");
+			// var x=event.clientX;
+			// var y=event.clientY;
+			// var msg = "";
+			// msg += "st:"+sp_stat;
+			// msg += "<br/>x:"+x;
+			// $("#console").html(msg);
+		});
+		$("#splitter2").mouseout(function(event){
+
+			if (sp_stat == 1){
+				sp_stat = 0;
+			}
+
+			return true;
+		});
+		$("#splitter2").mousedown(function(){
+			if (sp_stat != 1)
+				return true;
+			sp_stat = 2;
+			g_moving_sp=1;
+			return true;
+		});
+
+
+		$("#float").mousemove(function(event){
+			if (sp_stat != 2)
+				return;
+			// console.log("mounsedown");
+			// alert($("#main").offset().left);
+			// alert(g_moving_sp);
+			if (g_moving_sp == 0){
+
+
+			}else if (g_moving_sp == 1){
+				// alert($("#pane1"));
+				var y= event.clientY - $("#float").offset().top-g_main_tb_height;
+				$("#pane1").height(y+"px");
+				$("#pane2").height(g_main_height-y);
+
+				// alert(y);
+				// var w = g_main_width-x-2;
+				// $("#code_pane").width(w+"px");
+				// $("#code_pane").css("margin-left", x+"px");
+
+
+			}
+
+
+
+			// $("#editor").width(w+"px");
+			var msg = "";
+			msg += "st:"+sp_stat;
+			msg += "<br/>x:"+y;
+			// $("#console").html(msg);
+			// alert(x);
+
+			sp_stat = 2;
+			return false;
+
+		});
+		$("#float").mouseup(function(event){
+			if (sp_stat != 2)
+				return;
+			// alert("up");
+			sp_stat = 0;
+			g_moving_sp =-1;
+			// var x=event.clientX;
+			// var y=event.clientY;
+			// var msg = "";
+			// msg += "st:"+sp_stat;
+			// msg += "<br/>x:"+x;
+			// $("#console").html(msg);
+			return true;
+		});
+
+
+		var g_scroll_timer = null;
+		function _scroll(){
+			h = $("#console").prop('scrollHeight');
+			t = $("#console").prop("scrollTop");
+			// alert(h+">>"+t);
+
+			var s = 6; // step = 6
+			if (h > t){
+				if (h-t<s)
+					a = h;
+				else
+					a = t+s;
+					// alert(s);
+				$("#console").prop("scrollTop", a);
+			}
+			else{
+				clearInterval(g_scroll_timer);
+				g_scroll_timer = null;
+			}
+			// alert(1);
+
+		}
+		function appendToConsole(msg){
+			h = $("#console").html();
+			// alert(h);
+			$("#console").html(h+"<div>"+msg+"</div>");
+			h = $("#console").prop('scrollHeight');
+			t = $("#console").prop("scrollTop");
+			// alert(h+">>"+t);
+			// alert(g_scroll_timer);
+			if (g_scroll_timer == null)
+				g_scroll_timer = setInterval("_scroll();", 100);
+			// alert();
+			// $("#console").attr("scrollTop", $("#console").prop('scrollHeight'));
+		}
+
+
+// =======
+// = git =
+// =======				
+		function show_diff(){
+			var fname="";
+			if (g_selected_node && g_selected_node.type == "bo" || g_selected_node.type == "file" ||  g_selected_node.type == "code")
+					fname = getNodePath(g_selected_node);
+				
+				diff_editor.setValue("");
+				$.ajax({
+					type: "post",
+					url: "/app/diff?f="+fname+"&t="+ new Date().getTime(),
+					// dataType: 'json',
+
+					data: {
+						appid:g_appid,
+					
+
+						// sid: '<%=@sid%>',
+						// authenticity_token:window._token
+					}, 
+					success: function(data, textStatus){
+						// alert( "Data Saved: " + data +","+ textStatus);
+
+						showWaiting(false);
+						// if (data.error){
+						// 						popup(data.error);
+						// 					}else{
+							// alert(data.data);
+							// $("#diff").text(data);
+							diff_editor.setValue(data);
+						// }
+
+					},
+					error: function(xhr, textStatus, errorThrow){
+						// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+						popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+						showWaiting(false);
+
+					}
+				}); // $ajax
+			
+			showWaiting(true);
+		}
+		function show_git(){
+			switch_view("git");
+			// $("#editor").css("display", "none");	
+			// $("#bo_designer").css("display", "none");
+			// $("#log").css("display", "none");
+			// 
+			// $("#git").css("display", "block");
+			select_commit();
+			
+			// g_currentView = "git";
+			fname = "";
+			diff_editor.setValue("");
+			
+
+		}
+
+	</script>
+	
+	<script>
+
+	// init resizables
+	// NOTE: the div position must be relative
+	$("#float_output").resizable({
+		 minHeight: 150,
+		minWidth: 200,
+		alsoResize: "#pane3"
+	});
+	$("#pane3").resizable();
+	// alert($(".resizable").length);
+	/* init dragable pane */
+	$(".draggable" ).draggable({
+		handle: ".draghandle"
+		// start:function(){
+		// 		
+		// 	}
+	});
+	// $(".revertable" ).draggable({
+	// 	revert: true,
+	// 	 stop: function() {
+	// 		// alert($(this));
+	// 		$(this).draggable({revert:false});
+	// 	}
+	// });
+	
+	// $("#left_pane").draggable({ disabled: true });
+	// $("#main_toolbar").draggable({ disabled: true });
+	$(".draggable_element" ).draggable({
+		opacity: 0.7, helper: "clone" 
+	});
+
+	
+	 $( ".droppable" ).droppable({
+		drop: function( event, ui ) {
+			// alert(inspect(ui.draggable.attr("class")));
+			content = ui.draggable.find("div.draggable_content");
+			// alert(content.attr("t"));
+			
+			content_type = content.attr("t");
+			id = $(event.target).attr("id");
+			// if (content.attr("inserted") != 1){
+			if (content.length != 0){
+				if (id == "editor" ){
+					if (content_type != "code"){
+						alert("not allow");
+					}else{
+					
+						source = content.html();
+						source = source.replace(/&lt;/g, "<");
+						ace_editor.insert(source);
+					}
+				}
+				else if (id == "bo_designer"){
+					// insert object in canvas
+					if (content_type != "obj"){
+						alert("not allow");
+					}else{
+						cloned = content.clone();
+						// alert(inspect(event));
+						x = event.clientX-$("#bo_designer").offset().left;
+						y = event.clientY-$("#bo_designer").offset().top;
+						// _id = Math.random();
+						_id = rand(10000000);
+						// alert(_id);
+						cloned.attr("id", _id+"");
+						// alert(x+","+y);
+						// alert(cloned.html());
+						cloned.attr("id", _id+"");
+						
+						inserted = $("#canvas").append(cloned.html());
+						// alert(inserted.html());
+						inserted = inserted.find("div.draggable_obj");
+						// alert(inserted.length);
+						// inserted.attr("inserted", "1");
+						inserted = $(inserted[inserted.length-1]);
+						inserted.draggable({containment: "parent" });
+						inserted.attr("id", _id);
+						inserted.css("left", x);
+						inserted.css("top", y);
+						inserted.addClass("bo");
+					
+						
+						_bo = {
+							x:x,
+							y:y,
+							name:"",
+							type:"",
+							desc:"",
+							size:1,
+							ui:_id,
+							fields:[{
+								name:"id",
+								type:"integer",
+								unique:true
+							}]
+						};
+						// alert(inspect(_bo));
+						// alert(inspect(g_bos));
+						g_bos.data.push(_bo);
+						
+						inserted.prop("ref", _bo);
+						// alert(inspect(inserted.prop("ref")));
+						alert(inserted[0].outerHTML);
+						// alert($(inserted[inserted.length-1]).attr("id"));
+						// alert(inserted.html());
+						inserted.click(function(event){
+							g_bo = inserted;
+							show_boprops(inserted);
+							
+						})
+						inserted.dblclick(function(event){
+							// inserted.balloon({ position: "bottom right" });
+							// $("#console").balloon({ position: "bottom right" });
+							// alert("dbc");
+							// $("#balloon").toggle(
+							// 							function(){
+							// 								$(this).animate({height: 'toggle', opacity: 'toggle'}, "slow");
+							// 							},
+							// 							function(){
+							// 								$(this).animate({height: 'toggle', opacity: 'toggle'}, "slow");
+							// 							});	
+							show_balloon_for_bo(true, event.clientX, event.clientY);
+							g_bo = inserted;
+							
+						});		
+						g_bo = inserted;
+							
+						// alert(inspect(inserted));
+					}
+				
+				} // if (id == "editor" ){ else if (id == "bo_designer"){
+			} // if (content.attr("inserted") != 1){
+		
+			// $( this ).addClass( "ui-state-highlight" ).find( "p" ).html( "Dropped!" );
+		}
+	});
+	
+
+	</script>
+
+<script>
+// ================
+// = Log Function =
+// ================
+var g_startLogline = 0;
+var g_lastLogLine = 0;
+var g_first_r_log = true;
+function openlog(){
+	switch_view("log");
+	// $("#editor").css("display", "none");	
+	// $("#bo_designer").css("display", "none");
+	// $("#log").css("display", "block");	
+	if (g_first_r_log){
+		tail_log(100);
+		g_rlog_timer = setInterval("retrieve_log();", 1000);
+	}else
+		retrieve_log();
+	// g_currentView = "log";
+}
+// function decode_base64(s) {
+//     var e={},i,k,v=[],r='',w=String.fromCharCode;
+//     var n=[[65,91],[97,123],[48,58],[43,44],[47,48]];
+// 
+//     for(z in n){for(i=n[z][0];i<n[z][1];i++){v.push(w(i));}}
+//     for(i=0;i<64;i++){e[v[i]]=i;}
+// 
+//     for(i=0;i<s.length;i+=72){
+//     var b=0,c,x,l=0,o=s.substring(i,i+72);
+//          for(x=0;x<o.length;x++){
+//                 c=e[o.charAt(x)];b=(b<<6)+c;l+=6;
+//                 while(l>=8){r+=w((b>>>(l-=8))%256);}
+//          }
+//     }
+//     return r;
+//     }
+// 	function decode_base642(s) {
+// 	  var b=l=0, r='', s=s.split(''), i,
+// 	  m='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
+// 	  for (i in s) {
+// 	    b=(b<<6)+m.indexOf(s[i]); l+=6;
+// 	    while (l>=8) r+=String.fromCharCode((b>>>(l-=8))&0xff);
+// 	  }
+	  // return r;
+	  // 		}
+function tail_log(ln){
+		$.ajax({
+			type: "get",
+			url: "/app/tlog?ln="+ln+"&t="+ new Date().getTime(),
+		 	dataType: 'json',
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				if (data.error){
+					popup(data.error);
+				}else{
+					// alert(data);
+					c = decodeURIComponent(data.c);
+					// c = c.replace(/</g, "$lt;").replace(/>/g, "$gt;")
+					$("#log_c").append(c);
+					g_startLogline = data.start_line;
+					g_lastLogLine = data.start_line -1;
+					count = c.split("<br/>").length;
+					for (var i = 0; i<count; i++){
+						g_lastLogLine += 1;
+						_num = g_lastLogLine+1;
+						$("#log_ln").append(_num+"<br/>");
+						
+					}
+					$("#log").attr("scrollTop",$("#log").attr('scrollHeight'));
+				 
+					// alert(g_lastLogLine);
+					g_first_r_log = false;
+					
+					
+				}
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+				showWaiting(false);
+
+			}
+		}); // $ajax
+		// showWaiting(true);
+	}
+
+function retrieve_previous_log(){
+	
+		$.ajax({
+			type: "get",
+			url: "/app/rlog?ln=-100&sl="+g_startLogline+"&t="+ new Date().getTime(),
+			// dataType: 'json',
+
+			// data: {
+				// appid:g_appid,
+				// 			fname:fname,
+				// 			type:type,
+
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			// }, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				if (data == ""){
+
+				}else{
+					// alert(data);
+					$("#log_c").html(data+$("#log_c").html);
+					count = data.split("<br/>").length;
+					if (count > 0){
+						for (var i = 0; i<count; i++){
+							g_startLogline -= 1;
+							_num = g_startLogline+1;
+							$("#log_ln").html(_num+"<br/>"+$("#log_ln").html());
+						}
+
+						$("#log").attr("scrollTop",$("#log").attr('0'));
+						
+						if (g_startLogline <=0){
+							$("#bt_plog").css("display", "none");
+						}
+					}
+					// alert(g_lastLogLine);
+				}
+
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+				showWaiting(false);
+
+			}
+		}); // $ajax
+}
+function retrieve_log(){
+
+	$.ajax({
+		type: "get",
+		url: "/app/rlog?sl="+g_lastLogLine+"&t="+ new Date().getTime(),
+		// dataType: 'json',
+
+		// data: {
+			// appid:g_appid,
+			// 			fname:fname,
+			// 			type:type,
+	
+			// sid: '<%=@sid%>',
+			// authenticity_token:window._token
+		// }, 
+		success: function(data, textStatus){
+			// alert( "Data Saved: " + data +","+ textStatus);
+
+			showWaiting(false);
+			if (data == ""){
+				
+			}else{
+				// alert(data);
+				$("#log_c").append(data);
+				count = data.split("<br/>").length;
+				if (count > 0){
+					for (var i = 0; i<count; i++){
+						g_lastLogLine += 1;
+								_num = g_lastLogLine+1;
+								$("#log_ln").append(_num+"<br/>");
+					}
+					// appendToConsole("last log line "+g_lastLogLine);
+					$("#log").attr("scrollTop",$("#log").attr('scrollHeight'));
+				}
+				// alert(g_lastLogLine);
+			}
+
+		},
+		error: function(xhr, textStatus, errorThrow){
+			// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+			popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+			showWaiting(false);
+
+		}
+	}); // $ajax
+}
+
+</script>
+
+	<script type="text/javascript" src="/javascripts/jquery.balloon.js"></script>
+<script>
+// jquery ballon
+
+// $("#pane1").balloon({});
+
+// $("#ballon").ballon({
+// contents: null,
+// url: null,
+// ajaxComplete: null,
+// classname: null,
+// position: "top",
+// offsetX: 0,
+// offsetY: 200,
+// tipSize: 12,
+// delay: 0,
+// minLifetime: 200,
+// showDuration: 100,
+// showAnimation: null,
+// hideDuration: 80
+// // hideAnimation: function (d) { this.fadeOut(d); }
+// 	});
+	// alert(111);
+	
+	function show_balloon_for_bo(t, x,y ){
+		/*	fl = g_bo.find("div.field_list");
+			bal = $("#balloon_field_list");
+			bal.html(fl.html());
+
+			inputs = fl.find("input");
+			forEach(i in inputs){
+				bal.find(i.prop('id')).val(i.val());
+			}*/
+			html = render_bo_fields(g_bo.prop('ref'));
+			html += "<div class=\"btn_add_bf\" style=\"border-bottom:1px solid grey;margin-top:5px;\" onclick=\"add_bo_field();\">\
+						<img src=\"/images/button-add.png\" class=\"toolbar_btn\">\
+					</div>";
+			show_balloon(t, x,y, html, "Fields");
+	
+			// alert(g_bo.html());
+			// alert(inspect(g_bo));	
+	}
+	// t: true to show, false to close
+	function show_balloon(t, x,y, content, title){
+		title = title || "";
+		content = content || "";
+		$("#balloon_field_list").html(content);
+		// alert(html);
+		$("#balloon_title").html(title);
+
+		$("#balloon").animate({height: 'toggle', opacity: 'toggle'}, "slow");
+		// alert(inspect(e));
+		// if (e){
+			$("#balloon").css("left", x);
+			$("#balloon").css("top", y);
+		// }
+	}
+	
+	$("#balloon").draggable();
+	
+	function show_balloon_for_mig(e){
+		$.ajax({
+			type: "post",
+			url: "/app/migrated?t="+ new Date().getTime(),
+			// dataType: 'json',
+
+			data: {
+				appid:g_appid,
+
+				// sid: '<%=@sid%>',
+				// authenticity_token:window._token
+			}, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				// if (data.error){
+				// 			popup(data.error);
+				// 		}else{
+					show_balloon(true, e.clientX, e.clientY, data, "Undeploy to version");
+
+				//	popup('Deploy successfully.<br />Please click <a target="_blank" href="'+data.url+'" >here</a> to view.');
+				// }
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+				showWaiting(false);
+
+			}
+		}); // $ajax
+
+		// alert(html);
+
+		// alert(g_bo.html());
+		// alert(inspect(g_bo));
+	}
+// ================
+// = BO functions =
+// ================	
+	
+	// $(".field").click(function(event){
+	// 	show_field_prop();
+	// });
+	
+	// store bo list of current editing bo view
+	var g_bos = {data:[]};
+	// the bo node of current bo view
+	var g_current_bo_node = null;
+	
+	g_type_options = ["Boolean",
+	    "Date",
+	    "Time",
+	    "DateTime",
+	    "Integer",
+	    "Long",
+	    "Double",
+	    "Decimal",
+	    "Rate",
+	    "Price",
+	    "Sum",
+	    "Quantity",
+	    "Percent",
+	    "Measure",
+	    "Tax",
+	    "String",
+	    "Text",
+	    "Link",
+	    "Address",
+	    "Phone",
+	    "Binary",
+	    "Memo",
+	    "Email",
+	    "Fax",
+	    "ZipCode"];
+	/*	function show_boprops(t){
+			// alert(t.find("div.draggable_obj_name").html());
+			a =  t.find("div.draggable_obj_name").html();
+			// alert($("#props input#prop_name").html());
+			// alert($("#props input#prop_v_name").length);
+			name = ""+$.trim(a);
+			// alert(name);
+			$("#props input#boprop_v_name").val(name);
+			$("#props input#boprop_v_type").val("BO");
+			$("#prop_pad").css("display", "block");
+
+			ps = t.find(".draggable_obj_prop");
+			 // alert(ps.length);
+			i = 0;
+			for (;i<ps.length;i++){
+				// alert($(ps[i]).attr("n"));
+				item = $(ps[i]);
+				n = item.attr("n");
+				v = item.html();
+				v = $.trim(v);
+				// alert(v);
+				// alert("#props #boprop_v_"+n);
+				// alert($("#props #boprop_v_"+n).length);
+				$("#boprop_v_"+n).val(v);
+
+			}
+			$("#field_prop_pad").css("display", "none");
+			// alert(0);
+		}
+	*/
+	function show_boprops(t){
+			// alert(g_bo);
+			bo = g_bo.prop('ref');
+			$("#props input#boprop_v_name").val(bo.name);
+			$("#props input#boprop_v_type").val("BO");
+			$("#boprop_v_desc").val(bo.desc);
+			// $("#props input#boprop_v_desc").val(bo.desc);
+			// alert(bo.desc);
+			
+			
+			$("#prop_pad").css("display", "block");
+			// $("#boprop_v_name").html(bo.name);
+			// $("#boprop_v_type").html(bo.type);
+			
+			$("#field_prop_pad").css("display", "none");
+			// alert(0);
+		}
+	
+	function add_bo_field(){
+		newf = "<div class=\"field\" style=\"border-bottom:1px solid grey;margin-top:5px;\" i='"+g_bo.prop("ref").fields.length+"' onclick=\"show_field_prop(event);\";>\
+			<span class='field_name' >unnamed</span> <span class='field_type' style=\"color:grey\">(String)</span>\
+		<div class=bo_field_prop_list ></div>\
+		</div>";
+
+		btn = g_bo.find(".btn_add_bf");
+		$(newf).insertBefore(btn);
+
+		b = $("#balloon");
+		btn = b.find(".btn_add_bf");
+		newn = $(newf).insertBefore(btn);
+		
+		data = {
+			name:"unamed",
+			type:"string",
+			length:1,
+			default_value:"null",
+			desc:""
+		};
+		g_bo.prop("ref").fields.push(data);
+		newn.prop("ref", data);
+		
+		// alert(1);
+	}
+	
+	g_selected_bo_field = null;
+	function render_bo(bo){
+		// alert(inspect(bo));
+		str = "<div style='position:absolute;left:"+bo.x+"px; top: "+bo.y+"px;' id='"+bo.ui+"' class='draggable_obj ui-draggable bo'>\
+			<img src='/images/block2.png' style='height:50px;'>\
+			<div class='draggable_obj_name'>"
+			+bo.name+
+			"</div> \
+			<div class='draggable_obj_prop' n='type'>"
+			+bo.type+
+			"</div>\
+			<div class='draggable_obj_prop' n='desc'>"
+				+bo.desc+
+			"</div>\
+		</div>";
+		// alert(str);
+		return str;
+	}
+	function prepare_bo(inserted, bo){
+		// alert(inspect(inserted));
+		// alert(inserted.outerHTML);
+		inserted = inserted.find("div#"+bo.ui);
+		// alert(inserted.length);
+		// inserted.attr("inserted", "1");
+		// inserted = $(inserted[inserted.length-1]);
+		// alert(inserted[0].outerHTML);
+		inserted.draggable({containment: "parent" });	
+		// inserted.css('left', bo.x);
+		// 	inserted.css('top', bo.x);
+		
+		inserted.prop("ref", bo);
+		// alert(inspect(inserted.prop("ref")));
+		// alert($(inserted[inserted.length-1]).attr("id"));
+		// alert(inserted.html());
+		inserted.click(function(event){
+			g_bo = inserted;
+			show_boprops(inserted);
+			
+		});
+		
+		inserted.dblclick(function(event){
+			// inserted.balloon({ position: "bottom right" });
+			// $("#console").balloon({ position: "bottom right" });
+			// alert("dbc");
+			// $("#balloon").toggle(
+			// 							function(){
+			// 								$(this).animate({height: 'toggle', opacity: 'toggle'}, "slow");
+			// 							},
+			// 							function(){
+			// 								$(this).animate({height: 'toggle', opacity: 'toggle'}, "slow");
+			// 							});	
+			show_balloon_for_bo(true, event.clientX, event.clientY);
+			g_bo = inserted;
+			
+		});		
+		g_bo = inserted;
+			
+		
+	}
+
+	function render_bo_fields(bo){
+		ret = "";
+		// alert(inspect(bo.fields.length));
+		for (var i =0; i< bo.fields.length;i++){
+			f = bo.fields[i];
+			ret += "<div class=\"field\" style=\"border-bottom:1px solid grey;margin-top:5px;\" i='"+i+"'onclick=\"show_field_prop(event);\";>\
+				<span class='field_name' >"+f.name+"</span> <span class='field_type' style=\"color:grey\">("+f.type+")</span></div>";
+		}
+		return ret;
+	}
+
+	function render_bo_field_props(f){
+	
+		ret =  "<div class='prop_line' style='height:30px;' >                                                                        \
+			<div class='prop_name'>Name</div><div class='prop_v'  n='name'><input id='fprop_v_name' value='"+ f.name +"' onchange='on_bfprop_change(event);'></input></div>                             \
+		</div>";
+		
+		opt = "";
+		
+		
+		for (var i=0;i<g_type_options.length;i++){
+			op = g_type_options[i];
+			if (op.toLowerCase() == f.type.toLowerCase())
+				opt += "<option selected>"+op+"</option>";
+			else
+				opt += "<option >"+op+"</option>";
+
+		}
+		ret += "<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name' >Type</div><div class='prop_v' n='type'><select id='fprop_v_type' value='"+ f.type +"' onchange='on_bfprop_change(event);'>"
+			+opt +"</select></div></div>";
+		
+		
+		 if (f.readonly )
+			ret += "<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>ReadOnly</div><div class='prop_v' n='readonly'><input type='checkbox' id='prop_v_readonly' checked='checked' onchange='on_bfprop_change(event);'></input></div>      \
+		</div>   ";
+		else
+			ret += "<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>ReadOnly</div><div class='prop_v' n='readonly'><input type='checkbox' id='prop_v_readonly' onchange='on_bfprop_change(event);'></input></div>      \
+		</div>   ";	
+		
+		ret += "  <div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>Default value</div><div class='prop_v' n='default_value'><input id='fprop_v_default_value' onchange='on_bfprop_change(event);' value='"+f.default_value+"'></input></div>                    \
+		</div>                                                                                                                       \
+		<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>Length</div><div class='prop_v' n='length'><input id='bfprop_v_length' onchange='on_bfprop_change(event);' value='"+f.length+"' ></input></div>                          \
+		</div>                                                                                                                       \
+		<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>Enabled</div><div class='prop_v' n='enabled'><input type='checkbox' id='bfprop_v_enabled' onchange='on_bfprop_change(event);'></input></div>     \
+		</div>                                                                                                                       \
+		<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>Encoding</div><div class='prop_v' n='encoding'><input id='bfprop_v_encoding' onchange='on_bfprop_change(event); value='"+f.default_value+"'></input></div>                        \
+		</div>                                                                                                                       \                                                                                                    \
+		<div class='prop_line' style='height:30px;'>                                                                                 \
+			<div class='prop_name'>unique</div><div class='prop_v' n='unique'><input type='checkbox' id='bfprop_v_unique' onchange='on_bfprop_change(event);'></input></div>      \
+		</div>";
+		
+		return ret;
+	}
+	function show_field_prop(event){
+		if (g_selected_bo_field != null)
+			g_selected_bo_field.css("color", "#000000");
+		
+		g_selected_bo_field = $(event.currentTarget);
+		// alert(g_selected_bo_field.html());
+		g_selected_bo_field.css("color", "#9999ff");
+/*		prop_list = g_selected_bo_field.find(".bo_field_prop_list");
+
+		
+		_html = prop_list.html();
+		
+		if (_html == ""){                    
+			name = g_selected_bo_field.find("span.field_name").html(); 
+			type = g_selected_bo_field.find("span.field_type").html();                                                                                 
+			                                                                                
+			_html = "<div class='prop_line' style='height:30px;'>                                                                        \
+				<div class='prop_name'>Name</div><div class='prop_v'><input id='fprop_v_name' value='"+ name +"' onchange='on_bfprop_change(event);'></input></div>                             \
+			</div>                                                                                                                       \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>Type</div><div class='prop_v'><select id='fprop_v_type' value='"+ type +"' onchange='on_bfprop_change(event);'>\
+				<option>String</option>\
+				<option>Integer</option>\
+				</input></div>                             \
+			</div>                                                                                                                       \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>ReadOnly</div><div class='prop_v'><input type='checkbox' id='prop_v_readonly' onchange='on_bfprop_change(event);'></input></div>      \
+			</div>                                                                                                                       \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>Default value</div><div class='prop_v'><input id='fprop_v_default_value' onchange='on_bfprop_change(event);'></input></div>                    \
+			</div>                                                                                                                       \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>Length</div><div class='prop_v'><input id='bfprop_v_length' onchange='on_bfprop_change(event);'></input></div>                          \
+			</div>                                                                                                                       \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>Enabled</div><div class='prop_v'><input type='checkbox' id='bfprop_v_enabled' onchange='on_bfprop_change(event);'></input></div>     \
+			</div>                                                                                                                       \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>Encoding</div><div class='prop_v'><input id='bfprop_v_encoding' onchange='on_bfprop_change(event);'></input></div>                        \
+			</div>                                                                                                                       \                                                                                                    \
+			<div class='prop_line' style='height:30px;'>                                                                                 \
+				<div class='prop_name'>unique</div><div class='prop_v'><input type='checkbox' id='bfprop_v_unique' onchange='on_bfprop_change(event);'></input></div>      \
+			</div>";                                                                                                                     
+			prop_list.html(_html);                                                                                                       
+		}                                                                                                                    
+		$("#fprops").html(_html);
+		*/
+		i = g_selected_bo_field.attr("i");
+		// alert(i);
+		f  = g_bo.prop("ref").fields[i];
+		// alert(inspect(f));
+		_html = render_bo_field_props(f);
+		// alert(_html);
+		$("#fprops").html(_html);
+		$("#prop_pad").css("display", "none");
+		$("#field_prop_pad").css("display", "block");
+	}
+	function on_bfprop_change(event){
+	/*	prop_list = g_selected_bo_field.find(".bo_field_prop_list");
+		prop_list.html($("#fprops").html());
+		currentTarget = $(event.currentTarget);
+		currentTarget.parent().prop("v", currentTarget.val());
+		
+		if ($(event.currentTarget).prop("id") == "fprop_v_name"){			
+			g_selected_bo_field.find("span.field_name").html(currentTarget.val());
+		}else if ($(event.currentTarget).prop("id") == "fprop_v_type"){
+			g_selected_bo_field.find("span.field_type").html(currentTarget.val());			
+		}		
+		
+		alert(prop_list.html());
+		f = prop_list.find("#"+currentTarget.prop("id"));
+		if (f.size() > 0 ){
+			f.val(currentTarget.val());
+		}
+			*/
+		// alert($("#balloon_field_list").html());
+		currentTarget = $(event.currentTarget);
+		i = g_selected_bo_field.attr("i");
+		f  = g_bo.prop("ref").fields[i];
+		// alert(currentTarget);
+		if (currentTarget.is(':radio,:checkbox'))
+			v = currentTarget.prop('checked');
+		else
+			v = currentTarget.val();
+			// alert(v);
+		prop_name = currentTarget.parent().attr("n");
+		if (prop_name == "name")
+			g_selected_bo_field.find(".field_name").html(v);
+		else if (prop_name == "type")
+			g_selected_bo_field.find(".field_type").html(v);
+		
+		
+		
+		f[prop_name] = v;
+		// alert(inspect(f));
+	}
+	
+	function on_boprop_change(event){
+	/*	bo_name = g_bo.find(".draggable_obj_name");
+		bo_name.html($(event.currentTarget).val());
+		
+		if ($(event.currentTarget).prop("id") == "fprop_v_name"){			
+			g_selected_bo_field.find("span.field_name").html($(event.currentTarget).val());
+		}else if ($(event.currentTarget).prop("id") == "fprop_v_type"){
+			g_selected_bo_field.find("span.field_type").html($(event.currentTarget).val());
+			
+		}*/
+		bo = g_bo.prop('ref');
+		bo.name = $("#boprop_v_name").val();
+		bo.type = $("#boprop_v_type").val();
+		bo.desc = $("#boprop_v_desc").val();
+		// alert(bo.desc);
+	
+		g_bo.find(".draggable_obj_name").html(bo.name);
+	}
+		
+</script>
+
+<script src="/javascripts/oauth.js"></script>
+<script>
+	function init_dev(){
+		g_appid = getUrlQueryString("appid");
+		load_project(g_appid);
+		list_tenatns();
+	}
+	function init(){
+
+		g_appid = getUrlQueryString("appid");
+		// alert("appid1="+g_appid);
+		if (isNullString(g_appid)){
+			var cookie_appid = getCookie("appid");
+			console.log("get cookie appid="+cookie_appid);
+			if (cookie_appid){
+				g_appid = cookie_appid;
+			}
+		}
+		// alert("appid="+g_appid);
+		console.log("appid="+g_appid);
+		// client_id="4874805429075418-yFNLByquAI63nUMkOxdZUoehmI0c85Um";
+		// 		client_id="4501106486113946-Z9c5A9BOOVkzdD6YARvhj7TVg4ClTAGY";
+		
+		// redirect_uri="http://d.anywhere.cn/index.html?appid="+g_appid;
+		redirect_uri="http://d.anywhere.cn/index.html";
+		// oauth_url = "https://10.58.118.63:8444/sld/oauth2/authorize";
+		check_session({
+			appid:g_appid,
+			// client_id: client_id,
+			redirect_uri:redirect_uri,
+			// oauth_url: oauth_url,
+			ajax: false
+		}, function(){
+			alert("dd");
+			load_project(g_appid);
+			list_tenatns();
+		});
+	
+	}
+</script>
+<script>
+$("#edit_box").click(function(e){
+	e.stopPropagation();
+});
+$("#theme_list").click(function(e){
+	e.stopPropagation();
+});
+
+$("body").click(function(e){
+	// hide rename box
+	$("#edit_box").css("display", "none");
+	// hide theme
+	$("#theme_list").css("display", "none");
+});
+// check_session();
+
+// check_session2();
+// load_project(g_appid);
+// list_tenatns();
+//init();
+init_dev();
+</script>
+
+<!--<div id="dropbox" style="width:250px;height:250px;border:1px red solid;z-index:100000;"></div>
+<input id="multiple" type="file" multiple>
+<script>
+ 	$("#dropbox, #multiple").html5Uploader({
+    name: "haha",
+    postUrl: "/app/upload"    
+});
+// alert("upalod"); 
+</script--> 
+  </body>
+</html>

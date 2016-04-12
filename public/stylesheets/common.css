@@ -1,0 +1,68 @@
+.gradient{
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#aaa)); /** Chrome Safari **/
+	background: -moz-linear-gradient(top, #eee, #bbb); /** FireFox **/
+	background: -o-linear-gradient(top, #eee, #aaa);  /** Opear **/
+	background: -ms-linear-gradient(#eeeeee 0%,#aaaaaa 100%);  /** IE9 IE10 **/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE7 **/
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE8 **/	}
+.gradient-lefttoright{
+	background: -webkit-gradient(linear, 0 0, 100%, 0, from(#eee), to(#aaa)); /** Chrome Safari **/
+	background: -moz-linear-gradient(left, #eee, #bbb); /** FireFox **/
+	background: -o-linear-gradient(left, #eee, #aaa);  /** Opear **/
+	background: -ms-linear-gradient(#eeeeee 0%,#aaaaaa 100%);  /** IE9 IE10 **/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE7 **/
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE8 **/	}
+.gradient-toptobottom{
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#eee), to(#aaa)); /** Chrome Safari **/
+	background: -moz-linear-gradient(top, #eee, #bbb); /** FireFox **/
+	background: -o-linear-gradient(top, #eee, #aaa);  /** Opear **/
+	background: -ms-linear-gradient(#eeeeee 0%,#aaaaaa 100%);  /** IE9 IE10 **/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE7 **/
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#aaaaaa',grandientType=1); /** IE8 **/	}
+
+.round_border{
+	border-radius: 3px;  
+	-moz-border-radius: 3px;  
+	-webkit-border-radius: 3px;
+}
+
+.round_border_m{
+	border-radius: 5px;  
+	-moz-border-radius: 5px;  
+	-webkit-border-radius: 5px;
+}
+
+.round_border_b{
+	border-radius: 10px;  
+	-moz-border-radius: 10px;  
+	-webkit-border-radius: 10px;
+}
+
+.shadowed{
+	    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}
+
+#balloon:before {
+border-right-color: #dddddd;
+border-width: 8px;
+}
+#balloon:after, #balloon:before{
+	position: absolute;
+	top: 11px;
+	left: -16px;
+	right: 100%;
+	width: 0;
+	height: 0;
+	display: block;
+	content: " ";
+	border-color: transparent;
+	border-style: solid solid outset;
+	pointer-events: none;
+}
+#balloon:after{
+	border-width: 7px;
+	border-right-color: #efefef;
+/*	border-right-color: white;	*/
+	margin-top: 1px;
+	margin-left: 2px;
+}
