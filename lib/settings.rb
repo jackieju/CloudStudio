@@ -1,3 +1,4 @@
+=begin
 if ENV['RAILS_ENV'] == "development"
 $SETTINGS=
      {
@@ -44,7 +45,7 @@ else
             :port=>"3000"
         }
 end
-
+=end
 
 $FS_RT_ROOT = "/var/sa"
 $FS_EXT_ROOT = "extension"

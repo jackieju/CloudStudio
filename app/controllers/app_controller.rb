@@ -66,9 +66,9 @@ class AppController < ApplicationController
         end
 =end        
         p "check_session1"
-        #if !check_session
-            #return
-        #end
+        if !check_session
+            return
+        end
         p "===>ld"
         appid= params[:appid]
 =begin    
@@ -123,9 +123,23 @@ end
         
         repo = appid
         repo_url = repo_url(appid)
+        p "repo_url:#{repo_url}"
+        
+        if appid.end_with?(".git")
+            appid = appid[0..appid.size-5]
+        end
+        query_ret[:name] = appid
+        fname_config = repo_ws_path(appid)+"/.git/config"
+        p "fname_config:#{fname_config}"
         # clone if not yet
-        if File.exists?(repo_ws_path(appid)+"/.git/config") == false
-            Git2.clone(repo, @user.name)
+        if File.exists?(fname_config) == false
+            begin 
+               # Git2.clone(repo, @user.name)
+               Git2.clone(repo_url, @user.name)
+            rescue Exception=>e
+                error("project not exits")
+                return
+            end
         end
             
         # pull if not yet
@@ -225,7 +239,7 @@ end
             
             Git2.add_and_commit(appid, @user.name, git_newfile_rpath)
             
-        rescue Expcetion=>e
+        rescue Exception=>e
            # logger.error e
             p e.inspect
             p e.backtrace[1..e.backtrace.size-1].join("\n\r")
@@ -584,7 +598,11 @@ load "bomigration.rb"
         
         if params[:r] == 'json'
             p "data:#{data}"
-            data = JSON.parse(data)
+            if data.strip == ""
+                data = {}
+            else
+                data = JSON.parse(data)
+            end
         end
         success("ok", {:data=>data})
         return 
@@ -685,7 +703,7 @@ load "bomigration.rb"
          begin
              if FileTest::exists?(dir) 
                      Dir.foreach("#{dir}") do |item|
-
+p "file1  #{item}"
                        next if item.start_with?(".")
                        fname = "#{dir}/#{item}"
                        if File.file?(fname)

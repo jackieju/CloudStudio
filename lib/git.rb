@@ -12,7 +12,21 @@ class GitExp < Exception
 end
 
 class Git2
-
+    
+    def self.clone(url, username)
+        command = "mkdir -p #{$SETTINGS[:workspace_root]}/#{username}\n
+                    cd #{$SETTINGS[:workspace_root]}/#{username}\n 
+                    git clone #{url}"
+            p "command=>#{command}"
+            r = `#{command}`
+            # success('OK', {:ret=>r})
+            p "==>r=#{r}"
+            if $?.exitstatus != 0
+                raise Exception.new("git command=>#{command}\n return:\n#{r}")
+            end
+            return true
+    end
+=begin    
     def self.clone( repo, username)
         p "===>#{$git_user}@#{$SETTINGS[:git_server]}:#{$SETTINGS[:repo_root]}/#{repo}"  
         
@@ -28,7 +42,7 @@ class Git2
             end
             return true
     end
-    
+=end   
     def self.pull(repo, username)
         p "===>#{$git_user}@#{$SETTINGS[:git_server]}:#{$SETTINGS[:repo_root]}/#{repo}"  
         

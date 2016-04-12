@@ -35,8 +35,14 @@ class ApplicationController < ActionController::Base
       redirect_to(oauth_url_authorize)  
   end
   
+  def oauth_enabled?
+      $SETTINGS[:oauth_server_url_authorize] && $SETTINGS[:oauth_server_url_token] &&
+      $SETTINGS[:oauth_client_secret] && $SETTINGS[:oauth_client_id]
+  end
   # return false if no session
   def check_session
+      return true if !oauth_enabled?
+          
       p "check_session"
       if cookies[:atoken]
           session[:atoken] = cookies[:atoken]
@@ -82,7 +88,11 @@ class ApplicationController < ActionController::Base
   
   def repo_url(repo)
       # "#{@user.name}@#{$SETTINGS[:git_server]}:#{$SETTINGS[:repo_root]}/#{repo}"
-      "#{$git_user}@#{$SETTINGS[:git_server]}:#{$SETTINGS[:repo_root]}/#{repo}"
+      if $SETTINGS[:git_protocol] == "https"
+          return "https://#{$SETTINGS[:git_server]}#{$SETTINGS[:repo_root]}/#{repo}"
+      else
+          return "#{$git_user}@#{$SETTINGS[:git_server]}:#{$SETTINGS[:repo_root]}/#{repo}"
+      end
   end
   
   def workspace_path

@@ -6,100 +6,18 @@ var $tree = null;
 var g_root_node = null;
 var g_selected_node = null;
 //////
-var data = 
-[
-    {
-        label: 'Business Objects',
-		type: 'bo_root',
-        children: [
-      					//       { 
-      					// label: 'TestBO1',
-      					// type: 'bo',
-      					// 	 			},
-      					// 	            {
-      					// 		 			label: 'TestBO2',
-      					// type: 'bo', }
-        ]
-    },
-    {
-        label: 'Extensions',
-		type: 'extension',
-        children: [
- 					//            { 
- 					// label: 'child3',
- 					// type: 'code', }
-        ]
-    }
-	,
-    {
-        label: 'Service',
-		type: 'service_root',
-        children: [
- 					//            { 
- 					// label: 'child3',
- 					// type: 'code', }
-        ]
-    }	,
-	    {
-	        label: 'UI',
-			type: 'ui_root',
-	        children: [
-	 		            { 
-	 					label: 'Universal',
-	 					type: 'ui_root_u',
-						children: []
-						},
-						 { 
-		 					label: 'Mobile',
-		 					type: 'ui_root_m',
-							children: []
-						}
 
-
-	        ]
-	    },
-		{
-	        label: 'Migration',
-			type: 'migrate',
-			id: 111,
-	        children: [
-	      					//       { 
-	      					// label: 'TestBO1',
-	      					// type: 'bo',
-	      					// 	 			},
-	      					// 	            {
-	      					// 		 			label: 'TestBO2',
-	      					// type: 'bo', }
-	        ]
-	    },
-		{
-	        label: 'Lib',
-			type: 'lib', // actually the folder nam inf FS
-			id: 112,
-	        children: [
-	      			{ 
-	      				label: 'bosource',
-	      				type: 'bosource',
-						children:[],
-	      			},
-	      			// {
-	      			//       				label: 'source',
-	      			//       				type: 'bosource', 
-	      			// 				}
-	        ]
-	    },
-];
 // var g_bo_root = data[0];
 // var g_extion_root = data[1];
 
-var root = [
+/*var root = [
 	{
 		label: 'B1_project',
 		type: 'app',
 		children:data
 	}
 ];	
-
+*/
 
 
 /*
@@ -260,6 +178,53 @@ function init_tree(data_root){
 		);
 }*/
 
+var g_nodetypes = [{
+	type:"app",
+	name:"app",
+	icon:"/images/Apps-256.png",
+},{
+	type:"folder",
+	name:"folder",
+	icon:"/images/Folder-128.png",
+	pos:null
+}];
+g_nodetypes.push({
+	type:"dataelement",
+	name:"dataelement",
+	ext:"de",
+	isLeaf:true,
+	icon:"",
+	open_method:function(node){ return open_bo(node);},
+	pos:null
+});
+
+function get_type(type){
+	
+	for (i = 0; i< g_nodetypes.length; i++){
+		t = g_nodetypes[i];
+		
+		console.log(t.type);	
+		if (t.type == type)
+			return t;
+	}
+	return null;
+}
+function find_type_by_ext(ext){
+	for (i = 0; i< g_nodetypes.length; i++){
+		t = g_nodetypes[i];
+		
+		if (t.ext == ext)
+			return t;
+	}
+	return null;
+}
+function get_type_by_filename(fname){
+//	alert(fname);
+	ext = get_file_ext(fname).toLowerCase();
+//	alert("ext "+ext);
+	t = find_type_by_ext(ext);
+	return t;
+}
 function add_file_to_tree(node, parent, tree_node){
 	
 	// alert("add "+ inspect(node));
@@ -307,7 +272,7 @@ function add_file_to_tree(node, parent, tree_node){
 		else{
 			tnode = {
 				label:label,
-				type:node.name,
+				type:"folder",
 				children:[]
 			};
 			tree_node.children.push(tnode);
@@ -321,10 +286,17 @@ function add_file_to_tree(node, parent, tree_node){
 			// alert(k +"th in "+list.length+" added" );
 		}
 	}else{
-		type = "code";
 		// alert(get_file_ext(node).toLowerCase());
-		if (get_file_ext(node).toLowerCase() == 'bo')
-			type = "bo";
+		//if (get_file_ext(node).toLowerCase() == 'bo')
+		//	type = "bo";
+		ext = get_file_ext(node).toLowerCase();
+		t = find_type_by_ext(ext);
+		if (t)
+			type = t.type;
+		else
+			type = "code";
+		
+		
 			// alert(type);
 		tree_node.children.push({
 			label:node,
@@ -334,14 +306,17 @@ function add_file_to_tree(node, parent, tree_node){
 		// alert("added "+ inspect(node));
 }
 // init tree from fs structure
-function init_tree2(data_root, info){
+function init_tree2(data_root, info, init_structure){
 	// alert(inspect(data_root.bo_list));
 
 	// alert(inspect(data_root));
-	
+	data = init_structure;
+	if (data == null)
+		data = [];
 	root = [
 		{
-			label: info.name+"("+info.appid+")",
+			//label: info.name+"("+info.appid+")",
+			label: "anyting",
 			type: 'app',
 			children:data
 		}
@@ -351,7 +326,7 @@ function init_tree2(data_root, info){
 		// data_root,root[0].children= [];
 		for (var i = 0;i <  data_root.length; i++){
 			item = data_root[i];
-			add_file_to_tree(item, data_root,root[0]);
+			add_file_to_tree(item, data_root, root[0]);
 			// alert(i);
 			
 		}
@@ -367,7 +342,7 @@ function init_tree2(data_root, info){
 		        // Add 'icon' span before title
 				icon = "/images/File-32.png";
 				style= "vertical-align:bottom;height:25px;border:0px solid red;";
-				if (node.type == 'folder')
+				/*if (node.type == 'folder')
 					icon = "/images/Folder-128.png";
 				if (node.type == 'bo_root')
 					icon = "/images/Folder-128.png";
@@ -382,13 +357,24 @@ function init_tree2(data_root, info){
 				if (node.type == "ui_root_m" )
 					icon = "/images/mobile.png";
 				if (node.type == "service_root")
-					icon = "/images/service.png";
+					icon = "/images/service.png";*/
+				if (node.type == 'app')
+					icon = "/images/Apps-256.png";
+				else{
+					t = get_type(node.type);
+				
+					if (t)
+						icon = t.icon;
+				}
+				if (icon == null || icon == "")
+					icon = "/images/File-32.png";
 				if (node.children == null  || node.children.length == 0)
 					style= "vertical-align:bottom;height:25px;border:0px solid red;margin-left:20px;";
 	
 		        $li.find('.jqtree-title').before('<img style="'+style+'" src="'+icon+'" />');
 				if (node.type == 'app'){
-					app_title = "<span style=\"font-size:14pt;font-weight:600;\">"+info.name+"</span>("+info.appid+")";
+					//app_title = "<span style=\"font-size:14pt;font-weight:600;\">"+info.name+"</span>("+info.appid+")";
+					app_title = "<span style=\"font-size:14pt;font-weight:600;\">"+info.name+"</span>";
 					$li.find('.jqtree-title').html(app_title);
 				}
 					
@@ -415,18 +401,30 @@ function init_tree2(data_root, info){
 		        // The clicked node is 'event.node'
 		       	var node = event.node;
 				if ( node !=g_selected_node ){
-					if (g_selected_node && g_selected_node.isNew == 'true' ){
+					if (g_selected_node && g_selected_node.isNew == 'true' && g_selected_node.type != "folder"){
 						popup("You haven't save this file.");
 						return false;
 					}
 					else
 					{
-					
 						g_selected_node = node;
-						if (node.type == 'code')
+					   //if (node.type == 'code')
+					   //	open_file(node);
+					   //else if (node.type == 'bo')
+					   //	open_bo(node);
+						
+						if (g_selected_node != g_root_node){
+						t = get_type(node.type);
+						//alert(node.type);
+						
+						if (t && t.isLeaf == false)
+						;
+						else if (t){
+							
+							t.open_method(node);
+						}else
 							open_file(node);
-						else if (node.type == 'bo')
-							open_bo(node);
+						}
 					}
 				}
 		    }
@@ -438,10 +436,10 @@ function init_tree2(data_root, info){
 		        // console.log(event.node);
 		        var node = event.node;
 				g_editing_node = node;
-		        if (node.type == 'code')
-					pre_rename_node(event)
+		        if (node.type == 'code' || node.type == 'folder')
+					pre_rename_node(event);
 				else if (node.type == 'bo')
-					pre_rename_node(event)
+					pre_rename_node(event);
 				else 
 				$tree.tree(
 					'openNode',
@@ -465,6 +463,7 @@ function init_tree2(data_root, info){
 		    }
 		);
 }
+
 function rename_file(node, name){
 	fname = getNodePath(node);
 	
@@ -488,8 +487,14 @@ function rename_file(node, name){
 				if (data.error){
 					popup(data.error);
 				}else{
+					newtype = g_editing_node.type;
+					t = get_type_by_filename(name);
+					if (t)
+						newtype = t.type;
+					//alert("new "+newtype);
 					va = {
-						type:g_editing_node.type,
+						//type:g_editing_node.type,
+						type: newtype,
 						isNew:g_editing_node.isNew,
 						label:name
 						};
@@ -515,6 +520,8 @@ function rename_file(node, name){
 
 		showWaiting(true);	
 }
+
+
 function pre_rename_node(event){
 	var node = event.node;
 	// alert(node.name);
@@ -540,6 +547,8 @@ function pre_rename_node(event){
 	// $("#edit_box").top(event.click_event.clientY);
 	
 }
+
+
 $("#edit_value").keydown(function(event){
 	if (g_editing_node == null){
 		$("#edit_box").css("display", "none");
@@ -581,6 +590,7 @@ $("#edit_value").keydown(function(event){
 		};
 	}; // 	if (g_editing_node == null) else {
 });
+
 	// find node by name (Not recursively)
 function find_node_by_name(node, name){
 	// alert(node.children.length);
@@ -625,6 +635,7 @@ function get_new_name(excl, name, ext_count){
 	return _name;
 }
 
+// check duplciated name
 function get_new_node_name(parent_node, name){
 
 	// // get filename and file ext
@@ -642,12 +653,36 @@ function get_new_node_name(parent_node, name){
 	return new_name;
 }
 
-
-function add_node(){
+function pre_add_node(){
+	$("#type_list").css("display", "block");
+	var pos = $("#add_node_btn").offset();
+	var m_pos = $("#main").offset();
+	var x = pos.left - m_pos.left;
+	// alert($("#btn_select_theme").height());
+	var y = pos.top - m_pos.top - $("#type_list").height();
+	// alert(inspect(m_pos));
+	// alert($("#btn_select_theme").offset().left);
+	$("#type_list").css("left", x);
+	$("#type_list").css("top", y-50);
+	//e.stopPropagation();	
+}
+function add_node(type){
 	 //alert(g_selected_node.type);
 	if (g_selected_node == null)
 		return;
-	if (g_selected_node.type == 'bo_root' || g_selected_node.parent.type == 'bo_root'){
+	/*if (g_selected_node == g_root_node){
+		newname = get_new_node_name(g_selected_node, "unnamed_folder");
+		$('#tree').tree(
+		    'appendNode',
+		    {
+		        label: newname,
+		        type: 'folder',
+				isNew: 'true'
+		    },
+		    g_selected_node
+		);
+	}
+	else */if (g_selected_node.type == 'bo_root' || g_selected_node.parent.type == 'bo_root'){
 
 		// g_bo_root.children.push({
 		// 			label: 'New File',
@@ -685,30 +720,37 @@ function add_node(){
 	}
 	// alert(g_selected_node.type);
 	else 	{ // if (g_selected_node.type == 'bo_root' || g_selected_node == 'bo')
-		if (g_selected_node.type == 'code'  ){
-			parent_node = g_selected_node.parent;
+		parent_node = g_selected_node.parent;
+	
+		if (type && get_type(type)){
+			alert(type);
+			tt = get_type(type);
+			node_type = tt.type;
+			newname = get_new_node_name(parent_node, "Untitled."+tt.ext);
+		}else{
+			newname = get_new_node_name(parent_node, "Untitled");
+			node_type= "code";
+		}
+		newnode = {
+	        label: newname,
+	        type:node_type,
+			isNew: 'true'
+	    };
+		t = get_type(g_selected_node.type );
+		
+		if (t.isLeaf == true){
 			// alert(inspect(parent_node));
-			newname = get_new_node_name(parent_node, "Untitled.rb");
 
 			$('#tree').tree(
 			    'addNodeAfter',
-			    {
-			        label: newname,
-			        type:'code',
-					isNew: 'true'
-			    },
+			    newnode,
 			    g_selected_node
 			);
 		}else /*	if (g_selected_node.type == 'extension' || g_selected_node.type == 'service_root' || /^ui_root/.match(g_selected_node.type)  )*/{
-			newname = get_new_node_name(g_selected_node, "Untitled.rb");
 
 			$('#tree').tree(
 			    'appendNode',
-			    {
-			        label: newname,
-			        type:'code',
-					isNew: 'true'
-			    },
+			    newnode,
 			    g_selected_node
 			);
 

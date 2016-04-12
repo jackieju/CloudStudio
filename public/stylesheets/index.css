@@ -120,5 +120,10 @@ div.btn_theme{
 div.selected_theme{
 	background:#cccccc;
 }
-
+div.btn_add_node{
+	cursor:default;border-top:1px solid #c8c8c8;padding:2px 5px;
+	background:#eeeeee;
+	white-space:nowrap;
+	/*font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;*/
+	font-size:11pt;font-weight:lighter/*;
 }

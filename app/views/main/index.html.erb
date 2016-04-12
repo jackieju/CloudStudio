@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -58,7 +57,7 @@
 		var g_main_width = 1000;
 		var g_main_height = 600;
 		var g_main_tb_height = 50;
-			alert("this is index.html");
+		//	alert("this is index.html");
 	</script>
 	<div id="main" class="draggable" style=" position: absolute;width: 1000px;height: 600px;margin-left:100px;">
 		
@@ -100,9 +99,17 @@
 			<div class='left_toolbar' style="position:static;bottom:0px;float:bottom;width:100%;height:20px;border:1px solod blue;background:#eeeeee;">
 				
 				<div id='cp_tb_btns' style="float:right;">
-					<a href="javascript:add_node();"> <img src="/images/button-add.png" class="toolbar_btn"></a>
+					<a href="javascript:pre_add_node();"> <img src="/images/button-add.png" class="toolbar_btn" id="add_node_btn"></a>
 					<a href="javascript:remove_node();"> <img src="/images/button-remove.png" class="toolbar_btn"></a>
+					<div id="type_list" style="min-width:100px;display:none;z-index:100;border-left:1px solid #c8c8c8;border-right:1px solid #c8c8c8;position:absolute;">
+						<div class='btn_add_node' onclick="on_add_node('code');" >Source File</div>
+						<div class='btn_add_node' onclick="on_add_node('dataelement');" >Data Element</div>
+						<div class='btn_add_node' onclick="on_add_node('syntax');" >Syntax</div>
+						<div class='btn_add_node' onclick="on_add_node('folder');" >Folder</div>
+
+					</div>
 				</div>
+				
 			</div>
 		</div><!-- left_pane -->
 		<div id="splitter" style="position:relative;float:left;height:600px;width:2px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
@@ -114,8 +121,9 @@
 				</div>
 				<div id='cp_tb_btns' style="float:right;">
 					<button class='btn1' onclick="show_git();">Git</button>
+				<% if @logwatch_enabled %>
 					<button class='btn1' onclick="openlog();">Log</button>
-					
+				<% end %>
 					<button class='btn1' onclick="openvi();">vim</button>
 					<button id = "btn_open_editor"  class='btn1' onclick="show_editor()" >Editor</button>
 				</div>
@@ -152,6 +160,7 @@
 				<div style="clear:both">
 				</div>
 			</div>
+			<% if @git_enabled %>
 			<div id="git" name="body" class="" style="display:none;width:99%;height:580px;overflow:auto;">
 				<div id="git_tab">
 					<button id="btn_tab_commit" class="minibutton selected" onclick="select_commit();" style="margin:0px;width:65px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;" >Commit</button>
@@ -159,8 +168,6 @@
 					<button id="btn_tab_pull" class="minibutton " onclick="select_pull();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">Pull</button>
 					<button id="btn_tab_push" class="minibutton " onclick="select_push();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">Push</button>
 					<button id="btn_tab_hisotry" class="minibutton " onclick="select_hisotry();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">History</button>
-					
-				
 				</div>
 				<div id="diff" name="body" class="droppable" style="display:none;width:99%;min-height:500px;border:1px solid #999999">
 					
@@ -221,8 +228,8 @@
 				  </div>
 				</div>
 				<script src="/javascripts/git.js" ></script>
-
 			</div>
+			<% end %>
 			
 			<div id="bo_designer" class="droppable" name="body" style="display:none;width:99%;height:580px;background:#fefefe;">
 				<div id="bod_tb" style="float:left;width:50px;height:100%;border-right:1px solid grey;margin-right:5px;">
@@ -247,6 +254,10 @@
 
 
 <script>
+function on_add_node(type){
+	add_node(type);
+	$("#type_list").css("display", "none");
+}
 var last_theme_div = $("div.selected_theme");
 function on_select_theme(event, t, theme){
 	ace_editor.setTheme("ace/theme/"+theme);
@@ -724,7 +735,7 @@ end
 		parent = node.parent;
 		while (parent != null && parent != undefined && parent.name != null){
 			// alert(parent.name);
-			fname = parent.type +"/"+fname;
+			fname = parent.name +"/"+fname;
 			parent = parent.parent;
 		}
 		fname = "/"+fname;
@@ -1232,8 +1243,91 @@ function ws_deploy(appid, tenant){
 	<script>
 	////////
 	// load repo
+/* // example:
+	var init_data_struct = 
+	[
+	    {
+	        label: 'Business Objects',
+			type: 'bo_root',
+	        children: [
+	      					//       { 
+	      					// label: 'TestBO1',
+	      					// type: 'bo',
+	      					// 	 			},
+	      					// 	            {
+	      					// 		 			label: 'TestBO2',
+	      					// type: 'bo', }
+	        ]
+	    },
+	    {
+	        label: 'Extensions',
+			type: 'extension',
+	        children: [
+	 					//            { 
+	 					// label: 'child3',
+	 					// type: 'code', }
+	        ]
+	    }
+		,
+	    {
+	        label: 'Service',
+			type: 'service_root',
+	        children: [
+	 					//            { 
+	 					// label: 'child3',
+	 					// type: 'code', }
+	        ]
+	    }	,
+		    {
+		        label: 'UI',
+				type: 'ui_root',
+		        children: [
+		 		            { 
+		 					label: 'Universal',
+		 					type: 'ui_root_u',
+							children: []
+							},
+							 { 
+			 					label: 'Mobile',
+			 					type: 'ui_root_m',
+								children: []
+							}
 
 
+		        ]
+		    },
+			{
+		        label: 'Migration',
+				type: 'migrate',
+				id: 111,
+		        children: [
+		      					//       { 
+		      					// label: 'TestBO1',
+		      					// type: 'bo',
+		      					// 	 			},
+		      					// 	            {
+		      					// 		 			label: 'TestBO2',
+		      					// type: 'bo', }
+		        ]
+		    },
+			{
+		        label: 'Lib',
+				type: 'lib', // actually the folder nam inf FS
+				id: 112,
+		        children: [
+		      			{ 
+		      				label: 'bosource',
+		      				type: 'bosource',
+							children:[],
+		      			},
+		      			// {
+		      			//       				label: 'source',
+		      			//       				type: 'bosource', 
+		      			// 				}
+		        ]
+		    },
+	];
+	*/
 		function load_project(appid){
 			// var appid = "Jidang";
 			$.ajax({
@@ -1255,8 +1349,8 @@ function ws_deploy(appid, tenant){
 					if (data.error){
 						popup(data.error);
 					}else{
-						// popup(inspect(data));
-						init_tree2(data.data_root, data.info);
+						//popup(inspect(data));
+						init_tree2(data.data_root, data.info, null);
 						appendToConsole("Project Ready");
 					}
 
@@ -2548,11 +2642,13 @@ function retrieve_log(){
 
 <script src="/javascripts/oauth.js"></script>
 <script>
-	function init_dev(){
+<% if !@oauth_enabled  %>
+	function init(){
 		g_appid = getUrlQueryString("appid");
 		load_project(g_appid);
 		list_tenatns();
 	}
+	<%else%>
 	function init(){
 
 		g_appid = getUrlQueryString("appid");
@@ -2567,9 +2663,10 @@ function retrieve_log(){
 		// alert("appid="+g_appid);
 		console.log("appid="+g_appid);
 
-		redirect_uri="http://d.anywhere.cn/index.html";
-		oauth_url = "https://10.58.118.63:8444/sld/oauth2/authorize";
-		client_id = "client1.id";
+		redirect_uri="<%=@oauth_redirect_uri %>";
+		oauth_url = "<%=@oauth_server_url_authorize%>";
+		client_id = "<%=@oauth_client_id %>";
+		
 		check_session({
 			appid:g_appid,
 			client_id: client_id,
@@ -2583,6 +2680,7 @@ function retrieve_log(){
 		});
 	
 	}
+		<%end%>
 </script>
 <script>
 $("#edit_box").click(function(e){
@@ -2597,14 +2695,15 @@ $("body").click(function(e){
 	$("#edit_box").css("display", "none");
 	// hide theme
 	$("#theme_list").css("display", "none");
+	$("#type_list").css("display", "none");
+	
 });
 // check_session();
 
 // check_session2();
 // load_project(g_appid);
 // list_tenatns();
-//init();
-init_dev();
+init();
 </script>
 
 <!--<div id="dropbox" style="width:250px;height:250px;border:1px red solid;z-index:100000;"></div>
