@@ -1,0 +1,172 @@
+
+<div class="de" style="border:0px #9999ff dotted; width:100%;">
+	<div class="section" style="width:100%;">
+		<div class="section_title" style="width:100%;">
+		General Infomation
+		</div>
+		
+		<!-- begin of data line -->
+		<div class="data_line">
+			<div class="attr_name">
+				<span style="color:red">*</span>Name
+			</div>
+			<div class="attr_value">
+				<input id="v_de_name" class="attr_value_input input_value" value="<%=@data.name%>"></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		<!-- end of data line -->
+		
+		<!-- begin of data line -->
+		<div class="data_line">
+			<div class="attr_name">
+				<span style="color:red">*</span>Description
+			</div>
+			<div class="attr_value">
+				<textarea id="v_de_desc" class="attr_value_textarea input_value" ><%=@data.desc%></textarea>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		<!-- end of data line -->
+		
+		<!-- begin of data line -->
+		<div class="data_line">
+			<div class="attr_name">
+				<span style="color:red">*</span>Data Type
+			</div>
+			<div class="attr_value">
+		
+				<!--input id="v_de_name" class="attr_value_input" value="<%=@data.dtype%>"></input-->
+				<div id="v_de_dtype" class="dropdown_box" onclick="show_types(event);"><%=@data.dtype.name%></div>
+				
+				<div id="v_de_dtype_ddl" class="dropdown_list_container temp_floating" style="position: absolute;display:none;max-height:500px;overflow-y:scroll;">
+					<ul class="dropdown_list" style="list-style-type:none;display: table;width: 100%;white-space: nowrap;  border-collapse: separate;">
+						<li>CHAR       </li>
+						<li>VARCHAR    </li>
+						<li>NCHAR      </li>
+						<li>NVARCHAR   </li>
+						<li>ALPHANUM   </li>
+						<li>SHORTTEXT  </li>
+						<li>BOOLEAN    </li>
+						<li>TINYINT    </li>
+						<li>SMALLINT   </li>
+						<li>INTEGER    </li>
+						<li>BIGINT     </li>
+						<li>DECIMAL    </li>
+						<li>SMALLDECIMA</li>
+						<li>REAL       </li>
+						<li>DOUBLE     </li>
+						<li>FLOAT      </li>
+						<li>BINARY     </li>
+						<li>VARBINARY  </li>
+						<li>BLOB       </li>
+						<li>CLOB       </li>
+						<li>NCLOB      </li>
+						<li>TEXT       </li>
+						<li>BINTEXT    </li>
+						<li>DATE       </li>
+						<li>TIME       </li>
+						<li>SECONDDATE </li>
+						<li>TIMESTAMP  </li>
+					</ul>
+					
+
+				</div>
+
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		<!-- end of data line -->
+		<% if @data.dtype._length %>
+		<!-- begin of data line -->
+		<div class="data_line" id="line_de_dtype_length">
+		<% else %>
+		<div class="data_line" id="line_de_dtype_length" style="display:none;">
+		<% end %>
+		
+			<div class="attr_name">
+				Length
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_length" class="attr_value_input input_value" value="<%=@data.dtype._length%>"></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		<!-- end of data line -->
+		
+		<% if @data.dtype.scale %>
+		
+		<!-- begin of data line -->
+		<div class="data_line" id="line_de_dtype_scale">
+		<% else %>
+		<div class="data_line" id="line_de_dtype_scale" style="display:none">
+		<% end %>
+			<div class="attr_name">
+				Scale
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_scale" class="attr_value_input input_value" value="<%=@data.dtype.scale%>"></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		<!-- end of data line -->
+	
+	</div>
+				
+				<script>
+				$("#v_de_dtype_ddl ul li").click(function(e){
+					//alert(inspect(e));
+					//alert(inspect(e.target));
+					stype = $(e.target).html();
+					//show_type_prop(stype);
+					stype = stype.trim();
+					$("#v_de_dtype").html(stype);
+					
+					// alert(stype);
+					// alert(g_de_typedefs["VARCHAR"]);
+					_type = g_de_typedefs[stype];
+					// alert(inspect(_type));
+					if (_type){
+						if (_type.useScale == true)
+							$("#line_de_dtype_scale").css("display", "block");
+						else
+							$("#line_de_dtype_scale").css("display", "none");
+						
+						if (_type.maxLength != null){
+							$("#line_de_dtype_length").css("display", "block");								
+						}		else
+								$("#line_de_dtype_length").css("display", "none");
+					}
+				});
+				</script>
+	<div class="section" style="width:100%;">
+		<div class="section_title" style="width:100%;">
+		Attributes
+		</div>
+		<% if @data.attrributes %>
+		<% @data.attributes.each{|attr|%>
+			<div class="data_line">
+				<div class="attr_name">
+					<% attr.n %>
+				</div>
+				<div class="attr_value">
+					<input id="v_de_name" class="attr_value_input" value="<%=attr.v%>"></input>
+				</div>
+				<div style="clear:both">
+				</div>
+			</div>
+			
+		<%} %>
+		<% end %>
+	</div>
+	<div class="section" style="width:100%;">
+		<div class="section_title" style="width:100%;">
+		UI Information
+		</div>
+	</div>
+</div>

@@ -119,7 +119,7 @@ function inspect(obj) {
 
          if(typeof(obj[p])=="function"){
           // obj[p]();
-			// props += "function "+p+"()\n";
+			props += "function "+p+"()\n";
          }else{
            	props+="["+typeof(obj[p])+"]" +  p + "=" + obj[p] + "\n";
 			// the recursive may cause dead loop

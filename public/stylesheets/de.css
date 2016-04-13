@@ -1,0 +1,123 @@
+.section_title{
+	color:rgb(71, 71, 71);
+	font-family:Arial, 'Microsoft YaHei', Helvetica, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	word-wrap:break-word;
+	background-color:rgba(0, 0, 0, 0.0588235);
+	padding:3px;
+	border-bottom:1px #000010 dotted;
+}
+.data_line{
+	margin:10px;
+}
+
+.attr_name{
+	float:left;
+	
+	/*color:rgb(119, 119, 119);*/
+	color:#777777;
+	font-size:15px;
+	box-sizing: border-box;
+	    padding: 9px 13px;
+	    min-height: 37px;
+	    position: relative;
+	    word-wrap: break-word;
+	    white-space: normal;
+	    word-break: normal;
+	width:200px;
+	text-align:right;
+}
+.attr_value{
+	float:left;
+
+}
+.input_value{
+	font-family:Arial, 'Microsoft YaHei', Helvetica, sans-serif;
+	font-size:15px;
+	color:rgb(71, 71, 71);
+}
+.attr_value_input{
+
+	min-width:300px;
+	box-sizing: border-box;
+	min-height: 37px;
+    position: relative;
+    border-radius: 2px;
+    padding: 8px 12px;
+    height: 37px;
+    line-height: normal;
+    border: 1px solid #CCCCCC;
+    background-color: white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 32px;
+}
+.attr_value_textarea{
+	min-width:300px;
+	box-sizing: border-box;
+	min-height: 60px;
+    position: relative;
+    border-radius: 2px;
+    padding: 8px 12px;
+    height: 37px;
+    line-height: normal;
+    border: 1px solid #CCCCCC;
+    background-color: white;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-right: 32px;
+}
+.dropdown_list_container{
+	background-color: rgba(0,0,0,0.24) !important;
+    min-width:300px;
+	box-sizing: border-box;
+	    background-color: white;
+	    color: #474747;
+	    border: 1px solid #B9B9B9;
+	    overflow-x: hidden;
+	    overflow-y: auto;
+	    white-space: nowrap;
+	    border-collapse: separate;
+	    z-index: 9999;
+	    max-height: 320px;
+}
+.dropdown_list li{
+	display: list-item;
+    text-align: -webkit-match-parent;
+   list-style-type: none;
+  	cursor: pointer;
+  	color: #fff;
+  	font-size: 1.4rem;
+  	font-family: 'Arial','Microsoft YaHei',Helvetica,sans-serif;
+  	height: 37px;
+  	line-height: 37px;
+  	white-space: nowrap;
+  	padding-left: 12px;
+}
+.dropdown_box{
+	    padding-left: 2px;
+	
+	text-overflow: ellipsis;
+	    white-space: nowrap;
+	    overflow: hidden;
+	
+	border: 1px solid #CCCCCC;
+	border-radius: 2px;
+	
+	min-width:300px;
+	height: 37px;
+	
+	vertical-align: middle;
+	color:#474747;
+	display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+    word-break: normal;
+	font-size:14px;
+	box-sizing: border-box;
+	padding:12px;
+}
+

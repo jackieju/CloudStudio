@@ -30,6 +30,7 @@
     </style>
 	<link rel="stylesheet" href="/stylesheets/index.css" type="text/css" />
 	<link rel="stylesheet" href="/stylesheets/github.css" type="text/css" />
+	<link rel="stylesheet" href="/stylesheets/de.css" type="text/css" />
 	
 	<!--script src="http://wh.joyqom.com/javascripts/jquery-1.3.2.js" type="text/javascript" charset="utf-8"></script-->
 	<!--script src="http://code.jquery.com/jquery-2.1.1.js"></script-->
@@ -44,6 +45,7 @@
 		//alert("this is index.html");
 
      </script>
+	<script src="/javascripts/de_designer.js" ></script>
   </head>
   <body>
 	<style>
@@ -112,7 +114,7 @@
 				
 			</div>
 		</div><!-- left_pane -->
-		<div id="splitter" style="position:relative;float:left;height:600px;width:2px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
+		<div id="splitter" style="position:relative;float:left;height:600px;width:3px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
 		</div>
 		<div id='code_pane' style="margin-left:18.5%;width:81.5%;height:100%;border:1px solid #d8d8d8;border-top:0;">
 			<div class='cp_toolbar' style="width:100%;height:20px;border:1px solod blue;background:#f5f5f5">
@@ -252,8 +254,13 @@
 				</div>
 			</div><!-- bo_designer -->
 
-
+			<div id="de_designer" class="droppable" name="body" style="display:none;width:99%;height:580px;background:#fefefe;">
+		
+				<div id="de_content" class="" style="float:left;border:0px solid red;height:100%;width:100%;">
+				</div>
+			</div><!-- de_designer -->
 <script>
+
 function on_add_node(type){
 	add_node(type);
 	$("#type_list").css("display", "none");
@@ -879,14 +886,7 @@ end
 		show_balloon_for_bo(true, g_bo.offset().left, g_bo.offset().top);
 		
 	}
-	function save(){
-		if (g_currentView == "bo_designer"){
-			
-			content = export_bo();
-			
-		}else
-			// alert(getNodePath(g_selected_node));
-			content = ace_editor.getValue(); 
+	function _save(content){
 		// alert(content);
 		type = g_selected_node.type;
 		// fname = g_selected_node.name;
@@ -895,8 +895,8 @@ end
 		isnew = g_selected_node.isNew;
 		// alert(isnew);
 		// alert(content);
-		if (type != 'bo' && type !='code')
-			return;
+		// if (type != 'bo' && type !='code')
+		// 	return;
 		//alert(content);
 		$.ajax({
 			type: "post",
@@ -913,7 +913,7 @@ end
 				// authenticity_token:window._token
 			}, 
 			success: function(data, textStatus){
-				// alert( "Data Saved: " + data +","+ textStatus);
+				 //alert( "Data Saved: " + data +","+ textStatus);
 
 				showWaiting(false);
 				if (data.error){
@@ -939,6 +939,21 @@ end
 		// alert(content);
 
 		showWaiting(true);
+	}
+	function save(){
+	//	alert(inspect(g_views[g_currentView]));
+		if (g_views[g_currentView].save_fn){
+			g_views[g_currentView].save_fn();
+			return;
+		}
+		if (g_currentView == "bo_designer"){
+			
+			content = export_bo();
+			
+		}else
+			// alert(getNodePath(g_selected_node));
+			content = ace_editor.getValue(); 
+		_save(content);
 	    
 	}
 	var g_prevContent = null;
@@ -1424,7 +1439,7 @@ function ws_deploy(appid, tenant){
 						
 						// $("#editor").css("display", "block");
 						// $("#bo_designer").css("display", "none");
-						switch_view("editor", node);
+						switch_view("editor_wrapper", node);
 						// $("#applist").html(data);
 						appendToConsole('Load successfully');
 
@@ -1471,12 +1486,10 @@ function ws_deploy(appid, tenant){
 				$("#canvas").empty();
 
 
-				// $("#applist").html(data);
-				appendToConsole('Load successfully');
+				appendToConsole('Load DataElement successfully');
 				return;
 			}
 			
-		// alert("b");
 			
 			$.ajax({
 				type: "post",
@@ -1549,40 +1562,125 @@ function ws_deploy(appid, tenant){
 			update_nav(fname, type);
 	
 		}
+		function open_de(node){
+			// fname = g_selected_node.name;
+			type = g_selected_node.type;
+			
+				// fname = g_selected_node.name;
+			fname = getNodePath(g_selected_node);
+			// alert("a");
+			
+			if (g_selected_node.isNew == 'true'){
+				
+				
+				nav = "";
+				if (type == 'bo')
+					nav = "Data Element > ";
+				else if	(type == "code")
+					nav = "Extensions > ";
+				$("#filenav").html(nav+g_selected_node.name);
+				
+				
+				switch_view("de_designer", node);
 		
-// ======
-// = UI =
-// ======
+				$("#de_content").empty();
 
+
+				// $("#applist").html(data);
+				appendToConsole('Load successfully');
+				return;
+			}
+			
+		// alert("b");
+			
+			$.ajax({
+				type: "post",
+				url: "/de/o?t="+ new Date().getTime(),
+			//	dataType: 'json',
+
+				data: {
+					appid:g_appid,
+					fname:fname,
+					// sid: '<%=@sid%>',
+					// authenticity_token:window._token
+				}, 
+				success: function(data, textStatus){
+					// alert( "Data Saved: " + data +","+ textStatus);
+
+					showWaiting(false);
+					// if (data.error){
+						// popup(data.error);
+					// }else{
+						// alert(data.data);
+					
+						
+						nav = "";
+						if (type == 'bo')
+							nav = "Data Element > ";
+						else if	(type == "code")
+							nav = "Extensions > ";
+						$("#filenav").html(nav+fname);
+						
+						$("#de_content").html(data);
+						switch_view("de_designer", node);
+						appendToConsole('Load successfully');
+
+					// }
+
+				},
+				error: function(xhr, textStatus, errorThrow){
+					// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+					popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+					showWaiting(false);
+
+				}
+			}); // $ajax
+		
+			// $("#props").empty();
+			appendToConsole("Load Data Element Successfully");
+			update_nav(fname, type);
+	
+		}		
+// =============
+// = UI CORE =
+// =============
 		g_currentView = null;
-		// view: "editor", "bo_designer", "git", "log"
-		// node: if triggered by click this node
+		g_views = {};
+		
+		function add_view(viewid, save_func){
+			// g_views.push(viewid);
+			g_views[viewid]={
+				save_fn:save_func
+			};
+		}
+		
+		
+		
+		// view: "editor_wrapper", "bo_designer", "git", "log"
+		// node: if triggered by click this node in left tree
 		function switch_view(view, node){ 
-			$("#editor_wrapper").css("display", "none");	
-			$("#bo_designer").css("display", "none");
-			$("#git").css("display", "none");
-			$("#log").css("display", "none");															
+			for (v in g_views){
+			
+				if (v != view)
+					$("#"+v).css("display", "none");
+			}
+														
 			$("#prop_pad").css("display", "none");
 			
-			if (view != "bo_designer")
+			if (view != "bo_designer") // clear current bo node if swtich to non-bo_designer
 				g_current_bo_node = null;
-			else if (node != null)
+			else if (node != null) // if swtich to bo node
 				g_current_bo_node = node;
 				
 			g_currentView = view;
 			
-			if (view == "editor")
-				$("#editor_wrapper").css("display", "block");
-			else
-				$("#"+view).css("display", "block");
+			$("#"+view).css("display", "block");
 			
 		}
 		function show_editor(){
-			// $("#editor").css("display", "block");	
-			// $("#bo_designer").css("display", "none");
-			// $("#log").css("display", "none");
-			// $("#git").css("display", "none");
-			switch_view("editor");
+
+			switch_view("editor_wrapper");
 		}
 		function update_nav(fname, type){
 				nav = "";
@@ -1799,70 +1897,8 @@ function ws_deploy(appid, tenant){
 		}
 
 
-// =======
-// = git =
-// =======				
-		function show_diff(){
-			var fname="";
-			if (g_selected_node && g_selected_node.type == "bo" || g_selected_node.type == "file" ||  g_selected_node.type == "code")
-					fname = getNodePath(g_selected_node);
-				
-				diff_editor.setValue("");
-				$.ajax({
-					type: "post",
-					url: "/app/diff?f="+fname+"&t="+ new Date().getTime(),
-					// dataType: 'json',
 
-					data: {
-						appid:g_appid,
-					
 
-						// sid: '<%=@sid%>',
-						// authenticity_token:window._token
-					}, 
-					success: function(data, textStatus){
-						// alert( "Data Saved: " + data +","+ textStatus);
-
-						showWaiting(false);
-						// if (data.error){
-						// 						popup(data.error);
-						// 					}else{
-							// alert(data.data);
-							// $("#diff").text(data);
-							diff_editor.setValue(data);
-						// }
-
-					},
-					error: function(xhr, textStatus, errorThrow){
-						// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
-						popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
-
-						showWaiting(false);
-
-					}
-				}); // $ajax
-			
-			showWaiting(true);
-		}
-		function show_git(){
-			switch_view("git");
-			// $("#editor").css("display", "none");	
-			// $("#bo_designer").css("display", "none");
-			// $("#log").css("display", "none");
-			// 
-			// $("#git").css("display", "block");
-			select_commit();
-			
-			// g_currentView = "git";
-			fname = "";
-			diff_editor.setValue("");
-			
-
-		}
-
-	</script>
-	
-	<script>
 
 	// init resizables
 	// NOTE: the div position must be relative
@@ -2004,191 +2040,6 @@ function ws_deploy(appid, tenant){
 	</script>
 
 <script>
-// ================
-// = Log Function =
-// ================
-var g_startLogline = 0;
-var g_lastLogLine = 0;
-var g_first_r_log = true;
-function openlog(){
-	switch_view("log");
-	// $("#editor").css("display", "none");	
-	// $("#bo_designer").css("display", "none");
-	// $("#log").css("display", "block");	
-	if (g_first_r_log){
-		tail_log(100);
-		g_rlog_timer = setInterval("retrieve_log();", 1000);
-	}else
-		retrieve_log();
-	// g_currentView = "log";
-}
-// function decode_base64(s) {
-//     var e={},i,k,v=[],r='',w=String.fromCharCode;
-//     var n=[[65,91],[97,123],[48,58],[43,44],[47,48]];
-// 
-//     for(z in n){for(i=n[z][0];i<n[z][1];i++){v.push(w(i));}}
-//     for(i=0;i<64;i++){e[v[i]]=i;}
-// 
-//     for(i=0;i<s.length;i+=72){
-//     var b=0,c,x,l=0,o=s.substring(i,i+72);
-//          for(x=0;x<o.length;x++){
-//                 c=e[o.charAt(x)];b=(b<<6)+c;l+=6;
-//                 while(l>=8){r+=w((b>>>(l-=8))%256);}
-//          }
-//     }
-//     return r;
-//     }
-// 	function decode_base642(s) {
-// 	  var b=l=0, r='', s=s.split(''), i,
-// 	  m='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split('');
-// 	  for (i in s) {
-// 	    b=(b<<6)+m.indexOf(s[i]); l+=6;
-// 	    while (l>=8) r+=String.fromCharCode((b>>>(l-=8))&0xff);
-// 	  }
-	  // return r;
-	  // 		}
-function tail_log(ln){
-		$.ajax({
-			type: "get",
-			url: "/app/tlog?ln="+ln+"&t="+ new Date().getTime(),
-		 	dataType: 'json',
-			success: function(data, textStatus){
-				// alert( "Data Saved: " + data +","+ textStatus);
-
-				showWaiting(false);
-				if (data.error){
-					popup(data.error);
-				}else{
-					// alert(data);
-					c = decodeURIComponent(data.c);
-					// c = c.replace(/</g, "$lt;").replace(/>/g, "$gt;")
-					$("#log_c").append(c);
-					g_startLogline = data.start_line;
-					g_lastLogLine = data.start_line -1;
-					count = c.split("<br/>").length;
-					for (var i = 0; i<count; i++){
-						g_lastLogLine += 1;
-						_num = g_lastLogLine+1;
-						$("#log_ln").append(_num+"<br/>");
-						
-					}
-					$("#log").attr("scrollTop",$("#log").attr('scrollHeight'));
-				 
-					// alert(g_lastLogLine);
-					g_first_r_log = false;
-					
-					
-				}
-			},
-			error: function(xhr, textStatus, errorThrow){
-				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
-				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
-
-				showWaiting(false);
-
-			}
-		}); // $ajax
-		// showWaiting(true);
-	}
-
-function retrieve_previous_log(){
-	
-		$.ajax({
-			type: "get",
-			url: "/app/rlog?ln=-100&sl="+g_startLogline+"&t="+ new Date().getTime(),
-			// dataType: 'json',
-
-			// data: {
-				// appid:g_appid,
-				// 			fname:fname,
-				// 			type:type,
-
-				// sid: '<%=@sid%>',
-				// authenticity_token:window._token
-			// }, 
-			success: function(data, textStatus){
-				// alert( "Data Saved: " + data +","+ textStatus);
-
-				showWaiting(false);
-				if (data == ""){
-
-				}else{
-					// alert(data);
-					$("#log_c").html(data+$("#log_c").html);
-					count = data.split("<br/>").length;
-					if (count > 0){
-						for (var i = 0; i<count; i++){
-							g_startLogline -= 1;
-							_num = g_startLogline+1;
-							$("#log_ln").html(_num+"<br/>"+$("#log_ln").html());
-						}
-
-						$("#log").attr("scrollTop",$("#log").attr('0'));
-						
-						if (g_startLogline <=0){
-							$("#bt_plog").css("display", "none");
-						}
-					}
-					// alert(g_lastLogLine);
-				}
-
-			},
-			error: function(xhr, textStatus, errorThrow){
-				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
-				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
-
-				showWaiting(false);
-
-			}
-		}); // $ajax
-}
-function retrieve_log(){
-
-	$.ajax({
-		type: "get",
-		url: "/app/rlog?sl="+g_lastLogLine+"&t="+ new Date().getTime(),
-		// dataType: 'json',
-
-		// data: {
-			// appid:g_appid,
-			// 			fname:fname,
-			// 			type:type,
-	
-			// sid: '<%=@sid%>',
-			// authenticity_token:window._token
-		// }, 
-		success: function(data, textStatus){
-			// alert( "Data Saved: " + data +","+ textStatus);
-
-			showWaiting(false);
-			if (data == ""){
-				
-			}else{
-				// alert(data);
-				$("#log_c").append(data);
-				count = data.split("<br/>").length;
-				if (count > 0){
-					for (var i = 0; i<count; i++){
-						g_lastLogLine += 1;
-								_num = g_lastLogLine+1;
-								$("#log_ln").append(_num+"<br/>");
-					}
-					// appendToConsole("last log line "+g_lastLogLine);
-					$("#log").attr("scrollTop",$("#log").attr('scrollHeight'));
-				}
-				// alert(g_lastLogLine);
-			}
-
-		},
-		error: function(xhr, textStatus, errorThrow){
-			// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
-			popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
-
-			showWaiting(false);
-
-		}
-	}); // $ajax
-}
 
 </script>
 
@@ -2290,369 +2141,54 @@ function retrieve_log(){
 		// alert(g_bo.html());
 		// alert(inspect(g_bo));
 	}
-// ================
-// = BO functions =
-// ================	
-	
-	// $(".field").click(function(event){
-	// 	show_field_prop();
-	// });
-	
-	// store bo list of current editing bo view
-	var g_bos = {data:[]};
-	// the bo node of current bo view
-	var g_current_bo_node = null;
-	
-	g_type_options = ["Boolean",
-	    "Date",
-	    "Time",
-	    "DateTime",
-	    "Integer",
-	    "Long",
-	    "Double",
-	    "Decimal",
-	    "Rate",
-	    "Price",
-	    "Sum",
-	    "Quantity",
-	    "Percent",
-	    "Measure",
-	    "Tax",
-	    "String",
-	    "Text",
-	    "Link",
-	    "Address",
-	    "Phone",
-	    "Binary",
-	    "Memo",
-	    "Email",
-	    "Fax",
-	    "ZipCode"];
-	/*	function show_boprops(t){
-			// alert(t.find("div.draggable_obj_name").html());
-			a =  t.find("div.draggable_obj_name").html();
-			// alert($("#props input#prop_name").html());
-			// alert($("#props input#prop_v_name").length);
-			name = ""+$.trim(a);
-			// alert(name);
-			$("#props input#boprop_v_name").val(name);
-			$("#props input#boprop_v_type").val("BO");
-			$("#prop_pad").css("display", "block");
 
-			ps = t.find(".draggable_obj_prop");
-			 // alert(ps.length);
-			i = 0;
-			for (;i<ps.length;i++){
-				// alert($(ps[i]).attr("n"));
-				item = $(ps[i]);
-				n = item.attr("n");
-				v = item.html();
-				v = $.trim(v);
-				// alert(v);
-				// alert("#props #boprop_v_"+n);
-				// alert($("#props #boprop_v_"+n).length);
-				$("#boprop_v_"+n).val(v);
-
-			}
-			$("#field_prop_pad").css("display", "none");
-			// alert(0);
-		}
-	*/
-	function show_boprops(t){
-			// alert(g_bo);
-			bo = g_bo.prop('ref');
-			$("#props input#boprop_v_name").val(bo.name);
-			$("#props input#boprop_v_type").val("BO");
-			$("#boprop_v_desc").val(bo.desc);
-			// $("#props input#boprop_v_desc").val(bo.desc);
-			// alert(bo.desc);
-			
-			
-			$("#prop_pad").css("display", "block");
-			// $("#boprop_v_name").html(bo.name);
-			// $("#boprop_v_type").html(bo.type);
-			
-			$("#field_prop_pad").css("display", "none");
-			// alert(0);
-		}
-	
-	function add_bo_field(){
-		newf = "<div class=\"field\" style=\"border-bottom:1px solid grey;margin-top:5px;\" i='"+g_bo.prop("ref").fields.length+"' onclick=\"show_field_prop(event);\";>\
-			<span class='field_name' >unnamed</span> <span class='field_type' style=\"color:grey\">(String)</span>\
-		<div class=bo_field_prop_list ></div>\
-		</div>";
-
-		btn = g_bo.find(".btn_add_bf");
-		$(newf).insertBefore(btn);
-
-		b = $("#balloon");
-		btn = b.find(".btn_add_bf");
-		newn = $(newf).insertBefore(btn);
-		
-		data = {
-			name:"unamed",
-			type:"string",
-			length:1,
-			default_value:"null",
-			desc:""
-		};
-		g_bo.prop("ref").fields.push(data);
-		newn.prop("ref", data);
-		
-		// alert(1);
-	}
-	
-	g_selected_bo_field = null;
-	function render_bo(bo){
-		// alert(inspect(bo));
-		str = "<div style='position:absolute;left:"+bo.x+"px; top: "+bo.y+"px;' id='"+bo.ui+"' class='draggable_obj ui-draggable bo'>\
-			<img src='/images/block2.png' style='height:50px;'>\
-			<div class='draggable_obj_name'>"
-			+bo.name+
-			"</div> \
-			<div class='draggable_obj_prop' n='type'>"
-			+bo.type+
-			"</div>\
-			<div class='draggable_obj_prop' n='desc'>"
-				+bo.desc+
-			"</div>\
-		</div>";
-		// alert(str);
-		return str;
-	}
-	function prepare_bo(inserted, bo){
-		// alert(inspect(inserted));
-		// alert(inserted.outerHTML);
-		inserted = inserted.find("div#"+bo.ui);
-		// alert(inserted.length);
-		// inserted.attr("inserted", "1");
-		// inserted = $(inserted[inserted.length-1]);
-		// alert(inserted[0].outerHTML);
-		inserted.draggable({containment: "parent" });	
-		// inserted.css('left', bo.x);
-		// 	inserted.css('top', bo.x);
-		
-		inserted.prop("ref", bo);
-		// alert(inspect(inserted.prop("ref")));
-		// alert($(inserted[inserted.length-1]).attr("id"));
-		// alert(inserted.html());
-		inserted.click(function(event){
-			g_bo = inserted;
-			show_boprops(inserted);
-			
-		});
-		
-		inserted.dblclick(function(event){
-			// inserted.balloon({ position: "bottom right" });
-			// $("#console").balloon({ position: "bottom right" });
-			// alert("dbc");
-			// $("#balloon").toggle(
-			// 							function(){
-			// 								$(this).animate({height: 'toggle', opacity: 'toggle'}, "slow");
-			// 							},
-			// 							function(){
-			// 								$(this).animate({height: 'toggle', opacity: 'toggle'}, "slow");
-			// 							});	
-			show_balloon_for_bo(true, event.clientX, event.clientY);
-			g_bo = inserted;
-			
-		});		
-		g_bo = inserted;
-			
-		
-	}
-
-	function render_bo_fields(bo){
-		ret = "";
-		// alert(inspect(bo.fields.length));
-		for (var i =0; i< bo.fields.length;i++){
-			f = bo.fields[i];
-			ret += "<div class=\"field\" style=\"border-bottom:1px solid grey;margin-top:5px;\" i='"+i+"'onclick=\"show_field_prop(event);\";>\
-				<span class='field_name' >"+f.name+"</span> <span class='field_type' style=\"color:grey\">("+f.type+")</span></div>";
-		}
-		return ret;
-	}
-
-	function render_bo_field_props(f){
-	
-		ret =  "<div class='prop_line' style='height:30px;' >                                                                        \
-			<div class='prop_name'>Name</div><div class='prop_v'  n='name'><input id='fprop_v_name' value='"+ f.name +"' onchange='on_bfprop_change(event);'></input></div>                             \
-		</div>";
-		
-		opt = "";
-		
-		
-		for (var i=0;i<g_type_options.length;i++){
-			op = g_type_options[i];
-			if (op.toLowerCase() == f.type.toLowerCase())
-				opt += "<option selected>"+op+"</option>";
-			else
-				opt += "<option >"+op+"</option>";
-
-		}
-		ret += "<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name' >Type</div><div class='prop_v' n='type'><select id='fprop_v_type' value='"+ f.type +"' onchange='on_bfprop_change(event);'>"
-			+opt +"</select></div></div>";
-		
-		
-		 if (f.readonly )
-			ret += "<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>ReadOnly</div><div class='prop_v' n='readonly'><input type='checkbox' id='prop_v_readonly' checked='checked' onchange='on_bfprop_change(event);'></input></div>      \
-		</div>   ";
-		else
-			ret += "<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>ReadOnly</div><div class='prop_v' n='readonly'><input type='checkbox' id='prop_v_readonly' onchange='on_bfprop_change(event);'></input></div>      \
-		</div>   ";	
-		
-		ret += "  <div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>Default value</div><div class='prop_v' n='default_value'><input id='fprop_v_default_value' onchange='on_bfprop_change(event);' value='"+f.default_value+"'></input></div>                    \
-		</div>                                                                                                                       \
-		<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>Length</div><div class='prop_v' n='length'><input id='bfprop_v_length' onchange='on_bfprop_change(event);' value='"+f.length+"' ></input></div>                          \
-		</div>                                                                                                                       \
-		<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>Enabled</div><div class='prop_v' n='enabled'><input type='checkbox' id='bfprop_v_enabled' onchange='on_bfprop_change(event);'></input></div>     \
-		</div>                                                                                                                       \
-		<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>Encoding</div><div class='prop_v' n='encoding'><input id='bfprop_v_encoding' onchange='on_bfprop_change(event); value='"+f.default_value+"'></input></div>                        \
-		</div>                                                                                                                       \                                                                                                    \
-		<div class='prop_line' style='height:30px;'>                                                                                 \
-			<div class='prop_name'>unique</div><div class='prop_v' n='unique'><input type='checkbox' id='bfprop_v_unique' onchange='on_bfprop_change(event);'></input></div>      \
-		</div>";
-		
-		return ret;
-	}
-	function show_field_prop(event){
-		if (g_selected_bo_field != null)
-			g_selected_bo_field.css("color", "#000000");
-		
-		g_selected_bo_field = $(event.currentTarget);
-		// alert(g_selected_bo_field.html());
-		g_selected_bo_field.css("color", "#9999ff");
-/*		prop_list = g_selected_bo_field.find(".bo_field_prop_list");
-
-		
-		_html = prop_list.html();
-		
-		if (_html == ""){                    
-			name = g_selected_bo_field.find("span.field_name").html(); 
-			type = g_selected_bo_field.find("span.field_type").html();                                                                                 
-			                                                                                
-			_html = "<div class='prop_line' style='height:30px;'>                                                                        \
-				<div class='prop_name'>Name</div><div class='prop_v'><input id='fprop_v_name' value='"+ name +"' onchange='on_bfprop_change(event);'></input></div>                             \
-			</div>                                                                                                                       \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>Type</div><div class='prop_v'><select id='fprop_v_type' value='"+ type +"' onchange='on_bfprop_change(event);'>\
-				<option>String</option>\
-				<option>Integer</option>\
-				</input></div>                             \
-			</div>                                                                                                                       \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>ReadOnly</div><div class='prop_v'><input type='checkbox' id='prop_v_readonly' onchange='on_bfprop_change(event);'></input></div>      \
-			</div>                                                                                                                       \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>Default value</div><div class='prop_v'><input id='fprop_v_default_value' onchange='on_bfprop_change(event);'></input></div>                    \
-			</div>                                                                                                                       \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>Length</div><div class='prop_v'><input id='bfprop_v_length' onchange='on_bfprop_change(event);'></input></div>                          \
-			</div>                                                                                                                       \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>Enabled</div><div class='prop_v'><input type='checkbox' id='bfprop_v_enabled' onchange='on_bfprop_change(event);'></input></div>     \
-			</div>                                                                                                                       \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>Encoding</div><div class='prop_v'><input id='bfprop_v_encoding' onchange='on_bfprop_change(event);'></input></div>                        \
-			</div>                                                                                                                       \                                                                                                    \
-			<div class='prop_line' style='height:30px;'>                                                                                 \
-				<div class='prop_name'>unique</div><div class='prop_v'><input type='checkbox' id='bfprop_v_unique' onchange='on_bfprop_change(event);'></input></div>      \
-			</div>";                                                                                                                     
-			prop_list.html(_html);                                                                                                       
-		}                                                                                                                    
-		$("#fprops").html(_html);
-		*/
-		i = g_selected_bo_field.attr("i");
-		// alert(i);
-		f  = g_bo.prop("ref").fields[i];
-		// alert(inspect(f));
-		_html = render_bo_field_props(f);
-		// alert(_html);
-		$("#fprops").html(_html);
-		$("#prop_pad").css("display", "none");
-		$("#field_prop_pad").css("display", "block");
-	}
-	function on_bfprop_change(event){
-	/*	prop_list = g_selected_bo_field.find(".bo_field_prop_list");
-		prop_list.html($("#fprops").html());
-		currentTarget = $(event.currentTarget);
-		currentTarget.parent().prop("v", currentTarget.val());
-		
-		if ($(event.currentTarget).prop("id") == "fprop_v_name"){			
-			g_selected_bo_field.find("span.field_name").html(currentTarget.val());
-		}else if ($(event.currentTarget).prop("id") == "fprop_v_type"){
-			g_selected_bo_field.find("span.field_type").html(currentTarget.val());			
-		}		
-		
-		alert(prop_list.html());
-		f = prop_list.find("#"+currentTarget.prop("id"));
-		if (f.size() > 0 ){
-			f.val(currentTarget.val());
-		}
-			*/
-		// alert($("#balloon_field_list").html());
-		currentTarget = $(event.currentTarget);
-		i = g_selected_bo_field.attr("i");
-		f  = g_bo.prop("ref").fields[i];
-		// alert(currentTarget);
-		if (currentTarget.is(':radio,:checkbox'))
-			v = currentTarget.prop('checked');
-		else
-			v = currentTarget.val();
-			// alert(v);
-		prop_name = currentTarget.parent().attr("n");
-		if (prop_name == "name")
-			g_selected_bo_field.find(".field_name").html(v);
-		else if (prop_name == "type")
-			g_selected_bo_field.find(".field_type").html(v);
-		
-		
-		
-		f[prop_name] = v;
-		// alert(inspect(f));
-	}
-	
-	function on_boprop_change(event){
-	/*	bo_name = g_bo.find(".draggable_obj_name");
-		bo_name.html($(event.currentTarget).val());
-		
-		if ($(event.currentTarget).prop("id") == "fprop_v_name"){			
-			g_selected_bo_field.find("span.field_name").html($(event.currentTarget).val());
-		}else if ($(event.currentTarget).prop("id") == "fprop_v_type"){
-			g_selected_bo_field.find("span.field_type").html($(event.currentTarget).val());
-			
-		}*/
-		bo = g_bo.prop('ref');
-		bo.name = $("#boprop_v_name").val();
-		bo.type = $("#boprop_v_type").val();
-		bo.desc = $("#boprop_v_desc").val();
-		// alert(bo.desc);
-	
-		g_bo.find(".draggable_obj_name").html(bo.name);
-	}
-		
 </script>
-
+<script src="/javascripts/oce_bo.js"></script>
+<script src="/javascripts/oce_git.js"></script>
+<script src="/javascripts/oce_serverlog.js"></script>
 <script src="/javascripts/oauth.js"></script>
 <script>
-<% if !@oauth_enabled  %>
-	function init(){
-		g_appid = getUrlQueryString("appid");
-		load_project(g_appid);
-		list_tenatns();
-	}
-	<%else%>
-	function init(){
 
+	function export_de(){
+		ret = {};
+		ret.name = $("#v_de_name").val();
+		ret.desc= $("#v_de_desc").val();
+		ret.dtype= {};
+		ret.dtype.name = $("#v_de_dtype").html();
+		_type = g_de_typedefs[ret.dtype.name];
+		if (_type){
+			if (_type.useScale == true)
+				ret.dtype.scale = parseInt($("#v_de_dtype_scale").val());
+			if (_type.maxLength != null)
+				ret.dtype._length = parseInt($("#v_de_dtype_length").val());
+		}
+		alert(inspect(ret));
+		return JSON.stringify(ret);
+	}
+	
+	function save_de(){
+		content = export_de();
+		alert(content);
+		_save(content);
+	}
+	function init_ui(){
+		
+		add_view("bo_designer");
+		add_view("editor_wrapper");
+		add_view("git");
+		add_view("log");
+		add_view("bo_designer");
+		add_view("de_designer", save_de);
+				
+		//$("#prop_pad").css("display", "none");
+	}
+	function init(){
+		
+		init_ui();
 		g_appid = getUrlQueryString("appid");
-		// alert("appid1="+g_appid);
+		<% if @oauth_enabled  %>
+		
+		//alert("appid1="+g_appid);
 		if (isNullString(g_appid)){
 			var cookie_appid = getCookie("appid");
 			console.log("get cookie appid="+cookie_appid);
@@ -2674,13 +2210,15 @@ function retrieve_log(){
 			// oauth_url: oauth_url,
 			ajax: false
 		}, function(){
-			alert("dd");
 			load_project(g_appid);
 			list_tenatns();
 		});
-	
-	}
+		<%else%>
+			load_project(g_appid);
+			list_tenatns();
 		<%end%>
+	}
+		
 </script>
 <script>
 $("#edit_box").click(function(e){
@@ -2696,14 +2234,17 @@ $("body").click(function(e){
 	// hide theme
 	$("#theme_list").css("display", "none");
 	$("#type_list").css("display", "none");
+	$(".temp_floating").css("display", "none");
 	
 });
+
 // check_session();
 
 // check_session2();
 // load_project(g_appid);
 // list_tenatns();
 init();
+
 </script>
 
 <!--<div id="dropbox" style="width:250px;height:250px;border:1px red solid;z-index:100000;"></div>

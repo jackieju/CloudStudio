@@ -161,53 +161,7 @@ end
         render :text=>ret.to_json
         
     end
-    
-    # /project/extension/untitle1.rb => {
-    # :path=>"/project/extension/Untitled1.rb",
-    # :cat2=>"Untitled1.rb", 
-    # :project=>"project",
-    # :cat1=>"extension", 
-    # :relative_dir=>"extension", 
-    # :relative_path=>"extension/Untitled1.rb", 
-    # :fname=>"Untitled1.rb"
-    # }
-    # save file to ./tmp/workspaces/i027910/rrr/app/extension/Untitled1.rb
-    def fileInfoFromPath(path)
-        p "===>path #{path}"
-        b = path.split('/')
-        fname = b[b.size-1]
-        if path.start_with?("/")
-            b = b[1..b.size-1]
-        end
-            prj = b[0]
-         p "===>prj=#{prj} #{b.size}"
-         cat = b[1]
-         cat2 = nil
-         if (b.size > 2)
-             cat2 = b[2]
-         end
-        r =  {
-             :path=>path,
-             :project=>prj,
-             :fname=>fname,
-             :cat1=>cat,
-             :cat2=>cat2,
-             :relative_path=>b[1..b.size-1].join("/"),
-             :relative_dir=>b[1..b.size-2].join("/")
 
-         }
-         p r
-        return {
-            :path=>path,
-            :project=>prj,
-            :fname=>fname,
-            :cat1=>cat,
-            :cat2=>cat2,
-            :relative_path=>b[1..b.size-1].join("/"),
-            :relative_dir=>b[1..b.size-2].join("/")
-            
-        }
-    end
     
     # rename file
     # appid:
@@ -571,39 +525,8 @@ load "bomigration.rb"
         path = params[:fname]
         type = params[:type]
         repo = appid
-        fi= fileInfoFromPath(path)
-        fname = fi[:fname]
-        
-        # dir = repo_ws_path(repo)+"/app/#{fi[:relative_dir]}"
-        
-        fname = "#{repo_ws_path(repo)}/app/#{fi[:relative_path]}"
-        data = ""
-        begin
-            if FileTest::exists?(fname) 
-                    open(fname, "r+") {|f|
-                           data = f.read
-                           
-                       p "===>data(#{fname}):#{data}"
-                            data = "" if data == nil
-                                
-                       }
-                  
-                   
-            end
-        rescue Exception=>e
-             p e.inspect
-             p e.backtrace[1..e.backtrace.size-1].join("\n\r")
-             
-        end
-        
-        if params[:r] == 'json'
-            p "data:#{data}"
-            if data.strip == ""
-                data = {}
-            else
-                data = JSON.parse(data)
-            end
-        end
+        data = open_file(repo, path, params[:r])
+ 
         success("ok", {:data=>data})
         return 
         

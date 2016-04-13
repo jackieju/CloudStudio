@@ -194,7 +194,7 @@ g_nodetypes.push({
 	ext:"de",
 	isLeaf:true,
 	icon:"",
-	open_method:function(node){ return open_bo(node);},
+	open_method:function(node){ return open_de(node);},
 	pos:null
 });
 

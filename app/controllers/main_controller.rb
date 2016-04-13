@@ -4,7 +4,7 @@ class MainController < ApplicationController
         @git_enabled = false if !$SETTINGS[:git_server] or $SETTINGS[:git_server] == ""
             
         @oauth_enabled = oauth_enabled?
-        
+        p "===>@oauth_enabled=#{@oauth_enabled}"
         if @oauth_enabled
             @oauth_redirect_uri  = $SETTINGS[:oauth_redirect_uri]
             @oauth_server_url_authorize =$SETTINGS[:oauth_server_url_authorize]
