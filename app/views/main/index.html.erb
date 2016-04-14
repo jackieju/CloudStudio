@@ -2153,7 +2153,18 @@ function ws_deploy(appid, tenant){
 		ret = {};
 		ret.name = $("#v_de_name").val();
 		ret.desc= $("#v_de_desc").val();
+		// ret.dtype.name = $("#v_de_dtype").html();
+
+		ret.dbname = $("#v_de_dbname").val();
+		dbnamechanged = $("#v_de_dbname").attr('dbnamechanged');
+		// alert(dbnamechanged);
+		if (dbnamechanged == "true")
+			ret.dbnamechanged = true;
+		else
+			ret.dbnamechanged = false;
+		
 		ret.dtype= {};
+		
 		ret.dtype.name = $("#v_de_dtype").html();
 		_type = g_de_typedefs[ret.dtype.name];
 		if (_type){

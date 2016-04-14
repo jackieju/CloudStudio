@@ -120,4 +120,8 @@
 	box-sizing: border-box;
 	padding:12px;
 }
-
+.dropdown_list li.list_item_group_title
+{
+	background-color:#eeeeee;font-size:12pt;text-align:left;margin-left:-40px;height:30px;color:#333333;
+	
+}

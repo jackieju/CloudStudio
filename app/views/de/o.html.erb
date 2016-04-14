@@ -11,7 +11,15 @@
 				<span style="color:red">*</span>Name
 			</div>
 			<div class="attr_value">
-				<input id="v_de_name" class="attr_value_input input_value" value="<%=@data.name%>"></input>
+				<input id="v_de_name" style="width:170px;min-width:170px;" class="attr_value_input input_value" value="<%=@data.name%>" onfocus="this.oldvalue = this.value;" onchange="check_change_type_name(this);this.oldvalue = this.value;" ></input>
+			</div>
+
+			
+			<div class="attr_name">
+				<span style="color:red"></span>DBAlias
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dbname" style="width:170px;min-width:170px;" class="attr_value_input input_value" value="<%=@data.dbname%>" dbnamechanged="<%=@data.dbnamechanged%>" onchange="onchangedbname(this);"></input>
 			</div>
 			<div style="clear:both">
 			</div>
@@ -24,7 +32,8 @@
 				<span style="color:red">*</span>Description
 			</div>
 			<div class="attr_value">
-				<textarea id="v_de_desc" class="attr_value_textarea input_value" ><%=@data.desc%></textarea>
+				<!--textarea id="v_de_desc" class="attr_value_textarea input_value" ><%=@data.desc%></textarea-->
+				<input id="v_de_desc" class="attr_value_textarea input_value" value="<%=@data.name%>"></input>
 			</div>
 			<div style="clear:both">
 			</div>
@@ -43,33 +52,48 @@
 				
 				<div id="v_de_dtype_ddl" class="dropdown_list_container temp_floating" style="position: absolute;display:none;max-height:500px;overflow-y:scroll;">
 					<ul class="dropdown_list" style="list-style-type:none;display: table;width: 100%;white-space: nowrap;  border-collapse: separate;">
-						<li>CHAR       </li>
-						<li>VARCHAR    </li>
-						<li>NCHAR      </li>
-						<li>NVARCHAR   </li>
-						<li>ALPHANUM   </li>
-						<li>SHORTTEXT  </li>
-						<li>BOOLEAN    </li>
-						<li>TINYINT    </li>
-						<li>SMALLINT   </li>
-						<li>INTEGER    </li>
-						<li>BIGINT     </li>
-						<li>DECIMAL    </li>
-						<li>SMALLDECIMA</li>
-						<li>REAL       </li>
-						<li>DOUBLE     </li>
-						<li>FLOAT      </li>
-						<li>BINARY     </li>
-						<li>VARBINARY  </li>
-						<li>BLOB       </li>
-						<li>CLOB       </li>
-						<li>NCLOB      </li>
-						<li>TEXT       </li>
-						<li>BINTEXT    </li>
-						<li>DATE       </li>
-						<li>TIME       </li>
-						<li>SECONDDATE </li>
-						<li>TIMESTAMP  </li>
+						<li class="list_item_group_title" style=""><i>Character String</i></li>
+						<li class="datatype">NVARCHAR    </li>
+						<li class="datatype">VARCHAR     </li>
+						<li class="datatype">ALPHANUM    </li>
+						<li class="datatype">NCHAR       </li>
+						<li class="datatype">CHAR        </li>
+						<li class="datatype">SHORTTEXT   </li>
+						
+						<li class="list_item_group_title" style=""><i>Numeric</i></li>
+						<li class="datatype">DECIMAL       </li>
+						<li class="datatype">SMALLDECIMAL  </li>
+						<li class="datatype">INTEGER       </li>
+						<li class="datatype">BIGINT        </li>
+						<li class="datatype">SMALLINT      </li>
+						<li class="datatype">TINYINT       </li>
+						<li class="datatype">DOUBLE        </li>
+						<li class="datatype">FLOAT         </li>
+						<li class="datatype">REAL          </li>
+						
+						
+						<li class="list_item_group_title" style=""><i>Date/Time </i></li>
+						<li class="datatype">SECONDDATE    </li>
+						<li class="datatype">DATE          </li>
+						<li class="datatype">TIME          </li>
+						<li class="datatype">TIMESTAMP     </li>
+				
+						
+						
+						<li class="list_item_group_title" style=""><i>Boolean</i></li>
+						<li class="datatype">BOOLEAN    </li>
+						
+						<li class="list_item_group_title" style=""><i>Binary</i></li>
+						<li class="datatype">VARBINARY  </li>
+						<li class="datatype">BINARY     </li>
+						
+						<li class="list_item_group_title" style=""><i>Large Object</i></li>
+						<li class="datatype">BLOB          </li>
+						<li class="datatype">NCLOB         </li>
+						<li class="datatype">CLOB          </li>
+						<li class="datatype">TEXT          </li>
+						<li class="datatype">BINTEXT       </li>
+
 					</ul>
 					
 
@@ -119,7 +143,9 @@
 	</div>
 				
 				<script>
-				$("#v_de_dtype_ddl ul li").click(function(e){
+			
+				
+				$("#v_de_dtype_ddl ul li.datatype").click(function(e){
 					//alert(inspect(e));
 					//alert(inspect(e.target));
 					stype = $(e.target).html();
@@ -143,6 +169,33 @@
 								$("#line_de_dtype_length").css("display", "none");
 					}
 				});
+				
+				function onchangedbname(t){
+					
+					$(t).attr('dbnamechanged', true);
+					alert($(t).attr('dbnamechanged'));
+				}
+				function check_change_type_name(t){
+					// old_value = t.oldvalue;
+					// alias = $("#v_de_dbname").val();
+					dbnamechanged = $("#v_de_dbname").attr('dbnamechanged');
+					
+					if (dbnamechanged != "true"){
+						value = $(t).val();
+					// alert(value);
+					
+					
+					// ar = value.split(/[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/);
+					// alert(inspect(ar));
+					// v = ar.join("_");
+					
+					v = value.replace(/([ABCDEFGHIJKLMNOPQRSTUVWXYZ])/g, '_$1');
+					v = v.toLowerCase();
+					$("#v_de_dbname").val(v);
+				}
+					
+					
+				}
 				</script>
 	<div class="section" style="width:100%;">
 		<div class="section_title" style="width:100%;">
