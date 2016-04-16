@@ -98,6 +98,11 @@ function add_attr(data, attr_name, typedesc){
 	if (typedesc == null)
 		typedesc = g_de_typedefs[typename];
 		
+	if (typedesc == null){
+		$("#de_dtype_"+ attr_name).css("display", "none");
+		$("#v_de_dtype_"+ attr_name).val("");
+		return;
+	}
 
 	v = data.dtype[attr_name]; // get atrr value by attr name
 	attr_hash = typedesc.attrs[attr_name];
@@ -141,14 +146,16 @@ function load_de(data){
 	
 	if (data.dtype == null){
 		data.dtype = {
+			name:""
 		};
 	}
 	
 //	typename = data.dtype.name;
 //	_type = g_de_typedefs[data.dtype.name];
-	alert(JSON.stringify(data));
-	$("#v_de_dtype").html(data.dtype.name);
+	// alert(JSON.stringify(data));
 	
+	$("#v_de_dtype").html(data.dtype.name);
+	alert(data.dtype.name);
 	// if (data.dtype.scale){
 	// 	$("#v_de_dtype_scale").val(data.dtype.scale);
 	// 	if (data.dtype.scale.required == true)
@@ -180,8 +187,8 @@ function load_de(data){
 	// $("#v_de_dtype_removeleadingblank").val(data.dtype.removeleadingblank);
 	// $("#v_de_dtype_fixedvalues").val(data.dtype.fixedvalues);
 	// $("#v_de_dtype_uidefaultvalue").val(data.dtype.uidefaultvalue);
+	alert("d");
 
-		
 }
 
 function onchangedbname(t){

@@ -720,6 +720,10 @@ function add_node(type){
 	}
 	// alert(g_selected_node.type);
 	else 	{ // if (g_selected_node.type == 'bo_root' || g_selected_node == 'bo')
+		
+		if (g_selected_node.hasChildren()){
+			parent_node = g_selected_node;
+		}else
 		parent_node = g_selected_node.parent;
 	
 		if (type && get_type(type)){

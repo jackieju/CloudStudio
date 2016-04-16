@@ -541,7 +541,7 @@
 							v = $(event.target).html();
 							v = v.trim();
 							node.html(v);
-							event.stopPropagation();
+							// event.stopPropagation();
 							
 						});
 						e.stopPropagation();
@@ -1912,6 +1912,7 @@ function ws_deploy(appid, tenant){
 				switch_view("de_designer", node);
 		
 				//$("#de_content").empty();
+				load_de({});
 
 
 				// $("#applist").html(data);
