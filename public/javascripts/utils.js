@@ -108,13 +108,16 @@ function autoPos(a, b){
     $(b).css("margin-top", c_h);
 //	alert(c_w+","+c_h);
 }
-function inspect(obj) {
+function inspect(obj, deep) {
+	if (deep == null)
+		deep = 0;
+		
     var props = "";
 
 	var type = typeof(obj);
 	if (type == "string" || type == "number" || type == "boolean")
 		return obj+"["+typeof(obj)+"]";
-     
+
 	for(var p in obj){
 
          if(typeof(obj[p])=="function"){
@@ -123,8 +126,9 @@ function inspect(obj) {
          }else{
            	props+="["+typeof(obj[p])+"]" +  p + "=" + obj[p] + "\n";
 			// the recursive may cause dead loop
-            // if (typeof(obj[p])=="object")
-                    // props+="[\n"+inspect(obj[p])+"\n]\n";
+			
+            if (deep > 0 && typeof(obj[p])=="object")
+                     props+=deep+":[\n"+inspect(obj[p], deep-1)+"\n]\n";
          }
      }
 

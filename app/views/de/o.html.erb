@@ -141,6 +141,144 @@
 		<!-- end of data line -->
 	
 	</div>
+
+	<div class="section" style="width:100%;">
+		<div class="section_title" style="width:100%;">
+		Attributes
+		</div>
+		
+		<div id="de_dtype_minLength"class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Min Length
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_minLength" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		
+		<div id="de_dtype_min" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Min
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_min" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+				
+		<div id="de_dtype_max" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Max
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_max" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+
+		<div id="de_dtype_allowPast" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Allow Past
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_allowPast" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>	
+
+		<div id="de_dtype_charset" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Charset
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_charset" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>	
+				
+		<div id="de_dtype_regexpattern" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Regular Expression Pattern
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_regexpattern" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+
+		<div id="de_dtype_touppercase" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>To Uppercase
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_touppercase" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>	
+		
+		<div id="de_dtype_removeleadingblank" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Remove leading blank
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_removeleadingblank" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>
+		
+		<div id="de_dtype_fixedvalues" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>Fixed value
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_fixedvalues" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>		
+
+		<div id="de_dtype_uidefaultvalue" class="data_line">
+			<div class="attr_name">
+				<span style="color:red;display:none">*</span>ui default value
+			</div>
+			<div class="attr_value">
+				<input id="v_de_dtype_uidefaultvalue" class="attr_value_input" value=""></input>
+			</div>
+			<div style="clear:both">
+			</div>
+		</div>				
+	</div>
+	<div class="section" style="width:100%;">
+		<div class="section_title" style="width:100%;">
+		UI Information
+		</div>
+		
+		<% if @data.ui %>
+		<% @data.ui.each{|attr|%>
+			<div class="data_line">
+				<div class="attr_name">
+					<% attr.n %>
+				</div>
+				<div class="attr_value">
+					<input id="v_de_name" class="attr_value_input" value="<%=attr.v%>"></input>
+				</div>
+				<div style="clear:both">
+				</div>
+			</div>
+
+		<%} %>
+		<% end %>
+	</div>
+</div>
 				
 				<script>
 			
@@ -164,62 +302,11 @@
 							$("#line_de_dtype_scale").css("display", "none");
 						
 						if (_type.maxLength != null){
-							$("#line_de_dtype_length").css("display", "block");								
+							$("#line_de_dtype__length").css("display", "block");								
 						}		else
 								$("#line_de_dtype_length").css("display", "none");
 					}
 				});
 				
-				function onchangedbname(t){
-					
-					$(t).attr('dbnamechanged', true);
-					alert($(t).attr('dbnamechanged'));
-				}
-				function check_change_type_name(t){
-					// old_value = t.oldvalue;
-					// alias = $("#v_de_dbname").val();
-					dbnamechanged = $("#v_de_dbname").attr('dbnamechanged');
-					
-					if (dbnamechanged != "true"){
-						value = $(t).val();
-					// alert(value);
-					
-					
-					// ar = value.split(/[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/);
-					// alert(inspect(ar));
-					// v = ar.join("_");
-					
-					v = value.replace(/([ABCDEFGHIJKLMNOPQRSTUVWXYZ])/g, '_$1');
-					v = v.toLowerCase();
-					$("#v_de_dbname").val(v);
-				}
-					
-					
-				}
+
 				</script>
-	<div class="section" style="width:100%;">
-		<div class="section_title" style="width:100%;">
-		Attributes
-		</div>
-		<% if @data.attrributes %>
-		<% @data.attributes.each{|attr|%>
-			<div class="data_line">
-				<div class="attr_name">
-					<% attr.n %>
-				</div>
-				<div class="attr_value">
-					<input id="v_de_name" class="attr_value_input" value="<%=attr.v%>"></input>
-				</div>
-				<div style="clear:both">
-				</div>
-			</div>
-			
-		<%} %>
-		<% end %>
-	</div>
-	<div class="section" style="width:100%;">
-		<div class="section_title" style="width:100%;">
-		UI Information
-		</div>
-	</div>
-</div>

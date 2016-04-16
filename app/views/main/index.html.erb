@@ -256,8 +256,336 @@
 
 			<div id="de_designer" class="droppable" name="body" style="display:none;width:99%;height:580px;background:#fefefe;">
 		
-				<div id="de_content" class="" style="float:left;border:0px solid red;height:100%;width:100%;">
+				<div id="de_content" class="" style="float:left;border:0px solid red;height:100%;width:100%;overflow-y:scroll;">
+					<div class="de" style="border:0px #9999ff dotted; width:100%;">
+						<div class="section" style="width:100%;">
+							<div class="section_title" style="width:100%;">
+							General Infomation
+							</div>
+
+							<!-- begin of data line -->
+							<div class="data_line">
+								<div class="attr_name">
+									<span style="color:red">*</span>Name
+								</div>
+								<div class="attr_value">
+									<input id="v_de_name" style="width:170px;min-width:170px;" class="attr_value_input input_value" value="" onfocus="this.oldvalue = this.value;" onchange="check_change_type_name(this);this.oldvalue = this.value;" ></input>
+								</div>
+
+
+								<div class="attr_name">
+									<span style="color:red"></span>DBAlias
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dbname" style="width:170px;min-width:170px;" class="attr_value_input input_value" value="" dbnamechanged="" onchange="onchangedbname(this);"></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+							<!-- end of data line -->
+
+							<!-- begin of data line -->
+							<div class="data_line">
+								<div class="attr_name">
+									<span style="color:red">*</span>Description
+								</div>
+								<div class="attr_value">
+									<!--textarea id="v_de_desc" class="attr_value_textarea input_value" ></textarea-->
+									<input id="v_de_desc" class="attr_value_textarea input_value" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+							<!-- end of data line -->
+
+							<!-- begin of data line -->
+							<div class="data_line">
+								<div class="attr_name">
+									<span style="color:red">*</span>Data Type
+								</div>
+								<div class="attr_value">
+
+									<!--input id="v_de_name" class="attr_value_input" value=""></input-->
+									<div id="v_de_dtype" class="dropdown_box" onclick="show_types(event);"></div>
+
+									<div id="v_de_dtype_ddl" class="dropdown_list_container temp_floating" style="overflow-y:scroll;">
+										<ul class="dropdown_list" style="">
+											<li class="list_item_group_title" style=""><i>Character String</i></li>
+											<li class="datatype">NVARCHAR    </li>
+											<li class="datatype">VARCHAR     </li>
+											<li class="datatype">ALPHANUM    </li>
+											<li class="datatype">NCHAR       </li>
+											<li class="datatype">CHAR        </li>
+											<li class="datatype">SHORTTEXT   </li>
+
+											<li class="list_item_group_title" style=""><i>Numeric</i></li>
+											<li class="datatype">DECIMAL       </li>
+											<li class="datatype">SMALLDECIMAL  </li>
+											<li class="datatype">INTEGER       </li>
+											<li class="datatype">BIGINT        </li>
+											<li class="datatype">SMALLINT      </li>
+											<li class="datatype">TINYINT       </li>
+											<li class="datatype">DOUBLE        </li>
+											<li class="datatype">FLOAT         </li>
+											<li class="datatype">REAL          </li>
+
+
+											<li class="list_item_group_title" style=""><i>Date/Time </i></li>
+											<li class="datatype">SECONDDATE    </li>
+											<li class="datatype">DATE          </li>
+											<li class="datatype">TIME          </li>
+											<li class="datatype">TIMESTAMP     </li>
+
+
+
+											<li class="list_item_group_title" style=""><i>Boolean</i></li>
+											<li class="datatype">BOOLEAN    </li>
+
+											<li class="list_item_group_title" style=""><i>Binary</i></li>
+											<li class="datatype">VARBINARY  </li>
+											<li class="datatype">BINARY     </li>
+
+											<li class="list_item_group_title" style=""><i>Large Object</i></li>
+											<li class="datatype">BLOB          </li>
+											<li class="datatype">NCLOB         </li>
+											<li class="datatype">CLOB          </li>
+											<li class="datatype">TEXT          </li>
+											<li class="datatype">BINTEXT       </li>
+
+										</ul>
+									</div>
+
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+							<!-- end of data line -->
+							
+							<!-- begin of data line -->
+							<div class="data_line" id="de_dtype__length">
+								<div class="attr_name">
+									<span style="color:red;display:none;">*</span>Length
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype__length" class="attr_value_input input_value" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+							<!-- end of data line -->
+
+
+							<!-- begin of data line -->
+							<div class="data_line" id="line_de_dtype_scale">
+					
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Scale
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_scale" class="attr_value_input input_value" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+							<!-- end of data line -->
+
+						</div>
+
+						<div class="section" style="width:100%;">
+							<div class="section_title" style="width:100%;">
+							Attributes
+							</div>
+
+							<div id="de_dtype_minLength"class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Min Length
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_minLength" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+
+							<div id="de_dtype_min" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Min
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_min" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+
+							<div id="de_dtype_max" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Max
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_max" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+
+							<div id="de_dtype_allowPast" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Allow Past
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_allowPast" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>	
+
+							<div id="de_dtype_charset" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Charset
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_charset" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>	
+
+							<div id="de_dtype_regexpattern" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Regular Expression Pattern
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_regexpattern" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+
+							<div id="de_dtype_touppercase" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>To Uppercase
+								</div>
+								<div class="attr_value">
+									<!--input id="v_de_dtype_touppercase" class="dropdown_box attr_value_input" value=""></input-->
+									<div id="v_de_dtype_touppercase" class="dropdown_box"></div>
+									<div id="v_de_dtype_ddl" class="dropdown_list_container temp_floating" style="">
+										<ul class="dropdown_list" style="">
+											<li >YES</li>
+											<li >NO</li>
+										</ul>
+									</div>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>	
+
+							<div id="de_dtype_removeleadingblank" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Remove leading blank
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_removeleadingblank" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>
+
+							<div id="de_dtype_fixedvalues" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>Fixed value
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_fixedvalues" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>		
+
+							<div id="de_dtype_uidefaultvalue" class="data_line">
+								<div class="attr_name">
+									<span style="color:red;display:none">*</span>ui default value
+								</div>
+								<div class="attr_value">
+									<input id="v_de_dtype_uidefaultvalue" class="attr_value_input" value=""></input>
+								</div>
+								<div style="clear:both">
+								</div>
+							</div>				
+						</div>
+						<!--div class="section" style="width:100%;">
+							<div class="section_title" style="width:100%;">
+							UI Information
+							</div>
+
+
+						</div-->
+					</div>
 				</div>
+				<script>
+				
+
+				// $(document).on("click", ".dropdown_box", function(e){
+					// $(".dropdown_box").click(function(e){
+					$("#v_de_dtype_touppercase").click(function(e){
+							   			
+						node = $(e.target);
+						   
+						list = node.next();
+						list.css("display", "block");
+						
+						move_dropdown_list(node, list);
+					
+						
+						list.click(function(event){
+							v = $(event.target).html();
+							v = v.trim();
+							node.html(v);
+							event.stopPropagation();
+							
+						});
+						e.stopPropagation();
+				});
+			
+				$("#de_content .attr_value_input").change(function(e){
+					node = e.target;
+					id = node.id;
+					attr_name = id.substring(11);
+					// alert($(node).attr("changed"));
+					$(node).attr("changed", "true");
+					 
+				});
+				
+				$("#v_de_dtype_ddl ul li.datatype").click(function(e){
+					//alert(inspect(e));
+					//alert(inspect(e.target));
+					stype = $(e.target).html();
+					//show_type_prop(stype);
+					stype = stype.trim();
+					$("#v_de_dtype").html(stype);
+					
+					// alert(stype);
+					// alert(g_de_typedefs["VARCHAR"]);
+					_type = g_de_typedefs[stype];
+					// alert(inspect(_type));
+					if (_type){
+						if (_type.useScale == true)
+							$("#line_de_dtype_scale").css("display", "block");
+						else
+							$("#line_de_dtype_scale").css("display", "none");
+						
+						if (_type.maxLength != null){
+							$("#line_de_dtype__length").css("display", "block");								
+						}		else
+								$("#line_de_dtype__length").css("display", "none");
+					}
+					for (i = 0; i< g_type_attrs.length;i++)
+						check_type_attr(stype, g_type_attrs[i]);
+					
+				});
+				
+
+				</script>
 			</div><!-- de_designer -->
 <script>
 
@@ -1583,7 +1911,7 @@ function ws_deploy(appid, tenant){
 				
 				switch_view("de_designer", node);
 		
-				$("#de_content").empty();
+				//$("#de_content").empty();
 
 
 				// $("#applist").html(data);
@@ -1596,11 +1924,12 @@ function ws_deploy(appid, tenant){
 			$.ajax({
 				type: "post",
 				url: "/de/o?t="+ new Date().getTime(),
-			//	dataType: 'json',
+				dataType: 'json',
 
 				data: {
 					appid:g_appid,
 					fname:fname,
+					rtype:'json'
 					// sid: '<%=@sid%>',
 					// authenticity_token:window._token
 				}, 
@@ -1608,24 +1937,27 @@ function ws_deploy(appid, tenant){
 					// alert( "Data Saved: " + data +","+ textStatus);
 
 					showWaiting(false);
-					// if (data.error){
-						// popup(data.error);
-					// }else{
-						// alert(data.data);
-					
+					if (typeof(data) == "string"){
 						
-						nav = "";
-						if (type == 'bo')
-							nav = "Data Element > ";
-						else if	(type == "code")
-							nav = "Extensions > ";
-						$("#filenav").html(nav+fname);
-						
-						$("#de_content").html(data);
-						switch_view("de_designer", node);
-						appendToConsole('Load successfully');
+								nav = "";
+								if (type == 'bo')
+									nav = "Data Element > ";
+								else if	(type == "code")
+									nav = "Extensions > ";
+								$("#filenav").html(nav+fname);
 
-					// }
+								$("#de_content").html(data);
+								switch_view("de_designer", node);
+								appendToConsole('Load successfully');
+					}
+					else if (data.error){
+						 popup(data.error);
+					 }else{
+						 alert(JSON.stringify(data));
+						load_de(data);
+						switch_view("de_designer", node);
+						
+					}
 
 				},
 				error: function(xhr, textStatus, errorThrow){
@@ -2149,33 +2481,7 @@ function ws_deploy(appid, tenant){
 <script src="/javascripts/oauth.js"></script>
 <script>
 
-	function export_de(){
-		ret = {};
-		ret.name = $("#v_de_name").val();
-		ret.desc= $("#v_de_desc").val();
-		// ret.dtype.name = $("#v_de_dtype").html();
 
-		ret.dbname = $("#v_de_dbname").val();
-		dbnamechanged = $("#v_de_dbname").attr('dbnamechanged');
-		// alert(dbnamechanged);
-		if (dbnamechanged == "true")
-			ret.dbnamechanged = true;
-		else
-			ret.dbnamechanged = false;
-		
-		ret.dtype= {};
-		
-		ret.dtype.name = $("#v_de_dtype").html();
-		_type = g_de_typedefs[ret.dtype.name];
-		if (_type){
-			if (_type.useScale == true)
-				ret.dtype.scale = parseInt($("#v_de_dtype_scale").val());
-			if (_type.maxLength != null)
-				ret.dtype._length = parseInt($("#v_de_dtype_length").val());
-		}
-		alert(inspect(ret));
-		return JSON.stringify(ret);
-	}
 	
 	function save_de(){
 		content = export_de();

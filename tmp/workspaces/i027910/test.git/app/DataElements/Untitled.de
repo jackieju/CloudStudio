@@ -1,1 +1,1 @@
-{"name":"AaaBccEdddeffssf","desc":"AaaBccEdddeffssf","dbname":"_aaa_bcc_eddd1","dbnamechanged":true,"dtype":{"name":"DECIMAL","scale":null,"_length":32}}
+{"name":"AaaBccEdddeffssf","desc":"AaaBccEdddeffssf","dbname":"_aaa_bcc_eddd1","dbnamechanged":true,"dtype":{"name":"NVARCHAR","_length":"123","minLength":"","charset":"","touppercase":"","removeleadingblank":"","fixedvalues":"","uidefaultvalue":""}}

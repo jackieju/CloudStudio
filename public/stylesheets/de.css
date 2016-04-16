@@ -83,6 +83,13 @@
 	    border-collapse: separate;
 	    z-index: 9999;
 	    max-height: 320px;
+	
+	position: absolute;
+	display:none;max-height:500px;
+}
+
+.dropdown_list{
+	list-style-type:none;display: table;width: 100%;white-space: nowrap;  border-collapse: separate;
 }
 .dropdown_list li{
 	display: list-item;
