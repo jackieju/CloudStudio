@@ -1,11 +1,15 @@
 	function commit_file(){
+		if (g_selected_node == null || g_selected_node.hasChildren())
+			return;
 		type = g_selected_node.type;
+		alert(type);
+		
 		// fname = g_selected_node.name;
 		fname = getNodePath(g_selected_node);
 		// alert(fname);
 		// alert(isnew);
 		msg = $("#commit-description-textarea").val();
-		if (type != 'bo' && type !='code')
+		if (type ==null || type == "" || type == "folder" )
 			return;
 		$.ajax({
 			type: "post",

@@ -106,16 +106,16 @@
 		<!-- end of data line -->
 		<% if @data.dtype._length %>
 		<!-- begin of data line -->
-		<div class="data_line" id="line_de_dtype_length">
+		<div class="data_line" id="line_de_dtype__length">
 		<% else %>
-		<div class="data_line" id="line_de_dtype_length" style="display:none;">
+		<div class="data_line" id="line_de_dtype__length" style="display:none;">
 		<% end %>
 		
 			<div class="attr_name">
 				Length
 			</div>
 			<div class="attr_value">
-				<input id="v_de_dtype_length" class="attr_value_input input_value" value="<%=@data.dtype._length%>"></input>
+				<input id="v_de_dtype__length" class="attr_value_input input_value" value="<%=@data.dtype._length%>"></input>
 			</div>
 			<div style="clear:both">
 			</div>
@@ -304,7 +304,7 @@
 						if (_type.maxLength != null){
 							$("#line_de_dtype__length").css("display", "block");								
 						}		else
-								$("#line_de_dtype_length").css("display", "none");
+								$("#line_de_dtype__length").css("display", "none");
 					}
 				});
 				

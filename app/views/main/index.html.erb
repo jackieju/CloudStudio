@@ -376,7 +376,7 @@
 
 
 							<!-- begin of data line -->
-							<div class="data_line" id="line_de_dtype_scale">
+							<div class="data_line" id="de_dtype_scale">
 					
 								<div class="attr_name">
 									<span style="color:red;display:none">*</span>Scale
@@ -618,6 +618,7 @@ function show_themes(e){
 }
 </script>
 		</div><!-- code_pane -->
+	
 	</div> <!-- main -->
 
 	<div id="waitingbg" style="display:none;z-index:1000;position:absolute;left:0;top:0;width:100%;height:100%;">
@@ -2240,7 +2241,7 @@ function ws_deploy(appid, tenant){
 		minWidth: 200,
 		alsoResize: "#pane3"
 	});
-	$("#pane3").resizable();
+	//$("#pane3").resizable();
 	// alert($(".resizable").length);
 	/* init dragable pane */
 	$(".draggable" ).draggable({
@@ -2249,6 +2250,12 @@ function ws_deploy(appid, tenant){
 		// 		
 		// 	}
 	});
+	// $("#main").resizable({
+	// 	 minHeight: 150,
+	// 	minWidth: 200//,
+	// 	//alsoResize: "#pane_resize_main"
+	// });
+	
 	// $(".revertable" ).draggable({
 	// 	revert: true,
 	// 	 stop: function() {
@@ -2548,7 +2555,13 @@ $("#theme_list").click(function(e){
 
 $("body").click(function(e){
 	// hide rename box
-	$("#edit_box").css("display", "none");
+	if (g_editing_node != null && $("#edit_box").css("display") != "none"){
+		
+		var v = $("#edit_value").val();
+		
+		$("#edit_box").css("display", "none");
+		rename_file(g_editing_node, v);
+	}
 	// hide theme
 	$("#theme_list").css("display", "none");
 	$("#type_list").css("display", "none");

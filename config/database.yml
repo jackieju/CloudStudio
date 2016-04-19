@@ -41,7 +41,7 @@ production1:
   column_store: true
   schema: I027910_MASTER
 
-production:
+production2:
     adapter:  mysql
     database: appstore
     host: localhost
@@ -50,3 +50,9 @@ production:
     pool: 15
     timeout: 5000
     socket: /var/lib/mysql/mysql.sock
+
+production:
+    adapter: sqlite3
+    database: db/development.sqlite3
+    pool: 5
+    timeout: 5000

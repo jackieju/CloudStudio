@@ -396,10 +396,11 @@ function init_tree2(data_root, info, init_structure){
 		$tree.bind(
 		    'tree.click',
 		    function(event) {
-				
+
 				// alert(inspect(event));
 		        // The clicked node is 'event.node'
 		       	var node = event.node;
+				// alert(node.type);
 				if ( node !=g_selected_node ){
 					if (g_selected_node && g_selected_node.isNew == 'true' && g_selected_node.type != "folder"){
 						popup("You haven't save this file.");
@@ -414,37 +415,50 @@ function init_tree2(data_root, info, init_structure){
 					   //	open_bo(node);
 						
 						if (g_selected_node != g_root_node){
-						t = get_type(node.type);
-						//alert(node.type);
+							t = get_type(node.type);
+							//alert(node.type);
 						
-						if (t && t.isLeaf == false)
-						;
-						else if (t){
+							if (t && t.isLeaf == false)
+							;
+							else if (t){
 							
-							t.open_method(node);
-						}else
-							open_file(node);
+								t.open_method(node);
+							}else
+								open_file(node);
 						}
 					}
+					
+				}else{
+					if (g_selected_node != g_root_node){
+					pre_rename_node(event);
+						event.click_event.stopPropagation();
+					}
+
 				}
 		    }
 		);
 		$tree.bind(
 		    'tree.dblclick',
 		    function(event) {
+			
 		        // event.node is the clicked node
 		        // console.log(event.node);
-		        var node = event.node;
-				g_editing_node = node;
-		        if (node.type == 'code' || node.type == 'folder')
-					pre_rename_node(event);
-				else if (node.type == 'bo')
-					pre_rename_node(event);
-				else 
+		        //var node = event.node;
+				//g_editing_node = node;
+				// if (node.hasChildren()){
+				// 		$('#tree').tree('toggle', node);
+				// 	}
+				
+				// 		        if (node.type == 'code' || node.type == 'folder')
+				// 	pre_rename_node(event);
+				// else if (node.type == 'bo')
+				// 	pre_rename_node(event);
+				// else 
 				$tree.tree(
 					'openNode',
 					event.node,
 					true);
+					
 		    }
 		);
 		$tree.bind(
@@ -524,8 +538,9 @@ function rename_file(node, name){
 
 function pre_rename_node(event){
 	var node = event.node;
+	g_editing_node = node;
 	// alert(node.name);
-       $("#edit_box").css("display", "block");
+    $("#edit_box").css("display", "block");
 	// alert(inspect(event.click_event));
 	t = $(event.click_event.target);
 	tt = $(event.target);
@@ -545,7 +560,6 @@ function pre_rename_node(event){
 	$("#edit_value").val(node.name);
 	
 	// $("#edit_box").top(event.click_event.clientY);
-	
 }
 
 

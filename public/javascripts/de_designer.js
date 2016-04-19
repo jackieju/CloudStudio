@@ -155,7 +155,7 @@ function load_de(data){
 	// alert(JSON.stringify(data));
 	
 	$("#v_de_dtype").html(data.dtype.name);
-	alert(data.dtype.name);
+	//alert(data.dtype.name);
 	// if (data.dtype.scale){
 	// 	$("#v_de_dtype_scale").val(data.dtype.scale);
 	// 	if (data.dtype.scale.required == true)
@@ -187,7 +187,7 @@ function load_de(data){
 	// $("#v_de_dtype_removeleadingblank").val(data.dtype.removeleadingblank);
 	// $("#v_de_dtype_fixedvalues").val(data.dtype.fixedvalues);
 	// $("#v_de_dtype_uidefaultvalue").val(data.dtype.uidefaultvalue);
-	alert("d");
+		//alert("d");
 
 }
 
@@ -251,7 +251,7 @@ function export_de(){
 	
 	
 	
-	alert(inspect(ret));
+	alert(inspect(ret,1));
 	return JSON.stringify(ret);
 }
 
