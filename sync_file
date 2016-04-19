@@ -1,0 +1,42 @@
+#!/bin/sh
+#echo rsync lib/active_record/vendor/odbcext_hdb.rb  root@10.58.113.181:/usr/lib64/ruby/gems/1.8/gems/activerecord-odbc-adapter-2.0/lib/active_record/vendor/odbcext_hdb.rb 
+pwd1=`pwd`/
+pwd1=${0}
+pwd1=`echo $pwd1 | sed 's/sync_file//g'` 
+#echo $pwd1
+# pwd1=$pwd1/
+# pwd1="/Users/i027910/Desktop/SAP/src/oce/"
+echo project path:$pwd1
+#echo "sed -E 's/$pwd1//g' $1"
+#rpath=`sed -E 's/$pwd1//g' $1` 
+#echo ${1#$pwd1}
+rpath=${1#$pwd1}
+dpath=jackie@10.58.9.209:/var/www/CloudStudio/
+echo file relative path:$rpath
+echo rsync -v $1 $dpath$rpath
+rsync -v $1 $dpath$rpath
+
+#expect -c "
+#spawn rsync -v $1 ju.weihua@wh.joyqom.com:/var/www/wh/server/wh/$rpath
+#expect {
+#	\"*assword\" {set timeout 300; send \"your password\r\";}
+#	 \"yes/no\" {send \"yes\r\"; exp_continue;}
+#}
+#expect eof"
+echo DONE!
+############################################################
+# add micro command in textmate
+# save=>current file
+# commands=>
+# just to remind you of some useful environment variables
+# see Help / Environment Variables for the full list
+# echo File: "$TM_FILEPATH"
+# echo Word: "$TM_CURRENT_WORD"
+# echo Selection: "$TM_SELECTED_TEXT"
+
+# $TM_PROJECT_DIRECTORY/sync_file $TM_FILEPATH
+
+# input=>"selected text" or "document"
+# output=>"show as tooltips"
+# activation=>"key equivalent" "shift+command+s"
+############################################################
