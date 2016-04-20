@@ -125,5 +125,11 @@ div.btn_add_node{
 	background:#eeeeee;
 	white-space:nowrap;
 	/*font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;*/
-	font-size:11pt;font-weight:lighter/*;
+	font-size:11pt;font-weight:lighter;
+}
+
+img.tabbar_btn
+{
+	margin:5px;
+	height:20px;
 }

@@ -210,6 +210,10 @@ function check_change_type_name(t){
 	// ar = value.split(/[ABCDEFGHIJKLMNOPQRSTUVWXYZ]/);
 	// alert(inspect(ar));
 	// v = ar.join("_");
+	 
+	value = value.charAt(0).toUpperCase() + value.slice(1);
+	// alert(value);
+	$("#v_de_name").val(value);
 	
 	v = value.replace(/([ABCDEFGHIJKLMNOPQRSTUVWXYZ])/g, '_$1');
 	v = v.toUpperCase();

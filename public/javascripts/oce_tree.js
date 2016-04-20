@@ -5,6 +5,7 @@
 var $tree = null;
 var g_root_node = null;
 var g_selected_node = null;
+var g_editing_node = null;
 //////
 
 // var g_bo_root = data[0];
@@ -309,14 +310,14 @@ function add_file_to_tree(node, parent, tree_node){
 function init_tree2(data_root, info, init_structure){
 	// alert(inspect(data_root.bo_list));
 
-	// alert(inspect(data_root));
+	// alert(inspect(data_root), 1);
 	data = init_structure;
 	if (data == null)
 		data = [];
 	root = [
 		{
 			//label: info.name+"("+info.appid+")",
-			label: "anyting",
+			label: info.name,
 			type: 'app',
 			children:data
 		}
@@ -676,8 +677,10 @@ function pre_add_node(){
 	var y = pos.top - m_pos.top - $("#type_list").height();
 	// alert(inspect(m_pos));
 	// alert($("#btn_select_theme").offset().left);
+	alert("pos:"+pos.left+","+pos.top+", y:"+y);
 	$("#type_list").css("left", x);
-	$("#type_list").css("top", y-50);
+	// $("#type_list").css("top", y-50);
+	$("#type_list").css("top", 0-$("#type_list").height());
 	//e.stopPropagation();	
 }
 function add_node(type){

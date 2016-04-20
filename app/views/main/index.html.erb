@@ -63,7 +63,7 @@
 	</script>
 	<div id="main" class="draggable" style=" position: absolute;width: 1000px;height: 600px;margin-left:100px;">
 		
-		<div id="main_toolbar" class="gradient draghandle" style="width:100%;height:50px;border:1px solid #d8d8d8;border-bottom:0px;">
+		<div id="main_toolbar" class="gradient draghandle" style="display:block;width:100%;height:50px;border:1px solid #d8d8d8;border-bottom:0px;">
 			<center>
 			<div id="console" class="round_border shadowed-border" style="line-height:27px;padding:0;overflow-y:hidden;position:relative;top:13px;height:27px;width:300px;border:0px solid red;background:#f0f0f0;">
 				<div>Ready</div>
@@ -86,8 +86,31 @@
 			</div>
 		</div>
 		
-		<div id="left_pane" style="position:relative;float:left;width:18%;height:600px;background:#f5f5f5;">
-			<div id="tree" style="margin:2px;font-size:18px;height:580px;overflow-y:auto;">
+		<div id="left_pane" style="position:relative;float:left;width:18%;height:calc(100% - 50px);background:#f5f5f5;">
+			<div id="left_nav" class='left_toolbar' style="position: relative;width:100%;height:30px;border-bottom:1px solid #999999;text-align:center;">
+				
+			</div>
+			<div id="search" style="display:none;margin:2px;font-size:18px;height:calc(100% - 53px);overflow-y:auto;">
+				<div style="border:0px solid #eeeeee;margin:1px;background:white;">
+					<div style="float:left;" onclick="show_searchresult();">
+						<img src="/images/enterprise_search.png" style="height:15px;"/><span class="site-nav-icon" style="font-size:9pt;" onclick="show_searchoption();">▾</span>
+					</div>
+					<div style="float:left;">
+						<input id="left_search" class="" style="width:150px;border:0px;" value=""></input>
+					</div>
+					<div style="clear:both;">
+					</div>
+					
+					<div id="search_option" class="commit-form1 .shadowed" style="display:none;left:0;top:30px;width:100px;min-height:30px;position:absolute;z-index:20000;">
+						<div class="optionfield_list" style="margin-top:22px;scroll:auto;font-size:8pt;">
+						</div><!-- field_list -->
+					
+					</div>
+						
+				</div>
+				
+			</div>
+			<div id="tree" style="margin:2px;font-size:18px;height:calc(100% - 53px);overflow-y:auto;">
 				<ul>
 			      <!-- <li>Root node 1
 			      			        <ul>
@@ -98,7 +121,7 @@
 			      			      <li>Root node 2</li> -->
 			    </ul>
 			</div><!-- tree -->
-			<div class='left_toolbar' style="position:static;bottom:0px;float:bottom;width:100%;height:20px;border:1px solod blue;background:#eeeeee;">
+			<div class='left_toolbar' style="position: absolute;bottom:0px;float:bottom;width:100%;height:20px;border:1px solod blue;background:#eeeeee;">
 				
 				<div id='cp_tb_btns' style="float:right;">
 					<a href="javascript:pre_add_node();"> <img src="/images/button-add.png" class="toolbar_btn" id="add_node_btn"></a>
@@ -114,9 +137,9 @@
 				
 			</div>
 		</div><!-- left_pane -->
-		<div id="splitter" style="position:relative;float:left;height:600px;width:3px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
+		<div id="splitter" style="position:relative;float:left;height:calc(100% - 50px);width:3px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
 		</div>
-		<div id='code_pane' style="margin-left:18.5%;width:81.5%;height:100%;border:1px solid #d8d8d8;border-top:0;">
+		<div id='code_pane' style="margin-left:18.5%;width:81.5%;height:calc(100% - 50px);;border:1px solid #d8d8d8;border-top:0;">
 			<div class='cp_toolbar' style="width:100%;height:20px;border:1px solod blue;background:#f5f5f5">
 				<div id="filenav" style="color:#666666;float:left;">
 					
@@ -130,10 +153,10 @@
 					<button id = "btn_open_editor"  class='btn1' onclick="show_editor()" >Editor</button>
 				</div>
 			</div>
-			<div id="editor_wrapper" style="width:100%;height:580px;display:none;">
-				<div id="editor" name="body" class="droppable" style="display:block;width:99%;height:560px;">
+			<div id="editor_wrapper" style="width:100%;height:calc(100% - 20px);display:none;">
+				<div id="editor" name="body" class="droppable" style="display:block;width:99%;height:calc(100% - 25px);">
 				</div>
-				<div id="editor_bottombar" class="" name="editor_bottombar" style="font-size:8pt;height:35px;float:bottom;;bottom:0px;border-top:1px solid #d8d8d8;position:static;bottom:0px;float:bottom;">
+				<div id="editor_bottombar" class="" name="editor_bottombar" style="font-size:8pt;height:23px;float:bottom;;bottom:0px;background:#eeeeee;border-top:1px solid #d8d8d8;position:relative;bottom:0px;float:bottom;">
 					<!-- <div onclick="show_mode();" style="cursor:default;border-left:1px solid #c8c8c8;float:right;width:100px;padding-left:5px;">▼Mode</div>
 					<div id="mode_list" style="display:none;z-index:100;border:1px solid #c8c8c8;font-size:8pt;position:absolute;float:bottom;">
 						<div style="border-bottom:1px solid #c8c8c8;padding:2px 5px;">TextMate</div>
@@ -151,7 +174,7 @@
 					</div>
 				</div>
 			</div><!-- editor_wrapper -->
-			<div id="log" name="body" class="droppable" style="display:none;width:99%;height:580px;background:white;overflow:scroll;">
+			<div id="log" name="body" class="droppable" style="display:none;width:99%;height:calc(100% - 20px);background:white;overflow:scroll;">
 					<div id="bt_plog" style="height:20px;width:100%;text-align:center;color:#9999ff;" onclick="retrieve_previous_log();">
 						<a><i><span style="color:#9999ff;cursor:pointer;"> Previous Log</span></i></a>
 					</div>
@@ -163,7 +186,7 @@
 				</div>
 			</div>
 			<% if @git_enabled %>
-			<div id="git" name="body" class="" style="display:none;width:99%;height:580px;overflow:auto;">
+			<div id="git" name="body" class="" style="display:none;width:99%;height:calc(100% - 20px);overflow:auto;">
 				<div id="git_tab">
 					<button id="btn_tab_commit" class="minibutton selected" onclick="select_commit();" style="margin:0px;width:65px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;" >Commit</button>
 					<button id="btn_tab_diff" class="minibutton " onclick="select_diff();" style="margin:0px;width:60px;height:23px;font-size:10pt;padding:2px;line-height:12px;font-weight:normal;border-radius: 0px 0px 0px 0px;">Diff</button>
@@ -233,7 +256,7 @@
 			</div>
 			<% end %>
 			
-			<div id="bo_designer" class="droppable" name="body" style="display:none;width:99%;height:580px;background:#fefefe;">
+			<div id="bo_designer" class="droppable" name="body" style="display:none;width:99%;height:calc(100% - 20px);background:#fefefe;">
 				<div id="bod_tb" style="float:left;width:50px;height:100%;border-right:1px solid grey;margin-right:5px;">
 					<div class="bod_tb_btn" style="margin-top:50px;">
 						<a href="javascript:add_bo();"><img src="/images/plus.png" class="toolbar_btn_m"></a>
@@ -254,7 +277,7 @@
 				</div>
 			</div><!-- bo_designer -->
 
-			<div id="de_designer" class="droppable" name="body" style="display:none;width:99%;height:580px;background:#fefefe;">
+			<div id="de_designer" class="droppable" name="body" style="display:none;width:99%;height:calc(100% - 20px);background:#fefefe;">
 		
 				<div id="de_content" class="" style="float:left;border:0px solid red;height:100%;width:100%;overflow-y:scroll;">
 					<div class="de" style="border:0px #9999ff dotted; width:100%;">
@@ -274,7 +297,7 @@
 
 
 								<div class="attr_name">
-									<span style="color:red"></span>DBAlias
+									<span style="color:red"></span>DB Alias
 								</div>
 								<div class="attr_value">
 									<input id="v_de_dbname" style="width:170px;min-width:170px;" class="attr_value_input input_value" value="" dbnamechanged="" onchange="onchangedbname(this);"></input>
@@ -2250,11 +2273,11 @@ function ws_deploy(appid, tenant){
 		// 		
 		// 	}
 	});
-	// $("#main").resizable({
-	// 	 minHeight: 150,
-	// 	minWidth: 200//,
-	// 	//alsoResize: "#pane_resize_main"
-	// });
+	$("#main").resizable({
+		 minHeight: 150,
+		minWidth: 200//,
+		//alsoResize: "#pane_resize_main"
+	});
 	
 	// $(".revertable" ).draggable({
 	// 	revert: true,
@@ -2425,6 +2448,12 @@ function ws_deploy(appid, tenant){
 			// alert(g_bo.html());
 			// alert(inspect(g_bo));	
 	}
+	
+	
+	function show_searchoption(){
+		$("#search_option").css("display", "block");
+	}	
+	
 	// t: true to show, false to close
 	function show_balloon(t, x,y, content, title){
 		title = title || "";
@@ -2496,15 +2525,52 @@ function ws_deploy(appid, tenant){
 		alert(content);
 		_save(content);
 	}
+	var g_tabviews = [];
+	var g_current_tabview = null;
+	function show_tab_view(divid){
+		if (divid == g_current_tabview)
+			return;
+		node = $("#"+divid);
+		node.css("display", "block");
+		if (g_current_tabview !=null)
+			$("#"+g_current_tabview).css("display", "none");
+		g_current_tabview = divid;
+	}
+	function add_tab(divid, icon){
+		html = " <img src='"+icon+"' class='tabbar_btn' onclick='show_tab_view(\""+divid+"\")' >";
+		
+		//html = "<a href='javascript:show_tab_view(\""+divid+"\")'> <img src='"+icon+"' class='tabbar_btn' onclick='show_tab_view(\""+divid+"\")' ></a>";
+		
+		$("#left_nav").append(html);
+		g_tabviews.push(divid);
+		
+	}
+	
 	function init_ui(){
 		
+		add_tab("tree", "/images/application_side_tree.png");
+		add_tab("search", "/images/enterprise_search.png");
+		show_tab_view("tree");
+		
+		// add search_option
+		html = "";
+		 // html += "<div class=\"btn_add_bf\" style=\"border-bottom:1px solid grey;margin-top:5px;\" onclick=\"add_bo_field();\">\
+		 // 					<img src=\"/images/button-add.png\" class=\"toolbar_btn\">\
+		 // 				</div>";
+		search_option = "Data Element";
+		
+		html +=	"<div class=\"field\" style=\"border-bottom:1px solid grey;margin-top:5px;\" onclick=\"show_field_prop(event);\";>\
+				<span class='field_name' >"+search_option+"</span> </div>";
+				
+		$("#search_option div.optionfield_list").append(html);
+			
 		add_view("bo_designer");
 		add_view("editor_wrapper");
 		add_view("git");
 		add_view("log");
 		add_view("bo_designer");
 		add_view("de_designer", save_de);
-				
+		
 		//$("#prop_pad").css("display", "none");
 	}
 	function init(){
@@ -2554,21 +2620,28 @@ $("#theme_list").click(function(e){
 });
 
 $("body").click(function(e){
+	
 	// hide rename box
 	if (g_editing_node != null && $("#edit_box").css("display") != "none"){
-		
 		var v = $("#edit_value").val();
-		
 		$("#edit_box").css("display", "none");
 		rename_file(g_editing_node, v);
 	}
+	
 	// hide theme
+	
 	$("#theme_list").css("display", "none");
+	
 	$("#type_list").css("display", "none");
+	
 	$(".temp_floating").css("display", "none");
 	
 });
 
+$(".temp_floating").blur(function(e){
+	alert(inspect($(e.target)));
+	e.target.css("display", none);
+});
 // check_session();
 
 // check_session2();
