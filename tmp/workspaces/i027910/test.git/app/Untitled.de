@@ -1,1 +1,1 @@
-{"name":"aaa","desc":"323","dbname":"AAA","dbnamechanged":false,"dtype":{"name":"ALPHANUM","_length":"11","scale":"","touppercase":"YES","fixedvalues":"111","uidefaultvalue":"1"}}
+{"name":"Test","desc":"fff","dbname":"TEST","dbnamechanged":false,"dtype":{"name":"NVARCHAR","_length":"2","minLength":"1","charset":"fe","touppercase":"NO","removeleadingblank":"","fixedvalues":"","uidefaultvalue":""}}
