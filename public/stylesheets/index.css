@@ -133,3 +133,10 @@ img.tabbar_btn
 	margin:5px;
 	height:20px;
 }
+.search_option_field{
+	border-bottom:1px solid #c5c5c5;
+	padding:2px;
+	cursor:default;
+	opacity:1;
+	
+}

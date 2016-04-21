@@ -1,0 +1,18 @@
+<% if @result == nil || @result.size == 0 %>
+<H4> No Results for "<%=@keys%>"</H4>
+<% else %>
+<% @result.each{|k,v| 
+		path = "/#{@appid}#{v[:file]}"
+	%>
+	
+	<div class="sr_node" style="font-size:10pt;" onclick="do_open_de('<%=@appid %>.git','<%=path %>');">
+		<%=k%>
+		<div style="margin-left:10px">
+			<%=v[:data].name%> - <%=v[:data].dtype.name%> 
+		</div>
+	</div>
+	
+	
+	
+<%}%>
+<% end %>

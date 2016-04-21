@@ -86,14 +86,14 @@
 			</div>
 		</div>
 		
-		<div id="left_pane" style="position:relative;float:left;width:18%;height:calc(100% - 50px);background:#f5f5f5;">
+		<div id="left_pane" style="position:relative;float:left;width:200px;height:calc(100% - 50px);background:#f5f5f5;">
 			<div id="left_nav" class='left_toolbar' style="position: relative;width:100%;height:30px;border-bottom:1px solid #999999;text-align:center;">
 				
 			</div>
 			<div id="search" style="display:none;margin:2px;font-size:18px;height:calc(100% - 53px);overflow-y:auto;">
-				<div style="border:0px solid #eeeeee;margin:1px;background:white;">
-					<div style="float:left;" onclick="show_searchresult();">
-						<img src="/images/enterprise_search.png" style="height:15px;"/><span class="site-nav-icon" style="font-size:9pt;" onclick="show_searchoption();">▾</span>
+				<div id="search_bar" style="border:0px solid #eeeeee;margin:1px;background:white;">
+					<div style="float:left;" >
+						<img src="/images/enterprise_search.png" style="height:15px;" onclick="show_searchresult();"/><span class="site-nav-icon" style="font-size:9pt;cursor:pointer;" onclick="show_searchoption(event);">&nbsp;▾&nbsp;</span>
 					</div>
 					<div style="float:left;">
 						<input id="left_search" class="" style="width:150px;border:0px;" value=""></input>
@@ -101,12 +101,14 @@
 					<div style="clear:both;">
 					</div>
 					
-					<div id="search_option" class="commit-form1 .shadowed" style="display:none;left:0;top:30px;width:100px;min-height:30px;position:absolute;z-index:20000;">
-						<div class="optionfield_list" style="margin-top:22px;scroll:auto;font-size:8pt;">
+					<div id="search_option" class="commit-form1 shadowed temp_floating round_border" style="background-color:#f5f5f5;display:none;left:0;top:50px;width:100px;min-height:30px;position:absolute;z-index:20000;">
+						<div class="optionfield_list" style="margin-top:2px;scroll:auto;font-size:8pt;;">
 						</div><!-- field_list -->
 					
 					</div>
-						
+				</div>
+				<div id="search_result" style="margin:2px;font-size:18px;height:calc(100% - 33px);overflow-y:auto;">
+				
 				</div>
 				
 			</div>
@@ -139,7 +141,7 @@
 		</div><!-- left_pane -->
 		<div id="splitter" style="position:relative;float:left;height:calc(100% - 50px);width:3px;border:0px solid red;z-index:100;" class="gradient-lefttoright" >
 		</div>
-		<div id='code_pane' style="margin-left:18.5%;width:81.5%;height:calc(100% - 50px);;border:1px solid #d8d8d8;border-top:0;">
+		<div id='code_pane' style="width:calc(100% - 205px);height:calc(100% - 50px);border:1px solid #d8d8d8;border-top:0;position:relative;float:left;">
 			<div class='cp_toolbar' style="width:100%;height:20px;border:1px solod blue;background:#f5f5f5">
 				<div id="filenav" style="color:#666666;float:left;">
 					
@@ -1914,37 +1916,8 @@ function ws_deploy(appid, tenant){
 			update_nav(fname, type);
 	
 		}
-		function open_de(node){
-			// fname = g_selected_node.name;
-			type = g_selected_node.type;
-			
-				// fname = g_selected_node.name;
-			fname = getNodePath(g_selected_node);
-			// alert("a");
-			
-			if (g_selected_node.isNew == 'true'){
-				
-				
-				nav = "";
-				if (type == 'bo')
-					nav = "Data Element > ";
-				else if	(type == "code")
-					nav = "Extensions > ";
-				$("#filenav").html(nav+g_selected_node.name);
-				
-				
-				switch_view("de_designer", node);
-		
-				//$("#de_content").empty();
-				load_de({});
-
-
-				// $("#applist").html(data);
-				appendToConsole('Load successfully');
-				return;
-			}
-			
-		// alert("b");
+		function do_open_de(appid, fname){
+			alert(fname);
 			
 			$.ajax({
 				type: "post",
@@ -1952,7 +1925,7 @@ function ws_deploy(appid, tenant){
 				dataType: 'json',
 
 				data: {
-					appid:g_appid,
+					appid:appid,
 					fname:fname,
 					rtype:'json'
 					// sid: '<%=@sid%>',
@@ -1995,8 +1968,41 @@ function ws_deploy(appid, tenant){
 			}); // $ajax
 		
 			// $("#props").empty();
-			appendToConsole("Load Data Element Successfully");
+			// appendToConsole("Load Data Element Successfully");
 			update_nav(fname, type);
+		}
+		function open_de(node){
+			// fname = g_selected_node.name;
+			type = g_selected_node.type;
+			
+				// fname = g_selected_node.name;
+			fname = getNodePath(g_selected_node);
+			// alert("a");
+			
+			if (g_selected_node.isNew == 'true'){
+				
+				
+				nav = "";
+				if (type == 'bo')
+					nav = "Data Element > ";
+				else if	(type == "code")
+					nav = "Extensions > ";
+				$("#filenav").html(nav+g_selected_node.name);
+				
+				
+				switch_view("de_designer", node);
+		
+				//$("#de_content").empty();
+				load_de({});
+
+
+				// $("#applist").html(data);
+				appendToConsole('Load successfully');
+				return;
+			}
+			
+		// alert("b");
+			do_open_de(g_appid, fname);
 	
 		}		
 // =============
@@ -2118,9 +2124,11 @@ function ws_deploy(appid, tenant){
 					x = 150;
 
 				$("#left_pane").width(x+"px");
-				var w = g_main_width-x-2;
+				adjust_serach();
+				var w = g_main_width-x-2-$("#splitter").width();
 				$("#code_pane").width(w+"px");
-				$("#code_pane").css("margin-left", x+"px");
+				
+				// $("#code_pane").css("margin-left", x+"px");
 			}else if (g_moving_sp == 1){
 
 			}
@@ -2450,8 +2458,10 @@ function ws_deploy(appid, tenant){
 	}
 	
 	
-	function show_searchoption(){
+	function show_searchoption(e){
 		$("#search_option").css("display", "block");
+		e.stopPropagation();
+		
 	}	
 	
 	// t: true to show, false to close
@@ -2545,6 +2555,78 @@ function ws_deploy(appid, tenant){
 		g_tabviews.push(divid);
 		
 	}
+	function adjust_serach(){
+		$("#left_search").width($("#left_pane").width()-40);
+	}
+	
+	function show_searchresult(type){
+		key = $("#left_search").val();
+		args = {
+				appid:g_appid,
+				k:key,
+				// rtype:'json',
+		};
+		if (type != null)
+			args.type = type;
+		$.ajax({
+			type: "post",
+			url: "/search?t="+ new Date().getTime(),
+			// dataType: 'json',
+
+			data: args, 
+			success: function(data, textStatus){
+				// alert( "Data Saved: " + data +","+ textStatus);
+
+				showWaiting(false);
+				// if (data.error){
+				// 	popup(data.error);
+				// }else{
+				// 	alert(JSON.stringify(data));
+				// 	if (data.data == null){
+				// 		$("#search_result").
+				// 	}
+				// 
+				// 	// alert(inspect(target));
+				// 	// $(target.element).find("div").click();
+				// 	// $("#applist").html(data);
+				// 	appendToConsole('Search successfully');
+				// 
+				// }
+				
+				$("#search_result").html(data);
+
+			},
+			error: function(xhr, textStatus, errorThrow){
+				// alert("error"+errorThrow+","+textStatus+","+xhr.responseText);
+				popup("error"+errorThrow+","+textStatus+","+xhr.responseText);
+
+				showWaiting(false);
+
+			}
+		}); // $ajax
+		showWaiting(true);
+		 
+	}
+	function init_search(h){
+		// add search_option
+		
+		opt = h.search_options;
+		if (opt){
+			html = "";
+			
+			for (i = 0; i <opt.length; i++ ){
+				html +=	"<div class=\"search_option_field\"  onclick=\"show_searchresult('"+opt[i]+"');\";>\
+						<span class='searchoption_name' >"+opt[i]+"</span> </div>";
+			}
+			$("#search_option div.optionfield_list").append(html);
+			$("#left_search").keydown(function (event){
+				if (event.keyCode==13){
+					show_searchresult();
+				}
+			})
+		}
+		adjust_serach();
+	}
 	
 	function init_ui(){
 		
@@ -2552,17 +2634,9 @@ function ws_deploy(appid, tenant){
 		add_tab("search", "/images/enterprise_search.png");
 		show_tab_view("tree");
 		
-		// add search_option
-		html = "";
-		 // html += "<div class=\"btn_add_bf\" style=\"border-bottom:1px solid grey;margin-top:5px;\" onclick=\"add_bo_field();\">\
-		 // 					<img src=\"/images/button-add.png\" class=\"toolbar_btn\">\
-		 // 				</div>";
-		search_option = "Data Element";
-		
-		html +=	"<div class=\"field\" style=\"border-bottom:1px solid grey;margin-top:5px;\" onclick=\"show_field_prop(event);\";>\
-				<span class='field_name' >"+search_option+"</span> </div>";
-				
-		$("#search_option div.optionfield_list").append(html);
+		init_search({
+			search_options:["Data Element", "DataType Group", "Hana Table"]
+		});
 			
 		add_view("bo_designer");
 		add_view("editor_wrapper");
